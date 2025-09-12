@@ -2,19 +2,19 @@ import React from 'react';
 
 const UtilityNav: React.FC = () => {
   return (
-    <div className="bg-gray-100 h-10 flex items-center justify-end px-4">
-      <div className="flex items-center space-x-5 text-sm">
-        <a href="#" className="text-blue-900 hover:text-blue-700 font-medium">
+    <div className="bg-[#F4F4F4] h-[41px] flex items-center justify-end">
+      <div className="flex items-center gap-5 pr-6">
+        <a href="#" className="text-[#002856] hover:text-blue-700 font-medium text-[13px]">
           Newsroom
         </a>
-        <div className="w-px h-4 bg-gray-400"></div>
-        <a href="#" className="text-blue-900 hover:text-blue-700 font-medium">
+        <div className="w-px h-[17px] bg-[#C3C3C3]"></div>
+        <a href="#" className="text-[#002856] hover:text-blue-700 font-medium text-[13px]">
           Careers
         </a>
-        <div className="w-px h-4 bg-gray-400"></div>
-        <a href="#" className="text-blue-900 hover:text-blue-700 font-medium">
+        <div className="w-px h-[17px] bg-[#C3C3C3]"></div>
+        <button className="text-[#002856] hover:text-blue-700 font-medium text-[13px] px-4 py-3 rounded">
           Sign In
-        </a>
+        </button>
       </div>
     </div>
   );

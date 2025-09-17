@@ -6,10 +6,10 @@ const WhoWeGuidePage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-[356px] bg-cover bg-center bg-no-repeat" 
         style={{ backgroundImage: `url('/who-we-guide/backgrounds/hero-background.jpg')` }}>
-        <div className="absolute left-20 -top-10 w-[805px] h-[526px] bg-white/90 border-0 border-[#002856] flex items-center justify-center">
-          <h1 className="text-[#002856] text-[56px] font-bold leading-[65px] w-[771px] text-left px-7">
+        <div className="absolute left-20 -top-10 w-[805px] h-[526px] bg-white/10 border-0 border-[#002856] flex items-center justify-center">
+          {/*<h1 className="text-[#002856] text-[56px] font-bold leading-[65px] w-[771px] text-left px-7">
             We Don't Serve the Industry. We Guide Its Decision-Makers.
-          </h1>
+          </h1>*/}
         </div>
       </section>
 

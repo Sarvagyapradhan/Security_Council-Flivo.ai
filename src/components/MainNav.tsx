@@ -50,9 +50,9 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate }) => {
             Latest Insight
           </button>
           <button
-            onClick={() => onNavigate('briefings')}
+            onClick={() => onNavigate('events')}
             className={`text-[13px] font-medium hover:text-blue-700 pb-2 ${
-              currentPage === 'briefings'
+              currentPage === 'events'
                 ? 'border-b-2 border-[#0000D3]'
                 : 'border-b-2 border-transparent'
             }`}

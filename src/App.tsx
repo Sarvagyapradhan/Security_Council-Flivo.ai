@@ -19,6 +19,10 @@ const App = () => {
 
     const handleNavigate = (page: string) => {
         setCurrentPage(page);
+        // Reset scroll so new page starts at the top
+        if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        }
     };
 
     const renderHomePage = () => (

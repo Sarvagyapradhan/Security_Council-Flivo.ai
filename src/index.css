@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* Custom styles for Latest Insight page */
@@ -6,7 +7,6 @@
 }
 
 /* Ensure fonts are loaded properly */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
   font-family: 'Inter', -apple-system, 'Roboto', 'Helvetica', sans-serif;
@@ -15,4 +15,9 @@ body {
 /* Custom dropdown styles */
 .dropdown-open {
   z-index: 50;
+}
+
+/* Who We Guide hero background */
+.who-we-guide-hero {
+  background-image: url('/who-we-guide/backgrounds/hero-background.jpg');
 }

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const WhoWeGuidePage: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[356px] bg-cover bg-center bg-no-repeat" 
-        style={{ backgroundImage: `url('/who-we-guide/backgrounds/hero-background.jpg')` }}>
+      <section className="relative h-[356px] bg-cover bg-center bg-no-repeat who-we-guide-hero">
         <div className="absolute left-20 -top-10 w-[805px] h-[526px] bg-white/10 border-0 border-[#002856] flex items-center justify-center">
           {/*<h1 className="text-[#002856] text-[56px] font-bold leading-[65px] w-[771px] text-left px-7">
             We Don't Serve the Industry. We Guide Its Decision-Makers.
@@ -56,67 +55,46 @@ const WhoWeGuidePage: React.FC = () => {
           <div className="relative w-full h-[439px]">
             <div className="absolute left-0 top-[47px] w-full h-[314px] bg-[#0050AC]"></div>
             
-            {/* Left Images - Positioned outside viewport */}
-            <div className="absolute -left-[449px] top-0 w-[317px] h-[334px]">
-              <div className="absolute left-[41px] top-[21px] w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
-              <img className="absolute left-0 top-0 w-[290px] h-[328px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-            </div>
-            
-            <div className="absolute -left-[398px] top-[101px] w-[315px] h-[338px]">
-              <div className="absolute left-[29px] top-[15px] w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
-              <img className="absolute left-0 top-0 w-[276px] h-[313px] border-2 border-white shadow-lg" 
-                src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-              <div className="absolute left-[34px] top-[29px] w-[164px] h-[24px] bg-black/10 backdrop-blur-sm"></div>
-            </div>
+            {/* Left Images - Animated pair from Figma assets */}
+            <AnimatedOpsImagePair />
 
-            {/*<div className="absolute left-[613px] top-[92px] text-center">
-              <h3 className="text-white text-[22px] font-bold leading-[34px] mb-4 w-[519px]">
+            <div className="absolute left-[613px] top-[80px] text-left">
+              <h3 className="text-white text-[20px] font-bold leading-[30px] mb-4 w-[900px]">
                 Security Operations & Incident Response Teams:
               </h3>
-              <p className="text-white text-[22px] leading-[34px] mb-4 w-[762px]">
-                We provide them with upstream threat intelligence: actor patterns, breach
-                entry paths and infrastructure clues that sharpen prioritization and accelerate
-                containment.
+              <p className="text-white text-[20px] leading-[32px] mb-4 w-[900px]">
+                We provide them with upstream threat intelligence: actor patterns,<br />
+                breach entry paths and infrastructure clues that sharpen prioritization<br />
+                and accelerate containment.
               </p>
-              <p className="text-white text-[22px] leading-[34px] w-[762px]">
-                When timelines collapse, our guidance delivers the signal before the chaos.
+              <p className="text-white text-[20px] leading-[32px] w-[900px]">
+                When timelines collapse, our guidance delivers the signal before the<br />
+                chaos.
               </p>
-            </div>*/}
+            </div>
           </div>
 
           {/* Executives & Cybersecurity Leaders */}
           <div className="relative w-full h-[467px]">
             <div className="absolute left-0 top-[61px] w-full h-[323px] bg-[#0050AC]"></div>
             
-            {/* Right Images - Positioned outside viewport */}
-            {/*<div className="absolute -right-[237px] top-[141px] w-[291px] h-[326px]">
-              <div className="absolute left-0 top-0 w-[276px] h-[313px] bg-black/60 blur-[32px]"></div>
-              <img className="absolute left-2 top-1.5 w-[276px] h-[313px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-            </div>
-            
-            <div className="absolute -right-[99px] top-0 w-[301px] h-[328px]">
-              <div className="absolute left-[50px] top-0.5 w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
-              <img className="absolute left-[11px] top-0 w-[290px] h-[328px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-              <div className="absolute left-[15px] top-0.5 w-[277px] h-[324px] bg-black/10 backdrop-blur-sm"></div>
-            </div>
+            {/* Right Images - Animated pair from Figma assets */}
+            <AnimatedExecImagePair />
 
             <div className="absolute left-[88px] top-[93px]">
-              <h3 className="text-white text-[22px] font-bold leading-[34px] mb-4 w-[393px] text-center">
+              <h3 className="text-white text-[20px] font-bold leading-[30px] mb-4 w-[900px] text-left">
                 Executives & Cybersecurity Leaders:
               </h3>
-              <p className="text-white text-[22px] leading-[34px] mb-4 w-[762px]">
-                They don't need dashboards. They need clarity. We guide CISOs, CTOs and
-                senior security heads through exposures that aren't yet public and decisions
-                that can't wait for alerts.
+              <p className="text-white text-[20px] leading-[32px] mb-4 w-[900px]">
+                They don't need dashboards. They need clarity. We guide CISOs, CTOs<br />
+                and senior security heads through exposures that aren't yet public and<br />
+                decisions that can't wait for alerts.
               </p>
-              <p className="text-white text-[22px] leading-[34px] w-[762px]">
-                From zero-day visibility to adversary intent, our intelligence supports
+              <p className="text-white text-[20px] leading-[32px] w-[900px]">
+                From zero-day visibility to adversary intent, our intelligence supports<br />
                 high-stakes risk judgment, not post-breach reaction.
               </p>
-            </div>*/}
+            </div>
           </div>
 
           {/* Threat Researchers & Intelligence Analysts */}
@@ -138,19 +116,22 @@ const WhoWeGuidePage: React.FC = () => {
               <div className="absolute left-[25px] top-1 w-[268px] h-[304px] bg-black/10 backdrop-blur-sm"></div>
             </div>*/}
 
-            {/*<div className="absolute left-[632px] top-[116px] text-center">
-              <h3 className="text-white text-[22px] font-bold leading-[34px] mb-4 w-[466px]">
+            {/* Left Images - Animated pair from Figma assets */}
+            <AnimatedResearchersImagePair />
+
+            <div className="absolute left-[613px] top-[130px] text-left">
+              <h3 className="text-white text-[20px] font-bold leading-[30px] mb-4 w-[900px]">
                 Threat Researchers & Intelligence Analysts:
               </h3>
-              <p className="text-white text-[22px] leading-[34px] mb-4 w-[762px]">
-                For teams who hunt threats before they materialize, depth matters.
-                We work with researchers, CTI analysts and red teams to expose evolving
+              <p className="text-white text-[20px] leading-[32px] mb-4 w-[900px]">
+                For teams who hunt threats before they materialize, depth matters.<br />
+                We work with researchers, CTI analysts and red teams to expose evolving<br />
                 TTPs, adversary overlaps and the weak links others miss.
               </p>
-              <p className="text-white text-[22px] leading-[34px] w-[762px]">
+              <p className="text-white text-[20px] leading-[32px] w-[900px]">
                 This is not generic feed intel, it's targeted, mapped and high-fidelity.
               </p>
-            </div>*/}
+            </div>
           </div>
         </div>
       </section>
@@ -247,3 +228,135 @@ const WhoWeGuidePage: React.FC = () => {
 };
 
 export default WhoWeGuidePage;
+
+function AnimatedExecImagePair(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute right-[170px] top-[-10px] w-[460px] h-[420px] overflow-visible pointer-events-none"
+      aria-hidden
+    >
+      {/* Back image (b), lower-right and slightly smaller */}
+      <img
+        src="/images/Who We guide Page-1b.png"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : 'translate-x-28 opacity-0'}
+          transition-transform duration-[900ms] ease-out absolute left-[150px] top-[120px] w-[352px] h-[352px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+
+      {/* Front image (a), upper-left and above */}
+      <img
+        src="/images/Who We guide Page-1a.png"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}
+          transition-transform duration-[700ms] ease-out absolute left-[0px] top-[-20px] w-[376px] h-[376px] object-cover z-20 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+    </div>
+  );
+}
+
+function AnimatedOpsImagePair(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute left-[88px] top-[10px] w-[460px] h-[420px] overflow-visible pointer-events-none"
+      aria-hidden
+    >
+      {/* Back image (2b) */}
+      <img
+        src="/images/Who We guide Page-2b.png"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-16 opacity-0'}
+          transition-transform duration-[900ms] ease-out absolute left-[150px] top-[70px] w-[360px] h-[370px] object-cover z-30 drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]`}
+      />
+
+      {/* Front image (2a) */}
+      <img
+        src="/images/Who We guide Page-2a.png"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}
+          transition-transform duration-[700ms] ease-out absolute left-[20px] top-[-20px] w-[360px] h-[360px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+    </div>
+  );
+}
+
+function AnimatedResearchersImagePair(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute left-[88px] top-[10px] w-[460px] h-[420px] overflow-visible pointer-events-none"
+      aria-hidden
+    >
+      {/* Back image (3b) */}
+      <img
+        src="/images/Who We guide Page-3b.png"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-16 opacity-0'}
+          transition-transform duration-[900ms] ease-out absolute left-[150px] top-[90px] w-[360px] h-[370px] object-cover z-30 drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]`}
+      />
+
+      {/* Front image (3a) */}
+      <img
+        src="/images/Who We guide Page-3a.png"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}
+          transition-transform duration-[700ms] ease-out absolute left-[20px] top-[-20px] w-[360px] h-[360px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+    </div>
+  );
+}

@@ -33,42 +33,35 @@ const FeaturesSection: React.FC = () => {
 
   return (
     <section className="bg-gray-50 py-16">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex">
-          {/* Left Content */}
-          <div className="flex-1 pr-12">
-            <h2 className="text-blue-900 text-4xl font-bold leading-tight mb-6">
-              Original Intelligence, Built for Strategic Decision-Makers
-            </h2>
-            <p className="text-blue-900 text-xl leading-8">
-              Security Council delivers independent cybersecurity research and threat actor analysis tailored for CISOs, legal advisors, SOC leads and board members. Our intelligence helps organizations assess risk, understand adversary behavior and align security strategy with real-world threats.
-            </p>
-          </div>
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 sm:px-6 lg:flex-row">
+        <div className="lg:w-1/2">
+          <h2 className="mb-6 text-3xl font-bold leading-tight text-blue-900 sm:text-4xl">
+            Original Intelligence, Built for Strategic Decision-Makers
+          </h2>
+          <p className="text-base leading-7 text-blue-900 sm:text-lg">
+            Security Council delivers independent cybersecurity research and threat actor analysis tailored for CISOs, legal advisors, SOC leads and board members. Our intelligence helps organizations assess risk, understand adversary behavior and align security strategy with real-world threats.
+          </p>
+        </div>
 
-          {/* Right Features */}
-          <div className="flex-1 space-y-8">
-            {features.map((feature, index) => (
-              <div key={index} className="flex items-start space-x-9">
-                <div className="flex-shrink-0">
-                  {feature.icon}
-                </div>
-                <div className="space-y-5">
-                  <h3 className="text-blue-900 text-xl font-semibold leading-7">
-                    {feature.title}
-                  </h3>
-                  <a href="#" className="inline-flex items-center text-blue-700 font-semibold text-lg hover:text-blue-900">
-                    {feature.link}
-                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
-                    </svg>
-                  </a>
-                </div>
+        <div className="flex-1 space-y-8">
+          {features.map((feature) => (
+            <div key={feature.title} className="flex flex-col items-start gap-4 rounded-2xl bg-white p-6 shadow-sm sm:flex-row sm:gap-6">
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                {feature.icon}
               </div>
-            ))}
-            {/* Dividers */}
-            <div className="border-t-2 border-gray-300 my-6"></div>
-            <div className="border-t-2 border-gray-300 my-6"></div>
-          </div>
+              <div className="space-y-3">
+                <h3 className="text-lg font-semibold text-blue-900 sm:text-xl">
+                  {feature.title}
+                </h3>
+                <a href="#" className="inline-flex items-center text-sm font-semibold text-blue-700 transition-colors hover:text-blue-900 sm:text-base">
+                  {feature.link}
+                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

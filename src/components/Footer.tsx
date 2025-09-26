@@ -3,11 +3,10 @@ import React from 'react';
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-100">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Header with Logo and Social Media */}
-        <div className="flex justify-between items-center mb-16">
-          <h2 className="text-blue-900 text-3xl font-bold">Security Council</h2>
-          <div className="flex items-center space-x-3">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 py-14 sm:px-6">
+        <div className="flex flex-col gap-6 border-b border-[#D9D9D9] pb-8 lg:flex-row lg:items-center lg:justify-between">
+          <h2 className="text-2xl font-bold text-blue-900 sm:text-3xl">Security Council</h2>
+          <div className="flex flex-wrap items-center gap-3 text-blue-900">
             {/* YouTube */}
             <a href="#" className="text-blue-900 hover:text-blue-700">
               <svg className="w-9 h-9" fill="currentColor" viewBox="0 0 36 37">
@@ -46,78 +45,69 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Footer Navigation - 3 Columns */}
-        <div className="grid grid-cols-3 gap-8 mb-16">
-          {/* About Security Council */}
-          <div>
-            <h3 className="text-blue-900 text-xl font-bold mb-12">About Security Council</h3>
-            <div className="flex space-x-16">
-              <div className="space-y-4">
-                <h4 className="text-blue-900 text-sm font-medium">Who we guide</h4>
-              </div>
-              <div className="space-y-4">
-                <h4 className="text-blue-900 text-sm font-medium">Our Intelligence</h4>
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold text-blue-900">About Security Council</h3>
+            <ul className="space-y-3 text-sm text-blue-900">
+              <li><a className="hover:text-blue-700" href="#">Who we guide</a></li>
+              <li><a className="hover:text-blue-700" href="#">Our Intelligence</a></li>
+            </ul>
           </div>
 
-          {/* Get in Touch */}
-          <div>
-            <h3 className="text-blue-900 text-xl font-bold mb-12">Get in Touch</h3>
-            <div className="flex space-x-16">
-              {/* Contact Column */}
-              <div className="space-y-4">
-                <h4 className="text-blue-900 text-sm font-medium">Contact</h4>
-                <ul className="space-y-3 text-blue-900 text-sm font-light">
-                  <li><a href="#" className="hover:text-blue-700">Contact Us</a></li>
-                  <li><a href="#" className="hover:text-blue-700">Become a Client</a></li>
-                  <li><a href="#" className="hover:text-blue-700">Platform Access (Login)</a></li>
-                  <li><a href="#" className="hover:text-blue-700">Technical Support</a></li>
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold text-blue-900">Get in Touch</h3>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="space-y-3 text-sm text-blue-900">
+                <h4 className="font-semibold">Contact</h4>
+                <ul className="space-y-2">
+                  <li><a className="hover:text-blue-700" href="#">Contact Us</a></li>
+                  <li><a className="hover:text-blue-700" href="#">Become a Client</a></li>
+                  <li><a className="hover:text-blue-700" href="#">Platform Access (Login)</a></li>
+                  <li><a className="hover:text-blue-700" href="#">Technical Support</a></li>
                 </ul>
               </div>
-              
-              {/* Careers Column */}
-              <div className="space-y-4">
-                <h4 className="text-blue-900 text-sm font-medium">Careers</h4>
-                <ul className="space-y-3 text-blue-900 text-sm font-light">
-                  <li><a href="#" className="hover:text-blue-700">Why Security Council</a></li>
-                  <li><a href="#" className="hover:text-blue-700">Search Careers</a></li>
-                  <li><a href="#" className="hover:text-blue-700">Our Culture</a></li>
-                  <li><a href="#" className="hover:text-blue-700">Careers Blog</a></li>
+              <div className="space-y-3 text-sm text-blue-900">
+                <h4 className="font-semibold">Careers</h4>
+                <ul className="space-y-2">
+                  <li><a className="hover:text-blue-700" href="#">Why Security Council</a></li>
+                  <li><a className="hover:text-blue-700" href="#">Search Careers</a></li>
+                  <li><a className="hover:text-blue-700" href="#">Our Culture</a></li>
+                  <li><a className="hover:text-blue-700" href="#">Careers Blog</a></li>
                 </ul>
               </div>
             </div>
           </div>
 
-          {/* Latest Insights */}
-          <div>
-            <h3 className="text-blue-900 text-xl font-bold mb-12">Latest Insights</h3>
-            <div className="space-y-4">
-              <h4 className="text-blue-900 text-sm font-medium">Resources</h4>
-              <ul className="space-y-3 text-blue-900 text-sm font-light">
-                <li><a href="#" className="hover:text-blue-700">Featured Reports</a></li>
-                <li><a href="#" className="hover:text-blue-700">Blog & Briefings</a></li>
-                <li><a href="#" className="hover:text-blue-700">Newsletter</a></li>
-                <li><a href="#" className="hover:text-blue-700">Events</a></li>
-                <li><a href="#" className="hover:text-blue-700">Client Stories</a></li>
-              </ul>
-            </div>
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold text-blue-900">Resources</h3>
+            <ul className="space-y-2 text-sm text-blue-900">
+              <li><a className="hover:text-blue-700" href="#">Featured Reports</a></li>
+              <li><a className="hover:text-blue-700" href="#">Blog & Briefings</a></li>
+              <li><a className="hover:text-blue-700" href="#">Newsletter</a></li>
+              <li><a className="hover:text-blue-700" href="#">Events</a></li>
+              <li><a className="hover:text-blue-700" href="#">Client Stories</a></li>
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-white p-6 shadow-sm">
+            <h4 className="text-base font-semibold text-blue-900">Latest Insights</h4>
+            <p className="mt-3 text-sm text-blue-900/80">
+              Subscribe for curated intelligence briefs and executive updates.
+            </p>
+            <button className="mt-4 inline-flex items-center justify-center rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800">
+              Join the Briefing List
+            </button>
           </div>
         </div>
 
-        {/* Bottom Footer */}
-        <div className="flex justify-between items-center pt-6">
-          <div className="flex items-center space-x-6 text-gray-600 text-sm uppercase font-medium">
-            <a href="#" className="hover:text-blue-700">Policies</a>
-            <a href="#" className="hover:text-blue-700">Privacy Policy</a>
-            <a href="#" className="hover:text-blue-700">Terms of Use</a>
-            <a href="#" className="hover:text-blue-700">Ombuds</a>
-            <a href="#" className="hover:text-blue-700">Site Map</a>
-            <a href="#" className="hover:text-blue-700">Glossary</a>
+        <div className="flex flex-col gap-4 border-t border-[#D9D9D9] pt-6 text-xs text-gray-600 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
+          <div className="flex flex-wrap items-center gap-4">
+            {['Policies', 'Privacy Policy', 'Terms of Use', 'Ombuds', 'Site Map', 'Glossary'].map((item) => (
+              <a key={item} href="#" className="uppercase tracking-wide hover:text-blue-700">
+                {item}
+              </a>
+            ))}
           </div>
-          <div className="text-gray-600 text-sm">
-            © 2025 Security Council. All rights reserved.
-          </div>
+          <div>© 2025 Security Council. All rights reserved.</div>
         </div>
       </div>
     </footer>

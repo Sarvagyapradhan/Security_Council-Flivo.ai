@@ -36,44 +36,40 @@ const WhyChooseUs: React.FC = () => {
 
   return (
     <section className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex">
-          {/* Left Content */}
-          <div className="flex-1 pr-16">
-            <h2 className="text-blue-900 text-3xl font-bold mb-6">
-              Why Leading Organizations Choose Security Council ?
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-blue-900 sm:text-4xl">
+              Why Leading Organizations Choose Security Council
             </h2>
-            <h3 className="text-blue-900 text-2xl font-semibold mb-8">
+            <h3 className="text-xl font-semibold text-blue-900 sm:text-2xl">
               Independent. Analytical. Uncompromised.
             </h3>
-            <p className="text-blue-900 text-xl leading-8">
-              Security Council doesn't lead with assumption, we lead with research intelligence. We're an intelligence-first research authority, trusted by executive teams, national defense agencies and cybersecurity leaders to deliver clarity in moments where uncertainty is the norm.
-              <br /><br />
-              When visibility fails and dashboards go quiet, organizations turn to us, not just to protect them, but to expose what protection has missed.
+            <p className="text-base leading-7 text-blue-900 sm:text-lg">
+              Security Council doesn’t lead with assumption, we lead with research intelligence. We’re an intelligence-first research authority, trusted by executive teams, national defense agencies and cybersecurity leaders to deliver clarity in moments where uncertainty is the norm.
+            </p>
+            <p className="text-base leading-7 text-blue-900 sm:text-lg">
+              When visibility fails and dashboards go quiet, organizations turn to us—not just to protect them, but to expose what protection has missed.
             </p>
           </div>
 
-          {/* Right Features Grid */}
-          <div className="flex-1 space-y-6">
-            {features.map((feature, index) => (
-              <div key={index} className="flex items-center space-x-10">
-                {/* Image with Blue Background */}
-                <div className="relative flex-shrink-0">
-                  <div className="w-35 h-24 bg-blue-600 rounded-tr-2xl"></div>
-                  <div className="absolute top-1 left-1 w-35 h-24 bg-black/40 rounded-tr-2xl blur-sm"></div>
-                  <img 
-                    src={feature.image} 
+          <div className="space-y-8">
+            {features.map((feature) => (
+              <div key={feature.title} className="flex flex-col items-center gap-4 rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm sm:flex-row sm:items-start">
+                <div className="relative flex h-20 w-20 items-center justify-center">
+                  <div className="h-20 w-20 rounded-tr-2xl bg-blue-600" />
+                  <div className="absolute top-1 left-1 h-20 w-20 rounded-tr-2xl bg-black/40 blur-sm" />
+                  <img
+                    src={feature.image}
                     alt={feature.title}
-                    className="absolute top-0 left-3 w-35 h-24 object-cover rounded-tr-2xl"
+                    className="absolute inset-y-0 left-3 h-20 w-20 rounded-tr-2xl object-cover"
                   />
                 </div>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <h4 className="text-blue-900 text-lg font-semibold mb-1">
+                <div className="space-y-2 text-center sm:text-left">
+                  <h4 className="text-lg font-semibold text-blue-900">
                     {feature.title}
                   </h4>
-                  <p className="text-blue-900 text-lg leading-7">
+                  <p className="text-sm leading-6 text-blue-900 sm:text-base">
                     {feature.description}
                   </p>
                 </div>
@@ -82,28 +78,29 @@ const WhyChooseUs: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="mt-16 flex items-center justify-between">
-          <div className="flex-1 max-w-4xl">
-            <h3 className="text-blue-900 text-4xl font-bold mb-6">
-              Ready for Clarity Over Assumptions?
-            </h3>
-            <p className="text-blue-900 text-xl font-semibold leading-8 mb-8">
-              When standard visibility isn't enough and conventional approaches fall short, Security Council delivers the intelligence and evidence to act with confidence, exposing what others miss, discreetly and with full strategic context.
+        <div className="flex flex-col gap-6 rounded-2xl bg-blue-900 px-6 py-10 text-white lg:flex-row lg:items-center lg:justify-between">
+          <div className="space-y-4 lg:max-w-3xl">
+            <h3 className="text-2xl font-bold sm:text-3xl">Ready for Clarity Over Assumptions?</h3>
+            <p className="text-sm leading-6 sm:text-base">
+              When standard visibility isn’t enough and conventional approaches fall short, Security Council delivers the intelligence and evidence to act with confidence—exposing what others miss, discreetly and with full strategic context.
             </p>
-            <button className="bg-blue-700 text-white px-6 py-3 rounded text-sm font-semibold hover:bg-blue-800 flex items-center">
-              <span>Request a Confidential Briefing</span>
-              <svg className="ml-2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button className="inline-flex items-center justify-center gap-2 rounded border-2 border-white bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-[#002856]">
+              Request a Confidential Briefing
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </button>
           </div>
 
-          {/* Right Side Images */}
-          <div className="flex space-x-4">
-            <img src="/team/member-1.jpg" alt="Team member" className="w-24 h-60 object-cover border-2 border-white" />
-            <img src="/team/member-2.jpg" alt="Team member" className="w-24 h-60 object-cover border-2 border-white" />
-            <img src="/team/member-3.jpg" alt="Team member" className="w-24 h-60 object-cover border-2 border-white" />
+          <div className="flex justify-center gap-4">
+            {[1, 2, 3].map((member) => (
+              <img
+                key={member}
+                src={`/team/member-${member}.jpg`}
+                alt={`Team member ${member}`}
+                className="h-48 w-20 rounded-xl border-2 border-white object-cover"
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -16,8 +16,3 @@ body {
 .dropdown-open {
   z-index: 50;
 }
-
-/* Who We Guide hero background */
-.who-we-guide-hero {
-  background-image: url('/who-we-guide/backgrounds/hero-background.jpg');
-}

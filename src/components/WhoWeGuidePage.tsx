@@ -4,16 +4,64 @@ const WhoWeGuidePage: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[356px] bg-cover bg-center bg-no-repeat who-we-guide-hero">
-        <div className="absolute left-20 -top-10 w-[805px] h-[526px] bg-white/10 border-0 border-[#002856] flex items-center justify-center">
+      <section className="relative h-[220px] bg-cover bg-center bg-no-repeat overflow-hidden sm:h-[260px] md:h-[300px] xl:h-[356px] who-we-guide-hero">
+        <div className="absolute left-20 -top-10 hidden h-[526px] w-[805px] items-center justify-center bg-white/10 xl:flex">
           {/*<h1 className="text-[#002856] text-[56px] font-bold leading-[65px] w-[771px] text-left px-7">
             We Don't Serve the Industry. We Guide Its Decision-Makers.
           </h1>*/}
         </div>
       </section>
 
-      {/* Main Content Section */}
-      <section className="relative w-full h-[1870px] bg-white">
+      {/* Main Content Section - Mobile/Tablet */}
+      <section className="xl:hidden w-full bg-white">
+        {/* Intro */}
+        <div className="mx-auto max-w-4xl px-4 py-10 text-[#002856]">
+          <h2 className="mb-4 text-3xl font-bold leading-snug">Cyber Intelligence Designed for Decision-Makers</h2>
+          <p className="mb-4 text-lg leading-8">
+            <span className="font-bold">Security Council</span> works upstream, before the breach, before the alert, before the exposure. We guide those responsible for understanding risk at its root: the executives, analysts and security teams who make decisions when noise isn't an option.
+          </p>
+          <p className="text-lg leading-8">
+            This isn't just about services. It's about clarity, timing and knowing who needs to see what and when.
+          </p>
+        </div>
+
+        {/* Security Operations & Incident Response Teams (Mobile) */}
+        <MobileAudienceSection
+          title="Security Operations & Incident Response Teams:"
+          paragraphs={[
+            
+            'We provide them with upstream threat intelligence: actor patterns, breach entry paths and infrastructure clues that sharpen prioritization and accelerate containment.',
+            'When timelines collapse, our guidance delivers the signal before the chaos.',
+          ]}
+          images={{ frontSrc: '/images/Who We guide Page-2a.png', backSrc: '/images/Who We guide Page-2b.png' }}
+          imagePosition="left"
+        />
+
+        {/* Executives & Cybersecurity Leaders (Mobile) */}
+        <MobileAudienceSection
+          title="Executives & Cybersecurity Leaders:"
+          paragraphs={[
+            "They don't need dashboards. They need clarity. We guide CISOs, CTOs and senior security heads through exposures that aren't yet public and decisions that can't wait for alerts.",
+            'From zero-day visibility to adversary intent, our intelligence supports high-stakes risk judgment, not post-breach reaction.',
+          ]}
+          images={{ frontSrc: '/images/Who We guide Page-1a.png', backSrc: '/images/Who We guide Page-1b.png' }}
+          imagePosition="right"
+        />
+
+        {/* Threat Researchers & Intelligence Analysts (Mobile) */}
+        <MobileAudienceSection
+          title="Threat Researchers & Intelligence Analysts:"
+          paragraphs={[
+            'For teams who hunt threats before they materialize, depth matters. We work with researchers, CTI analysts and red teams to expose evolving TTPs, adversary overlaps and the weak links others miss.',
+            "This is not generic feed intel, it's targeted, mapped and high-fidelity.",
+          ]}
+          images={{ frontSrc: '/images/Who We guide Page-3a.png', backSrc: '/images/Who We guide Page-3b.png' }}
+          imagePosition="left"
+        />
+      </section>
+
+      {/* Main Content Section - Desktop */}
+      <section className="relative hidden w-full bg-white xl:block xl:h-[1870px]">
         {/* Background Blue Rectangles */}
         <div className="absolute right-[177px] top-[131px] w-[97px] h-[239px] bg-[#0050AC]"></div>
         <div className="absolute right-[63px] top-[182px] w-[97px] h-[239px] bg-[#0050AC]"></div>
@@ -136,8 +184,21 @@ const WhoWeGuidePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Reputational Stakes Section */}
-      <section className="relative h-[518px] bg-[#0050AC]">
+      {/* Reputational Stakes Section - Mobile */}
+      <section className="xl:hidden bg-[#0050AC] px-4 py-12">
+        <div className="mx-auto max-w-4xl text-white">
+          <h2 className="mb-6 text-3xl font-bold leading-snug">When the stakes are reputational, not just technical. Exposure becomes a matter of timing and trust.</h2>
+          <p className="mb-6 text-lg leading-8">We guide advisory boards, compliance heads and risk committees across industries where context matters most, from financial services and healthcare to critical infrastructure, SaaS, defense and more</p>
+          <p className="mb-8 text-lg font-semibold leading-8">This is intelligence that clarifies not just what happened, but what could.</p>
+          <button className="inline-flex w-full items-center justify-center gap-2 rounded border-2 border-white bg-white px-5 py-4 font-semibold text-[#002856] transition-colors hover:bg-gray-100 sm:w-auto">Request Private Assessment</button>
+          <div className="mt-8 overflow-hidden rounded-3xl border border-white/40 shadow-lg">
+            <img src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="Reputational stakes" className="h-full w-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      {/* Reputational Stakes Section - Desktop */}
+      <section className="relative hidden h-[518px] bg-[#0050AC] xl:block">
         <div className="absolute left-[110px] top-[43px]">
           <h2 className="text-white text-[41px] font-bold leading-[50px] mb-8 w-[1053px]">
             When the stakes are reputational, not just technical. Exposure becomes a matter
@@ -228,6 +289,81 @@ const WhoWeGuidePage: React.FC = () => {
 };
 
 export default WhoWeGuidePage;
+
+// Mobile helpers
+interface MobileAudienceSectionProps {
+  title: string;
+  paragraphs: string[];
+  images: { frontSrc: string; backSrc: string };
+  imagePosition: 'left' | 'right';
+}
+
+const MobileAudienceSection: React.FC<MobileAudienceSectionProps> = ({
+  title,
+  paragraphs,
+  images,
+  imagePosition,
+}) => {
+  const image = (
+    <div className="relative mx-auto flex w-full max-w-sm items-center justify-center">
+      <MobileImagePair frontSrc={images.frontSrc} backSrc={images.backSrc} />
+    </div>
+  );
+
+  return (
+    <article className="mx-auto mb-8 flex max-w-4xl flex-col gap-6 rounded-3xl bg-[#0050AC] p-6 text-white shadow-lg sm:p-8">
+      {imagePosition === 'left' && image}
+      <div className="space-y-4 text-base leading-7 sm:text-lg sm:leading-8">
+        <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
+        {paragraphs.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
+      </div>
+      {imagePosition === 'right' && image}
+    </article>
+  );
+};
+
+const MobileImagePair: React.FC<{ frontSrc: string; backSrc: string }> = ({ frontSrc, backSrc }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="relative h-48 w-40 sm:h-56 sm:w-48" aria-hidden>
+      <img
+        src={backSrc}
+        alt=""
+        loading="lazy"
+        className={`absolute left-6 top-8 h-36 w-24 rounded-2xl object-cover shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition-all duration-700 ease-out sm:h-44 sm:w-28 ${
+          inView ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+        }`}
+      />
+      <img
+        src={frontSrc}
+        alt=""
+        loading="lazy"
+        className={`absolute left-0 top-0 h-40 w-28 rounded-2xl border-2 border-white object-cover shadow-[0_16px_32px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out sm:h-48 sm:w-32 ${
+          inView ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+        }`}
+      />
+    </div>
+  );
+};
 
 function AnimatedExecImagePair(): React.ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+// (cards removed from header to avoid homepage layout changes)
+
 const CTIHighlights: React.FC = () => {
   const reports = [
     {
@@ -133,5 +135,40 @@ const CTIHighlights: React.FC = () => {
     </section>
   );
 };
+
+// Deprecated helper (kept commented to avoid re-add)
+/* const ArticleHighlightCard: React.FC<{ title: string; link: string; image: string }> = ({ title, link, image }) => (
+  <article className="group relative flex h-[420px] flex-col overflow-hidden rounded-3xl bg-black shadow-[0_25px_55px_rgba(0,0,0,0.35)] sm:h-[460px]">
+    <img
+      src={image}
+      alt={title}
+      loading="lazy"
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black/95" aria-hidden="true" />
+    <div className="relative flex flex-1 flex-col justify-between p-6 sm:p-7">
+      <div className="space-y-3">
+        <h3 className="text-lg font-semibold uppercase tracking-wide text-white/70 sm:text-xl">
+          {title}
+        </h3>
+        <button type="button" className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white">
+          {link}
+          <ArrowIcon />
+        </button>
+      </div>
+      <div className="space-y-4 pt-10">
+        <h3 className="text-2xl font-semibold leading-snug text-white sm:text-3xl">
+          {title}
+        </h3>
+        <button type="button" className="inline-flex items-center gap-2 text-base font-semibold text-white transition-colors hover:text-white/90">
+          {link}
+          <ArrowIcon />
+        </button>
+      </div>
+    </div>
+  </article>
+); */
+
+// icon removed to satisfy lint rules
 
 export default CTIHighlights;

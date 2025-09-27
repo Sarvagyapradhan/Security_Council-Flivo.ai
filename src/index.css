@@ -12,6 +12,8 @@ body {
   font-family: 'Inter', -apple-system, 'Roboto', 'Helvetica', sans-serif;
 }
 
+.who-we-guide-hero { background-image: url('/who-we-guide/backgrounds/hero-background.jpg'); background-size: cover; background-position: center; }
+
 /* Custom dropdown styles */
 .dropdown-open {
   z-index: 50;

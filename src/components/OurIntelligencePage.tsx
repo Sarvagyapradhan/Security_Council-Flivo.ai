@@ -121,31 +121,45 @@ const OurIntelligencePage: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className="relative mt-0 sm:mt-4 xl:mt-8">
 
-          <div className="relative mt-10 sm:mt-16 xl:mt-20">
-            <div className="relative grid grid-cols-1 gap-12 rounded-[36px] border border-white/15 bg-white/5 p-6 backdrop-blur-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[36px] after:border after:border-white/10 after:opacity-60 after:mix-blend-overlay sm:grid-cols-2 sm:gap-x-10 sm:gap-y-12 md:p-8 xl:grid-cols-3">
-            {focusAreas.map(({ title, description, image, alt }) => (
-              <article key={title} className="flex flex-col items-center text-center md:items-start md:text-left">
-                <div className="relative w-full max-w-[340px] md:max-w-none">
-                  <div className="relative mx-auto aspect-[250/170] w-full max-w-[340px] md:mx-0 md:max-w-sm">
-                    <div className="absolute inset-0 -translate-x-4 -translate-y-3 rounded-[24px] bg-[#021E3D]" />
-                    <div className="absolute inset-0 translate-x-1 translate-y-1 rounded-[24px] bg-[#074B98] shadow-[-12px_0_24px_rgba(0,0,0,0.25)]" />
-                    <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-[24px] bg-black/40 blur-sm" />
-                    <img
-                      src={image}
-                      alt={alt}
-                      className="absolute inset-0 translate-x-3 translate-y-3 rounded-[24px] object-cover"
-                    />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-gray-200">
+              {focusAreas.map(({ title, description, image, alt }) => (
+                <article
+                  key={title}
+                  className="flex flex-col items-center text-center md:items-start md:text-left h-full border-b border-r border-gray-200 p-8"
+                >
+                  {/* Image */}
+                  <div className="relative w-full max-w-[320px] md:max-w-none">
+                    <div className="relative mx-auto aspect-[250/170] w-full max-w-[320px] md:mx-0 md:max-w-sm">
+                      {/* Shadow layer */}
+                      <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-tr-[32px] rounded-bl-[32px] bg-black/40" />
+                      {/* Blue layer */}
+                      <div className="absolute inset-0 translate-x-1 translate-y-1 rounded-tr-[32px] rounded-bl-[32px] bg-[#0050AC]" />
+                      {/* Image */}
+                      <img
+                        src={image}
+                        alt={alt}
+                        className="relative z-10 w-full h-full object-cover rounded-tr-[32px] rounded-bl-[32px]"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="mt-8 flex flex-col gap-4 max-w-[34rem]">
-                  <h3 className="text-3xl font-bold leading-snug sm:text-[28px] md:text-[28px]">{title}</h3>
-                  <p className="text-base text-[#002856]/80 sm:text-base md:text-lg">{description}</p>
-                </div>
-              </article>
-            ))}
+
+                  {/* Text */}
+                  <div className="mt-6 flex flex-col gap-3 flex-1">
+                    <h3 className="text-lg font-bold leading-snug sm:text-xl md:text-[20px] text-[#002856]">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-[#002856]/80 sm:text-base md:text-[15px] leading-relaxed">
+                      {description}
+                    </p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
+
+
         </div>
       </section>
 

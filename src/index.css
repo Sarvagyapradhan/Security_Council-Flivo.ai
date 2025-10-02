@@ -18,3 +18,9 @@ body {
 .dropdown-open {
   z-index: 50;
 }
+
+/* Latest Insights hero background helper to avoid inline style lint warning */
+.li-hero-bg { background-image: url('/latest-insights/backgrounds/hero-background.jpg'); background-repeat: no-repeat; background-position: center center; background-size: cover; }
+
+/* Latest Insights: hero background (no inline styles) */
+.latest-insights-hero { background-image: url('/latest-insights/backgrounds/hero-background.jpg'); background-repeat: no-repeat; background-position: center center; background-size: cover; }

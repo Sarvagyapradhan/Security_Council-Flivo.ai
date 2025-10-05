@@ -70,7 +70,9 @@ const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        onContactClick && onContactClick();
+                        if (onContactClick) {
+                          onContactClick();
+                        }
                       }}
                     >
                       Contact Us

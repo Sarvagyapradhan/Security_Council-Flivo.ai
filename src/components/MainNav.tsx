@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface MainNavProps {
   currentPage: string;
   onNavigate: (page: string) => void;
+  isAtTop?: boolean;
 }
 
-const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate }) => {
+const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollYRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY || 0;
+      // Show only when near the very top or scrolling up
+      if (currentY < 10) {
+        setIsVisible(true);
+        lastScrollYRef.current = currentY;
+        return;
+      }
+
+      // scrolling down → hide; scrolling up → show
+      setIsVisible(currentY < lastScrollYRef.current);
+      lastScrollYRef.current = currentY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // no measurement needed; spacer uses fixed responsive heights
 
   const handleNavigateAndClose = (page: string) => {
     onNavigate(page);
@@ -14,7 +38,8 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate }) => {
   };
 
   return (
-    <nav className="border-b bg-white shadow-sm">
+    <>
+    <nav className={`fixed left-0 right-0 z-50 border-b bg-white shadow-sm transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'} ${isAtTop ? 'top-[36px] sm:top-[40px] lg:top-[44px]' : 'top-0'}`}>
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <button
           onClick={() => handleNavigateAndClose('home')}
@@ -85,6 +110,9 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate }) => {
         </div>
       )}
     </nav>
+    {/* Spacer to offset fixed nav height */}
+    <div className="h-[100px] sm:h-[108px] lg:h-[116px]" />
+    </>
   );
 };
 

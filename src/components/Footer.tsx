@@ -60,7 +60,25 @@ const Footer: React.FC = () => {
               <div className="space-y-3 text-sm text-blue-900">
                 <h4 className="font-semibold">Contact</h4>
                 <ul className="space-y-2">
+<<<<<<< Updated upstream
                   <li><a className="hover:text-blue-700" href="#">Contact Us</a></li>
+=======
+                  <li>
+                    <a
+                      className="hover:text-blue-700 cursor-pointer"
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (onContactClick) {
+                          onContactClick();
+                        }
+                      }}
+                    >
+                      
+                      Contact Us
+                    </a>
+                  </li>
+>>>>>>> Stashed changes
                   <li><a className="hover:text-blue-700" href="#">Become a Client</a></li>
                   <li><a className="hover:text-blue-700" href="#">Platform Access (Login)</a></li>
                   <li><a className="hover:text-blue-700" href="#">Technical Support</a></li>

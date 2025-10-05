@@ -85,9 +85,9 @@ const EventsPage: React.FC = () => {
   return (
     <div className="bg-white overflow-x-hidden">
       {/* Hero Section */}
-      <section className="min-h-[400px] md:h-[599px] bg-gradient-to-r from-transparent via-black/80 to-black/80 relative">
+      <section className="min-h-[400px] md:min-h-[660px] bg-gradient-to-r from-transparent via-black/80 to-black/80 relative">
         <div className="h-full md:absolute md:inset-0 hero-bg-overlay bg-center bg-cover">
-          <div className="relative md:absolute md:left-[113px] max-w-[771px] px-6 pt-12 pb-8 md:pb-0">
+          <div className="relative md:absolute md:left-[113px] max-w-[771px] px-6 pt-12 pb-8 md:pb-10">
             <h1 className="text-white font-bold text-3xl md:text-[56px] leading-tight md:leading-[65px] mb-4 md:mb-6">
               <span className="block">Cyber Leadership 2025:</span>
               <span className="block">Global Benchmark Summit</span>

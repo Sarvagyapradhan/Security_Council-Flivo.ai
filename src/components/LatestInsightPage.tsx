@@ -144,7 +144,7 @@ const LatestInsightPage: React.FC = () => {
         </div>
 
         {/* Insights Section Header and Sort Controls */}
-        <div className="px-4 sm:px-8 lg:px-0 flex items-center justify-between w-full lg:w-auto mt-6 sm:mt-8 lg:mt-0 lg:absolute lg:left-[84px] lg:top-[326px]">
+        <div className="w-full max-w-[1280px] px-4 sm:px-8 lg:px-0 mx-auto flex items-center justify-between mt-6 sm:mt-8 lg:mt-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-[326px] lg:z-40 z-40">
           <h3 className="text-2xl sm:text-3xl lg:text-[41px] font-bold text-[#002856]">Insights</h3>
 
           {/* Sort Dropdown */}
@@ -209,15 +209,17 @@ const LatestInsightPage: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {/* View More Button (moved to follow the grid) */}
+          <div className="flex items-center justify-center gap-3 mt-8 sm:mt-10">
+            <span className="text-sm sm:text-base lg:text-[18px] font-bold text-[#0000D3]">View More</span>
+            <svg className="w-4 h-4 text-[#0000D3]" viewBox="0 0 16 16" fill="none">
+              <path d="M6 3L11 8L6 13" stroke="#0000D3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
         </div>
 
-        {/* View More Button */}
-        <div className="flex items-center justify-center gap-3 mt-8 sm:mt-10 lg:mt-[72px]">
-          <span className="text-sm sm:text-base lg:text-[18px] font-bold text-[#0000D3]">View More</span>
-          <svg className="w-3 sm:w-4 h-4 sm:h-5 text-[#0000D3] transform rotate-90" viewBox="0 0 16 18" fill="none">
-            <path d="M8.70312 1.37305C8.70312 0.820762 8.25541 0.373047 7.70312 0.373047C7.15084 0.373047 6.70312 0.820762 6.70312 1.37305H7.70312H8.70312ZM6.99602 17.0802C7.38654 17.4707 8.01971 17.4707 8.41023 17.0802L14.7742 10.7162C15.1647 10.3257 15.1647 9.6925 14.7742 9.30198C14.3837 8.91145 13.7505 8.91145 13.36 9.30198L7.70312 14.9588L2.04627 9.30198C1.65575 8.91145 1.02258 8.91145 0.632057 9.30198C0.241533 9.6925 0.241533 10.3257 0.632057 10.7162L6.99602 17.0802ZM7.70312 1.37305H6.70312L6.70312 16.373H7.70312H8.70312L8.70312 1.37305H7.70312Z" fill="#0000D3"/>
-          </svg>
-        </div>
+        
       </div>
 
       {/* Newsletter Section */}

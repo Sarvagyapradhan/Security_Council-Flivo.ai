@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const WhoWeGuidePage: React.FC = () => {
+interface WhoWeGuidePageProps {
+  onNavigate?: (page: string) => void;
+}
+
+const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
   return (
     <>
       {/* Hero Section */}
@@ -162,7 +166,7 @@ const WhoWeGuidePage: React.FC = () => {
               <img className="absolute left-[21px] top-0 w-[276px] h-[313px] border-2 border-white" 
                 src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
               <div className="absolute left-[25px] top-1 w-[268px] h-[304px] bg-black/10 backdrop-blur-sm"></div>
-            </div>*/}
+            </div> */}
 
             {/* Left Images - Animated pair from Figma assets */}
             <AnimatedResearchersImagePair />
@@ -229,61 +233,72 @@ const WhoWeGuidePage: React.FC = () => {
           src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="" />
       </section>
 
-      {/* Featured Articles Section */}
-      {/*<section className="bg-white py-8">
-        <div className="flex justify-center px-12">
-          <div className="w-[1328px] h-[550px] flex items-start gap-8">
-             Article 1
-            <div className="w-[418px] h-[550px] bg-cover bg-center relative flex-shrink-0" 
+      {/* Featured Articles Section - Responsive */}
+      <section className="bg-white py-8 px-4 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {/* Article 1 */}
+            <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
               style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/ai-powered-threats.jpg')` }}>
-              <div className="absolute left-7 top-8 w-[362px] h-[202px] flex flex-col gap-0">
-                <h3 className="text-white text-[32px] font-bold leading-[38px]">
-                  The Rise of AI-Powered Threats:
-                  What Security Teams Need to Know
-                </h3>
-              </div>
-              <div className="absolute left-7 top-[200px] inline-flex items-center gap-2 w-[208px] h-4">
-                <span className="text-white text-[18px] font-bold w-[189px]">See Key Take-Aways</span>
-                <svg className="w-5 h-0 transform rotate-[-51.546deg] stroke-white stroke-[3px]" fill="none" viewBox="0 0 19 20">
-                  <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
-                </svg>
+              <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+                <div>
+                  <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+                    The Rise of AI-Powered Threats: What Security Teams Need to Know
+                  </h3>
+                  <button 
+                    onClick={() => onNavigate?.('ai-threats')}
+                    className="inline-flex items-center gap-2 self-start text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg cursor-pointer">
+                    <span>See Key Take-Aways</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 19 20">
+                      <path stroke="currentColor" strokeWidth="3" d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
-             Article 2
-            <div className="w-[417px] h-[550px] bg-cover bg-center relative flex-shrink-0" 
+            {/* Article 2 */}
+            <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
               style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/emerging-threat-actor.jpg')` }}>
-              <div className="absolute left-7 top-8 w-[362px] h-[114px] flex items-center">
-                <h3 className="text-white text-[32px] font-bold leading-[38px] w-[349px]">
-                  How CISOs Can Respond to Emerging Threat Actor Activity in Under 24 Hours
-                </h3>
-              </div>
-              <div className="absolute left-7 top-[200px] flex items-center gap-2 w-[163px] h-4">
-                <span className="text-white text-[18px] font-bold">Download Guide</span>
-                <svg className="w-5 h-0 transform rotate-[-51.546deg] stroke-white stroke-[3px]" fill="none" viewBox="0 0 19 20">
-                  <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
-                </svg>
+              <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+                <div>
+                  <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+                    How CISOs Can Respond to Emerging Threat Actor Activity in Under 24 Hours
+                  </h3>
+                  <button 
+                    onClick={() => onNavigate?.('threat-actor')}
+                    className="inline-flex items-center gap-2 self-start text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg cursor-pointer">
+                    <span>Download Guide</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 19 20">
+                      <path stroke="currentColor" strokeWidth="3" d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
-             Article 3
-            <div className="w-[418px] h-[550px] bg-cover bg-center relative flex-shrink-0" 
+            {/* Article 3 */}
+            <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
               style={{ backgroundImage: `url('/who-we-guide/articles/threat-intelligence-methodology.jpg')` }}>
-              <div className="absolute left-7 top-8 w-[362px] h-[114px] flex flex-col items-start gap-6">
-                <h3 className="text-white text-[32px] font-bold leading-[38px] w-[362px]">
-                  Where Threat Intelligence Turns Into Real-World Action
-                </h3>
-              </div>
-              <div className="absolute left-7 top-[200px] flex items-center gap-2">
-                <span className="text-white text-[18px] font-bold w-[196px]">Join Our Next Briefing</span>
-                <svg className="w-5 h-0 transform rotate-[-51.546deg] stroke-white stroke-[3px]" fill="none" viewBox="0 0 19 20">
-                  <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
-                </svg>
+              <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+                <div>
+                  <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+                    Where Threat Intelligence Turns Into Real-World Action
+                  </h3>
+                  <button 
+                    onClick={() => onNavigate?.('threat-intelligence')}
+                    className="inline-flex items-center gap-2 self-start text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg cursor-pointer">
+                    <span>Join Our Next Briefing</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 19 20">
+                      <path stroke="currentColor" strokeWidth="3" d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>*/}
+      </section>
     </>
   );
 };

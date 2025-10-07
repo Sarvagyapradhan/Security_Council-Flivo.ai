@@ -14,6 +14,17 @@ import WhoWeGuidePage from './components/WhoWeGuidePage';
 import OurIntelligencePage from './components/OurIntelligencePage';
 import LatestInsightPage from './components/LatestInsightPage';
 import EventsPage from './components/EventsPage';
+import AIThreatsPage from './components/AIThreatsPage';
+import ThreatActorPage from './components/ThreatActorPage';
+import Insight1Page from './components/insights/Insight1Page';
+import Insight2Page from './components/insights/Insight2Page';
+import Insight3Page from './components/insights/Insight3Page';
+import Insight4Page from './components/insights/Insight4Page';
+import Insight5Page from './components/insights/Insight5Page';
+import Insight6Page from './components/insights/Insight6Page';
+import Insight7Page from './components/insights/Insight7Page';
+import Insight8Page from './components/insights/Insight8Page';
+import ThreatIntelligencePage from './components/ThreatIntelligencePage';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -54,15 +65,36 @@ const App = () => {
             case 'who-we-guide':
                 return (
                     <>
-                        <WhoWeGuidePage />
-                        <CTIHighlights />
+                        <WhoWeGuidePage onNavigate={handleNavigate} />
                         <FeaturesSection />
                     </>
                 );
             case 'latest-insight':
-                return <LatestInsightPage />;
+                return <LatestInsightPage onNavigate={handleNavigate} />;
+            case 'insight-1':
+                return <Insight1Page />;
+            case 'insight-2':
+                return <Insight2Page />;
+            case 'insight-3':
+                return <Insight3Page />;
+            case 'insight-4':
+                return <Insight4Page />;
+            case 'insight-5':
+                return <Insight5Page />;
+            case 'insight-6':
+                return <Insight6Page />;
+            case 'insight-7':
+                return <Insight7Page />;
+            case 'insight-8':
+                return <Insight8Page />;
             case 'events':
                 return <EventsPage />;
+            case 'ai-threats':
+                return <AIThreatsPage />;
+            case 'threat-actor':
+                return <ThreatActorPage />;
+            case 'threat-intelligence':
+                return <ThreatIntelligencePage />;
             default:
                 return renderHomePage();
         }

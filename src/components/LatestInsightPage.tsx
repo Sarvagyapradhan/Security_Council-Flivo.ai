@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-const LatestInsightPage: React.FC = () => {
+interface LatestInsightPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
 
   const researchData = [
@@ -200,7 +204,10 @@ const LatestInsightPage: React.FC = () => {
                   <span className="text-sm sm:text-base lg:text-[16px] text-[#002856]/56 ml-1">{item.source}</span>
                 </div>
 
-                <button className="flex items-center gap-2 text-sm sm:text-base lg:text-[18px] font-bold text-[#0000D3] hover:text-blue-800 transition-colors mt-auto">
+                <button
+                  className="flex items-center gap-2 text-sm sm:text-base lg:text-[18px] font-bold text-[#0000D3] hover:text-blue-800 transition-colors mt-auto"
+                  onClick={() => onNavigate?.(`insight-${index + 1}`)}
+                >
                   {item.link}
                   <svg className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" viewBox="0 0 13 14" fill="none">
                     <path d="M0.216892 12.2514C-0.126566 12.6839 -0.0543845 13.3129 0.378114 13.6564C0.810612 13.9999 1.43965 13.9277 1.78311 13.4952L1 12.8733L0.216892 12.2514ZM11.3218 1.01267C11.2588 0.46399 10.763 0.0702337 10.2143 0.133195L1.27296 1.1592C0.72428 1.22216 0.330524 1.718 0.393485 2.26668C0.456446 2.81537 0.952282 3.20913 1.50097 3.14616L9.44881 2.23416L10.3608 10.182C10.4238 10.7307 10.9196 11.1244 11.4683 11.0615C12.017 10.9985 12.4107 10.5027 12.3478 9.954L11.3218 1.01267ZM1 12.8733L1.78311 13.4952L11.1114 1.74856L10.3283 1.12668L9.54518 0.504789L0.216892 12.2514L1 12.8733Z" fill="#0000D3"/>

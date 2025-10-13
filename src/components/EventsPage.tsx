@@ -209,7 +209,16 @@ const EventsPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12 mb-8">
             {events.map((event) => (
               <div key={event.id} className="w-full max-w-sm mx-auto md:max-w-none">
-                <EventCard event={event} />
+                <EventCard
+                  event={event}
+                  showViewButton={event.id === 1}
+                  onViewResearch={() => {
+                    const imagePath = '/images/events/event-card.jpg';
+                    const targetUrl = `/research?image=${encodeURIComponent(imagePath)}`;
+                    window.history.pushState({}, '', targetUrl);
+                    window.dispatchEvent(new Event('popstate'));
+                  }}
+                />
               </div>
             ))}
           </div>

@@ -25,6 +25,8 @@ import Insight6Page from './components/insights/Insight6Page';
 import Insight7Page from './components/insights/Insight7Page';
 import Insight8Page from './components/insights/Insight8Page';
 import ThreatIntelligencePage from './components/ThreatIntelligencePage';
+import ResearchPage from './components/ResearchPage';
+import SpeakersPage from './components/SpeakersPage';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -45,6 +47,18 @@ const App = () => {
             window.scrollTo({ top: 0, behavior: 'auto' });
         }
     };
+
+    // Sync pseudo-route from URL path for deep links and programmatic navigations
+    useEffect(() => {
+        const syncFromLocation = () => {
+            const path = (typeof window !== 'undefined' ? window.location.pathname : '/') || '/';
+            const page = path.replace(/^\//, '') || 'home';
+            setCurrentPage(page);
+        };
+        syncFromLocation();
+        window.addEventListener('popstate', syncFromLocation);
+        return () => window.removeEventListener('popstate', syncFromLocation);
+    }, []);
 
     const renderHomePage = () => (
         <>
@@ -95,6 +109,10 @@ const App = () => {
                 return <ThreatActorPage />;
             case 'threat-intelligence':
                 return <ThreatIntelligencePage />;
+            case 'research':
+                return <ResearchPage />;
+            case 'speakers':
+                return <SpeakersPage />;
             default:
                 return renderHomePage();
         }
@@ -102,15 +120,23 @@ const App = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            <UtilityNav isAtTop={isAtTop} />
-            <MainNav currentPage={currentPage} onNavigate={handleNavigate} isAtTop={isAtTop} />
+            {currentPage !== 'research' && currentPage !== 'speakers' && (
+                <>
+                    <UtilityNav isAtTop={isAtTop} />
+                    <MainNav currentPage={currentPage} onNavigate={handleNavigate} isAtTop={isAtTop} />
+                </>
+            )}
             {renderCurrentPage()}
-            <Footer onContactClick={() => setIsContactOpen(true)} />
-            <ContactPopup
-                isOpen={isContactOpen}
-                onClose={() => setIsContactOpen(false)}
-                showTrigger={false}
-            />
+            {currentPage !== 'research' && currentPage !== 'speakers' && (
+                <>
+                    <Footer onContactClick={() => setIsContactOpen(true)} />
+                    <ContactPopup
+                        isOpen={isContactOpen}
+                        onClose={() => setIsContactOpen(false)}
+                        showTrigger={false}
+                    />
+                </>
+            )}
         </div>
     );
 };

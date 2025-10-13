@@ -10,9 +10,11 @@ interface Event {
 
 interface EventCardProps {
   event: Event;
+  showViewButton?: boolean;
+  onViewResearch?: () => void;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ event }) => {
+const EventCard: React.FC<EventCardProps> = ({ event, showViewButton = false, onViewResearch }) => {
   return (
     <div className="w-[419px] h-[550px] relative">
       {/* Main Event Image */}
@@ -44,9 +46,14 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       </div>
 
       {/* CTA Button */}
-      <button className="absolute left-[107px] bottom-2 flex items-center gap-2 bg-[#0000D3] text-white px-6 py-6 rounded-md hover:bg-blue-800 transition-colors">
-        <span className="font-bold text-[24px] leading-[26px]">View Latest Research</span>
-      </button>
+      {showViewButton && (
+        <button
+          className="absolute left-[107px] bottom-2 flex items-center gap-2 bg-[#0000D3] text-white px-6 py-6 rounded-md hover:bg-blue-800 transition-colors"
+          onClick={onViewResearch}
+        >
+          <span className="font-bold text-[24px] leading-[26px]">View Latest Research</span>
+        </button>
+      )}
     </div>
   );
 };

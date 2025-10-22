@@ -1,0 +1,51 @@
+name: Deploy to Hostinger (Backend + Frontend)
+
+on:
+  push:
+    branches: [ deploy ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into server and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -e
+            # Change this path to your app directory on Hostinger
+            APP_DIR=/var/www/security-council
+            if [ ! -d "$APP_DIR" ]; then
+              echo "App directory $APP_DIR does not exist" >&2
+              exit 1
+            fi
+            cd "$APP_DIR"
+
+            # Ensure git remote points to your repo and deploy branch is tracked
+            git fetch --all --prune
+            git checkout deploy
+            git reset --hard origin/deploy
+
+            # Install production deps and build frontend
+            npm ci --omit=dev
+            npm run build
+
+            # Start or reload the Node server (requires pm2 installed globally)
+            if command -v pm2 >/dev/null 2>&1; then
+              pm2 describe security-council >/dev/null 2>&1 \
+                && pm2 reload security-council \
+                || pm2 start server/index.js --name security-council
+              pm2 save || true
+            else
+              # Fallback: simple Node. Adjust to your process manager if needed
+              # Caution: this will not daemonize; prefer pm2 on production
+              node server/index.js &
+            fi
+
+
+

@@ -27,6 +27,7 @@ import Insight8Page from './components/insights/Insight8Page';
 import ThreatIntelligencePage from './components/ThreatIntelligencePage';
 import ResearchPage from './components/ResearchPage';
 import SpeakersPage from './components/SpeakersPage';
+import AgendaPage from './components/AgendaPage';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -113,6 +114,8 @@ const App = () => {
                 return <ResearchPage />;
             case 'speakers':
                 return <SpeakersPage />;
+            case 'agenda':
+                return <AgendaPage />;
             default:
                 return renderHomePage();
         }
@@ -120,14 +123,14 @@ const App = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            {currentPage !== 'research' && currentPage !== 'speakers' && (
+            {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
                     <UtilityNav isAtTop={isAtTop} />
                     <MainNav currentPage={currentPage} onNavigate={handleNavigate} isAtTop={isAtTop} />
                 </>
             )}
             {renderCurrentPage()}
-            {currentPage !== 'research' && currentPage !== 'speakers' && (
+            {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
                     <Footer onContactClick={() => setIsContactOpen(true)} />
                     <ContactPopup

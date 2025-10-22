@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from './Footer';
+import ContactPopup from './ContactPopup';
+
+const navigateTo = (path: string) => {
+  if (typeof window !== 'undefined') {
+    window.history.pushState({}, '', path);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }
+};
 
 const ResearchPage: React.FC = () => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Page-specific navbar */}
@@ -12,9 +21,13 @@ const ResearchPage: React.FC = () => {
             <span className="text-[#002856]/70 text-xs font-semibold tracking-wide">Events</span>
           </div>
           <div className="hidden items-center gap-8 md:flex">
-            <a className="text-sm font-medium text-[#002856] hover:text-blue-700 border-b-2 border-[#0000D3]" href="#">Overview</a>
-            <a className="text-sm font-medium text-[#002856] hover:text-blue-700" href="#" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/speakers'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Speakers</a>
-            <a className="text-sm font-medium text-[#002856] hover:text-blue-700" href="#">Agenda</a>
+            <span className="text-sm font-medium text-[#002856] border-b-2 border-[#0000D3] pb-1">Overview</span>
+            <button className="text-sm font-medium text-[#002856] transition-colors hover:text-blue-700" onClick={() => navigateTo('/speakers')}>
+              Speakers
+            </button>
+            <button className="text-sm font-medium text-[#002856] transition-colors hover:text-blue-700" onClick={() => navigateTo('/agenda')}>
+              Agenda
+            </button>
           </div>
           <button className="inline-flex items-center gap-2 rounded bg-[#0000D3] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-800">
             Register Now
@@ -364,7 +377,12 @@ const ResearchPage: React.FC = () => {
         </div>
       </section>
 
-      <Footer />
+      <Footer onContactClick={() => setIsContactOpen(true)} />
+      <ContactPopup
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        showTrigger={false}
+      />
     </div>
   );
 };

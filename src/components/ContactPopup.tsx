@@ -10,6 +10,11 @@ type ContactPopupProps = {
 
 const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onOpen, onClose, showTrigger = true }) => {
   const [localOpen, setLocalOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [companyName, setCompanyName] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitMessage, setSubmitMessage] = useState<string>("");
   const open = typeof isOpen === "boolean" ? isOpen : localOpen;
 
   const handleOpen = () => {
@@ -76,9 +81,41 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onOpen, onClose, sh
                   </p>
 
                   <form
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                       e.preventDefault();
-                      alert("Form submitted!");
+                      setSubmitMessage("");
+                      setIsSubmitting(true);
+                      try {
+                        const base = import.meta.env.VITE_API_BASE || "";
+                        const res = await fetch(`${base}/api/contact`, {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            email,
+                            companyName,
+                            phoneNumber,
+                            phoneCountryCode: "+91",
+                          }),
+                        });
+                        if (!res.ok) {
+                          const data = await res.json().catch(() => ({}));
+                          throw new Error(data?.message || "Submission failed");
+                        }
+                        setSubmitMessage("Thanks! We will contact you shortly.");
+                        setEmail("");
+                        setCompanyName("");
+                        setPhoneNumber("");
+                        // Optionally close after a short delay
+                        setTimeout(() => {
+                          handleClose();
+                          setSubmitMessage("");
+                        }, 1200);
+                      } catch (err: unknown) {
+                        const message = err instanceof Error && err.message ? err.message : "Something went wrong. Please try again.";
+                        setSubmitMessage(message);
+                      } finally {
+                        setIsSubmitting(false);
+                      }
                     }}
                     className="space-y-4"
                   >
@@ -86,12 +123,16 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onOpen, onClose, sh
                       type="email"
                       placeholder="Enter your email ID"
                       className="w-full p-3 rounded-md bg-white text-gray-900 placeholder:text-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                     <input
                       type="text"
                       placeholder="Enter your Company Name"
                       className="w-full p-3 rounded-md bg-white text-gray-900 placeholder:text-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
                       required
                     />
                     <div className="flex shadow-sm rounded-md overflow-hidden">
@@ -102,15 +143,21 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onOpen, onClose, sh
                         type="tel"
                         placeholder="Phone No"
                         className="w-full p-3 bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                         required
                       />
                     </div>
+                    {submitMessage && (
+                      <p className="text-sm text-blue-50">{submitMessage}</p>
+                    )}
                     <div className="pt-2">
                       <button
                         type="submit"
-                        className="inline-flex bg-white text-[#0050AC] font-semibold px-5 py-2.5 rounded-md hover:bg-gray-100 transition text-sm"
+                        disabled={isSubmitting}
+                        className="inline-flex bg-white text-[#0050AC] font-semibold px-5 py-2.5 rounded-md hover:bg-gray-100 transition text-sm disabled:opacity-70"
                       >
-                        Contact Us
+                        {isSubmitting ? "Submitting..." : "Contact Us"}
                         <span className="ml-2">→</span>
                       </button>
                     </div>

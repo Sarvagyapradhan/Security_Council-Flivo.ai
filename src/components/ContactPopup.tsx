@@ -110,8 +110,9 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onOpen, onClose, sh
                           handleClose();
                           setSubmitMessage("");
                         }, 1200);
-                      } catch (err: any) {
-                        setSubmitMessage(err?.message || "Something went wrong. Please try again.");
+                      } catch (err: unknown) {
+                        const message = err instanceof Error && err.message ? err.message : "Something went wrong. Please try again.";
+                        setSubmitMessage(message);
                       } finally {
                         setIsSubmitting(false);
                       }

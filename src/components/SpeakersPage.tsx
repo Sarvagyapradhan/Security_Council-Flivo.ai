@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from './Footer';
+import ContactPopup from './ContactPopup';
+
+const navigateTo = (path: string) => {
+  if (typeof window !== 'undefined') {
+    window.history.pushState({}, '', path);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }
+};
 
 const SpeakersPage: React.FC = () => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Page-specific navbar */}
@@ -12,9 +21,15 @@ const SpeakersPage: React.FC = () => {
             <span className="text-[#002856]/70 text-xs font-semibold tracking-wide">Events</span>
           </div>
           <div className="hidden items-center gap-8 md:flex">
-            <a className="text-sm font-medium text-[#002856] hover:text-blue-700" href="#" onClick={(e) => { e.preventDefault(); window.history.back(); }}>Overview</a>
-            <a className="text-sm font-medium text-[#002856] hover:text-blue-700 border-b-2 border-[#0000D3]" href="#">Speakers</a>
-            <a className="text-sm font-medium text-[#002856] hover:text-blue-700" href="#">Agenda</a>
+            <button className="text-sm font-medium text-[#002856] transition-colors hover:text-blue-700" onClick={() => navigateTo('/research')}>
+              Overview
+            </button>
+            <span className="text-sm font-medium text-[#002856] border-b-2 border-[#0000D3] pb-1">
+              Speakers
+            </span>
+            <button className="text-sm font-medium text-[#002856] transition-colors hover:text-blue-700" onClick={() => navigateTo('/agenda')}>
+              Agenda
+            </button>
           </div>
           <button className="inline-flex items-center gap-2 rounded bg-[#0000D3] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-800">
             Register Now
@@ -40,7 +55,7 @@ const SpeakersPage: React.FC = () => {
           <div className="mx-auto w-full max-w-[1400px] px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-[57%_43%] gap-8 items-center">
               {/* Left Content */}
-              <div className="text-white min-w-0 pr-8">
+              <div className="text-white min-w-0 pr-0 lg:pr-8">
                 {/* Date */}
                 <div className="flex items-center gap-2 mb-3">
                   <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -60,18 +75,19 @@ const SpeakersPage: React.FC = () => {
                 </div>
 
                 {/* Title */}
-                <h1 className="font-bold leading-[1.2] text-[48px] lg:text-[56px] xl:text-[60px] 2xl:text-[64px] mb-6 whitespace-normal">
-                  <span className="inline-block whitespace-nowrap">Cyber Leadership 2025:</span><br />
-                  <span className="inline-block whitespace-nowrap">Global Benchmark Summit</span>
+                <h1 className="font-bold leading-[1.18] text-[34px] sm:text-[42px] lg:text-[56px] xl:text-[60px] 2xl:text-[64px] mb-5 sm:mb-6">
+                  <span className="block lg:inline-block lg:whitespace-nowrap">Cyber Leadership 2025:</span>
+                  <br className="hidden lg:block" />
+                  <span className="block lg:inline-block lg:whitespace-nowrap">Global Benchmark Summit</span>
                 </h1>
 
                 {/* Description */}
-                <p className="text-[17px] lg:text-[18px] leading-[1.65] mb-8 max-w-[650px]">
+                <p className="text-[15px] sm:text-[16px] lg:text-[18px] leading-[1.68] mb-7 sm:mb-8 max-w-[650px]">
                   Unite with the world's foremost cyber leaders, intelligence experts and policy architects to define the standards, strategies and global benchmarks shaping the future of cybersecurity. From national defense to enterprise resilience, this is where leadership meets intelligence.
                 </p>
 
                 {/* Register Button */}
-                <button className="inline-flex items-center gap-2 rounded-[4px] bg-[#0000D3] px-6 py-3 text-[15px] font-bold text-white transition-all hover:bg-blue-800">
+                <button className="inline-flex items-center gap-2 rounded-[4px] bg-[#0000D3] px-5 py-[10px] text-[14px] sm:text-[15px] font-bold text-white transition-all hover:bg-blue-800">
                   Register Now
                   <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 15L15 5M15 5H7M15 5V13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -157,12 +173,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title">Keynote: <span className="font-bold">Global Cyber Leadership in 2025</span></div>
-                </div>
-                <div className="speaker-description">
-                  20+ years in enterprise cybersecurity leadership, overseeing Microsoft's global security posture and strategic defense initiatives. Frequent keynote speaker at RSA, Black Hat, and World Economic Forum.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title">Keynote: <span className="font-bold">Global Cyber Leadership in 2025</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    20+ years in enterprise cybersecurity leadership, overseeing Microsoft's global security posture and strategic defense initiatives. Frequent keynote speaker at RSA, Black Hat, and World Economic Forum.
+                  </div>
                 </div>
               </div>
             </div>
@@ -185,13 +204,16 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title">Fireside Chat: <span className="font-bold">Future of Cyber Regulations & Compliance</span></div>
-                  <div className="session-title mt-2">Closing Keynote: <span className="font-bold">The Next Decade of Cyber Leadership</span></div>
-                </div>
-                <div className="speaker-description">
-                  Renowned cybersecurity strategist specializing in critical infrastructure defense. Holds a Ph.D. in Information Security and has advised governments on national cyber policy.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title">Fireside Chat: <span className="font-bold">Future of Cyber Regulations & Compliance</span></div>
+                    <div className="session-title mt-2">Closing Keynote: <span className="font-bold">The Next Decade of Cyber Leadership</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Renowned cybersecurity strategist specializing in critical infrastructure defense. Holds a Ph.D. in Information Security and has advised governments on national cyber policy.
+                  </div>
                 </div>
               </div>
             </div>
@@ -214,12 +236,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title"><span className="font-bold">The Evolving Threat Landscape: Insights from 200+ Leaders</span></div>
-                </div>
-                <div className="speaker-description">
-                  Leader in enterprise security solutions, with extensive experience in managing global threat response teams and designing AI-driven cyber resilience frameworks.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title"><span className="font-bold">The Evolving Threat Landscape: Insights from 200+ Leaders</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Leader in enterprise security solutions, with extensive experience in managing global threat response teams and designing AI-driven cyber resilience frameworks.
+                  </div>
                 </div>
               </div>
             </div>
@@ -242,12 +267,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title">Executive Panel: <span className="font-bold">The CEO-CISO Partnership for Resilient Enterprises</span></div>
-                </div>
-                <div className="speaker-description">
-                  Cyber defense innovator focusing on AI-powered incident detection and response systems. Formerly led security operations for Fortune 100 companies.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title">Executive Panel: <span className="font-bold">The CEO-CISO Partnership for Resilient Enterprises</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Cyber defense innovator focusing on AI-powered incident detection and response systems. Formerly led security operations for Fortune 100 companies.
+                  </div>
                 </div>
               </div>
             </div>
@@ -270,13 +298,16 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title"><span className="font-bold">Zero Trust in Large Enterprises</span></div>
-                  <div className="session-title mt-2">Executive Panel: <span className="font-bold">The CEO-CISO Partnership for Resilient Enterprises</span></div>
-                </div>
-                <div className="speaker-description">
-                  Cloud security specialist with expertise in Zero Trust architecture. Works with Fortune 500 enterprises to design next-gen security frameworks.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title"><span className="font-bold">Zero Trust in Large Enterprises</span></div>
+                    <div className="session-title mt-2">Executive Panel: <span className="font-bold">The CEO-CISO Partnership for Resilient Enterprises</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Cloud security specialist with expertise in Zero Trust architecture. Works with Fortune 500 enterprises to design next-gen security frameworks.
+                  </div>
                 </div>
               </div>
             </div>
@@ -299,12 +330,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title"><span className="font-bold">AI-Driven Cyber Defense Strategies</span></div>
-                </div>
-                <div className="speaker-description">
-                  Oversees global cyber risk strategy for Google Cloud, integrating AI and machine learning to combat emerging threats at scale.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title"><span className="font-bold">AI-Driven Cyber Defense Strategies</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Oversees global cyber risk strategy for Google Cloud, integrating AI and machine learning to combat emerging threats at scale.
+                  </div>
                 </div>
               </div>
             </div>
@@ -327,12 +361,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title"><span className="font-bold">Cybersecurity ROI: Winning Boardroom Support</span></div>
-                </div>
-                <div className="speaker-description">
-                  Veteran cybersecurity leader with deep expertise in national security, critical infrastructure protection and public-private cyber partnerships.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title"><span className="font-bold">Cybersecurity ROI: Winning Boardroom Support</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Veteran cybersecurity leader with deep expertise in national security, critical infrastructure protection and public-private cyber partnerships.
+                  </div>
                 </div>
               </div>
             </div>
@@ -355,12 +392,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title"><span className="font-bold">Cybersecurity ROI: Winning Boardroom Support</span></div>
-                </div>
-                <div className="speaker-description">
-                  Leads global threat intelligence research, specializing in nation-state cyberattack attribution and dark web monitoring.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title"><span className="font-bold">Cybersecurity ROI: Winning Boardroom Support</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Leads global threat intelligence research, specializing in nation-state cyberattack attribution and dark web monitoring.
+                  </div>
                 </div>
               </div>
             </div>
@@ -382,12 +422,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title">Fireside Chat: <span className="font-bold">Future of Cyber Regulations & Compliance</span></div>
-                </div>
-                <div className="speaker-description">
-                  International speaker and advocate for diversity in cybersecurity leadership. Known for building cross-border security collaborations.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title">Fireside Chat: <span className="font-bold">Future of Cyber Regulations & Compliance</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    International speaker and advocate for diversity in cybersecurity leadership. Known for building cross-border security collaborations.
+                  </div>
                 </div>
               </div>
             </div>
@@ -410,12 +453,15 @@ const SpeakersPage: React.FC = () => {
                 </div>
               </div>
               <div className="speaker-card-right">
-                <div className="speaker-session-info">
-                  <div className="session-label">Session:</div>
-                  <div className="session-title">Executive Panel: <span className="font-bold">The CEO-CISO Partnership for Resilient Enterprises</span></div>
-                </div>
-                <div className="speaker-description">
-                  Boardroom cyber strategy advisor, helping CEOs and CISOs align cybersecurity with overall business growth and governance goals.
+                <div className="speaker-card-detail">
+                  <div className="speaker-card-header">
+                    <div className="session-label">Session:</div>
+                    <div className="session-title">Executive Panel: <span className="font-bold">The CEO-CISO Partnership for Resilient Enterprises</span></div>
+                  </div>
+                  <div className="speaker-card-divider" />
+                  <div className="speaker-card-body">
+                    Boardroom cyber strategy advisor, helping CEOs and CISOs align cybersecurity with overall business growth and governance goals.
+                  </div>
                 </div>
               </div>
             </div>
@@ -424,7 +470,12 @@ const SpeakersPage: React.FC = () => {
         </div>
       </section>
 
-      <Footer />
+      <Footer onContactClick={() => setIsContactOpen(true)} />
+      <ContactPopup
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        showTrigger={false}
+      />
     </div>
   );
 };

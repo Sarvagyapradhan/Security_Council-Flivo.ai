@@ -19,16 +19,27 @@ const app = express();
 // Also permit typical Render domains if provided in the list.
 const configuredOrigins = (process.env.CORS_ORIGINS || process.env.CORS_ORIGIN || "")
   .split(",")
-  .map((s) => s.trim())
+  .map((s) => s.trim().replace(/\/$/, ""))
   .filter(Boolean);
+
+// Auto-allow service's own public URL on Render so same-origin works out-of-the-box
+const selfOrigins = [
+  process.env.RENDER_EXTERNAL_URL, // e.g. https://security-council.onrender.com
+  process.env.SELF_ORIGIN,
+]
+  .filter(Boolean)
+  .map((s) => s.replace(/\/$/, ""));
+
+const allowedOrigins = Array.from(new Set([...configuredOrigins, ...selfOrigins]));
 
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true); // allow server-to-server and curl
-      if (configuredOrigins.includes(origin)) return callback(null, true);
+      const normalized = origin.replace(/\/$/, "");
+      if (allowedOrigins.includes(normalized)) return callback(null, true);
       // Allow subdomains commonly used on Render if developer whitelists base domain
-      const allowOnrender = configuredOrigins.some((o) => /onrender\.com$/.test(o));
+      const allowOnrender = allowedOrigins.some((o) => /onrender\.com$/.test(o));
       if (allowOnrender && /onrender\.com$/.test(new URL(origin).hostname)) {
         return callback(null, true);
       }

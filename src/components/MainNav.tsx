@@ -43,9 +43,14 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <button
           onClick={() => handleNavigateAndClose('home')}
-          className="text-base font-bold text-[#002856] transition-colors hover:text-blue-700 sm:text-lg"
+          aria-label="Go to home"
+          className="flex items-center"
         >
-          Security Council
+          <img
+            src="/logo_sc.png"
+            alt="Security Council"
+            className="h-7 w-auto sm:h-8 lg:h-9"
+          />
         </button>
 
         <div className="flex items-center gap-4 lg:hidden">

@@ -3,7 +3,6 @@ import UtilityNav from './components/UtilityNav';
 import MainNav from './components/MainNav';
 import HeroSection from './components/HeroSection';
 import CTIHighlights from './components/CTIHighlights';
-import NewsletterSignup from './components/NewsletterSignup';
 import FeaturesSection from './components/FeaturesSection';
 import WhyChooseUs from './components/WhyChooseUs';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -43,8 +42,12 @@ const App = () => {
 
     const handleNavigate = (page: string) => {
         setCurrentPage(page);
-        // Reset scroll so new page starts at the top
+
         if (typeof window !== 'undefined') {
+            const targetPath = page === 'home' ? '/' : `/${page}`;
+            if (window.location.pathname !== targetPath) {
+                window.history.pushState({ page }, '', targetPath);
+            }
             window.scrollTo({ top: 0, behavior: 'auto' });
         }
     };
@@ -63,9 +66,8 @@ const App = () => {
 
     const renderHomePage = () => (
         <>
-            <HeroSection />
-            <CTIHighlights />
-            <NewsletterSignup />
+            <HeroSection onNavigate={handleNavigate} />
+            <CTIHighlights variant="cards-only" onNavigate={handleNavigate} />
             <FeaturesSection />
             <WhyChooseUs />
             <TestimonialsSection />
@@ -81,7 +83,7 @@ const App = () => {
                 return (
                     <>
                         <WhoWeGuidePage onNavigate={handleNavigate} />
-                        <FeaturesSection />
+                        <CTIHighlights variant="grid-only" onNavigate={handleNavigate} />
                     </>
                 );
             case 'latest-insight':

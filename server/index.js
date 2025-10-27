@@ -15,11 +15,25 @@ const distPath = path.join(projectRoot, "dist");
 
 const app = express();
 
-// Basic CORS allowing local dev origin by default
-const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
+// CORS: allow comma‑separated origins via CORS_ORIGINS or single via CORS_ORIGIN.
+// Also permit typical Render domains if provided in the list.
+const configuredOrigins = (process.env.CORS_ORIGINS || process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // allow server-to-server and curl
+      if (configuredOrigins.includes(origin)) return callback(null, true);
+      // Allow subdomains commonly used on Render if developer whitelists base domain
+      const allowOnrender = configuredOrigins.some((o) => /onrender\.com$/.test(o));
+      if (allowOnrender && /onrender\.com$/.test(new URL(origin).hostname)) {
+        return callback(null, true);
+      }
+      callback(new Error(`CORS: Origin not allowed: ${origin}`));
+    },
     credentials: false,
   })
 );
@@ -27,17 +41,44 @@ app.use(
 app.use(express.json());
 
 // MySQL pool
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: true } : undefined,
-});
+function createMysqlPoolFromEnv() {
+  const dbUrlString =
+    process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL || "";
+
+  if (dbUrlString) {
+    const dbUrl = new URL(dbUrlString);
+    const sslParam = (dbUrl.searchParams.get("ssl") || dbUrl.searchParams.get("sslmode") || "").toLowerCase();
+    const useSsl =
+      String(process.env.DB_SSL || "").toLowerCase() === "true" || sslParam === "true" || sslParam === "require";
+
+    return mysql.createPool({
+      host: dbUrl.hostname,
+      user: decodeURIComponent(dbUrl.username),
+      password: decodeURIComponent(dbUrl.password),
+      database: dbUrl.pathname.replace(/^\//, ""),
+      port: dbUrl.port ? Number(dbUrl.port) : 3306,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      ssl: useSsl ? { rejectUnauthorized: true } : undefined,
+    });
+  }
+
+  const useSsl = String(process.env.DB_SSL || "").toLowerCase() === "true";
+  return mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    ssl: useSsl ? { rejectUnauthorized: true } : undefined,
+  });
+}
+
+const pool = createMysqlPoolFromEnv();
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -72,13 +113,7 @@ async function ensureSchema() {
   }
 }
 
-// Serve frontend if built (production)
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-  app.get("*", (_req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
-  });
-}
+// NOTE: SPA fallback is registered AFTER API routes below
 
 // Health endpoint
 app.get("/api/health", async (_req, res) => {
@@ -89,6 +124,9 @@ app.get("/api/health", async (_req, res) => {
     res.status(500).json({ ok: false, error: String(e) });
   }
 });
+
+// Optional: clarify method support for /api/contact
+app.get("/api/contact", (_req, res) => res.status(405).json({ message: "Method Not Allowed" }));
 
 // Contact submission endpoint
 app.post("/api/contact", async (req, res) => {
@@ -159,6 +197,18 @@ app.post("/api/contact", async (req, res) => {
     res.status(500).json({ message: "Failed to store submission", error: String(err) });
   }
 });
+
+// Optional: 404 for unknown /api/* routes
+app.use("/api", (_req, res) => res.status(404).json({ message: "Not Found" }));
+
+// Serve frontend if built (production) - register LAST and exclude /api paths
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  // Any non-API GET should return index.html for SPA routing
+  app.get(/^\/(?!api)(.*)/, (_req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
 const port = process.env.PORT ? Number(process.env.PORT) : 4000;
 

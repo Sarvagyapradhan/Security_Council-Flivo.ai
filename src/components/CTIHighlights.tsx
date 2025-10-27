@@ -1,8 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import NewsletterSignup from './NewsletterSignup';
+import './CTIHighlights.css';
 
 // (cards removed from header to avoid homepage layout changes)
 
-const CTIHighlights: React.FC = () => {
+interface CTIHighlightsProps {
+  variant?: 'full' | 'grid-only' | 'cards-only';
+  onNavigate?: (page: string) => void;
+}
+
+const CTIHighlights: React.FC<CTIHighlightsProps> = ({ variant = 'full', onNavigate }) => {
   const reports = [
     {
       title: "Credential Leak Intelligence: Analysis of 300+ Incidents",
@@ -34,54 +41,115 @@ const CTIHighlights: React.FC = () => {
     {
       title: "AI-Powered Threats: 12-Month Research Analysis",
       link: "View Research Findings",
-      background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/reports/ai-powered-threats.jpg')"
+      backgroundClass: 'featured-card--ai-threats',
+      page: 'ai-threats'
     },
     {
       title: "Emerging Threat Actor Analysis: Real-Time Intelligence Report",
       link: "Read Intelligence Brief",
-      background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/reports/emerging-threat-actor.jpg')"
+      backgroundClass: 'featured-card--threat-actor',
+      page: 'threat-actor'
     },
     {
       title: "Threat Intelligence Methodology: Our Research Approach",
       link: "View Research Process",
-      background: "url('/reports/threat-intelligence-methodology.jpg')"
+      backgroundClass: 'featured-card--threat-intelligence',
+      page: 'threat-intelligence'
     }
   ];
 
-  const FeaturedCard: React.FC<{ title: string; link: string; background: string }> = ({ title, link, background }) => {
-    const cardRef = useRef<HTMLDivElement | null>(null);
-
-    useEffect(() => {
-      const el = cardRef.current;
-      if (el) {
-        el.style.backgroundImage = background;
+  const FeaturedCard: React.FC<{ title: string; link: string; backgroundClass: string; navigateTo?: string }> = ({
+    title,
+    link,
+    backgroundClass,
+    navigateTo,
+  }) => {
+    const handleClick = () => {
+      if (navigateTo && onNavigate) {
+        onNavigate(navigateTo);
       }
-    }, [background]);
+    };
 
     return (
       <div
-        ref={cardRef}
-        className="relative h-[420px] overflow-hidden rounded-2xl bg-cover bg-center sm:h-[500px] lg:h-[550px]"
+        className={`group relative h-[420px] overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform duration-500 ease-out hover:-translate-y-2 hover:scale-[1.01] sm:h-[500px] lg:h-[550px] ${backgroundClass}`}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-          <h3 className="mb-3 text-2xl font-semibold leading-9 text-white sm:mb-4 sm:text-3xl">
-            {title}
-          </h3>
-          <a href="#" className="inline-flex items-center text-base font-semibold text-white transition-colors hover:text-gray-200 sm:text-lg">
-            {link}
-            <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 17l10-10M17 7H7v10" />
-            </svg>
-          </a>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/20"></div>
+        <div className="relative flex h-full flex-col p-6 sm:p-8">
+          <div className="z-10">
+            <h3 className="mb-4 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+              {title}
+            </h3>
+            {navigateTo && onNavigate ? (
+              <button
+                type="button"
+                onClick={handleClick}
+                className="inline-flex items-center gap-2 text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg"
+              >
+                <span>{link}</span>
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 17l10-10M17 7H7v10" />
+                </svg>
+              </button>
+            ) : (
+              <a href="#" className="inline-flex items-center gap-2 text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg">
+                <span>{link}</span>
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 17l10-10M17 7H7v10" />
+                </svg>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     );
   };
 
+  if (variant === 'cards-only') {
+    return (
+      <section className="bg-white py-8 px-4 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {featuredReports.map((report, index) => (
+              <FeaturedCard
+                key={index}
+                title={report.title}
+                link={report.link}
+                backgroundClass={report.backgroundClass}
+                navigateTo={report.page}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const showExtendedContent = variant === 'full';
+
   return (
     <section className="bg-white py-16">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+        {showExtendedContent && (
+          <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {featuredReports.map((report, index) => (
+              <FeaturedCard
+                key={index}
+                title={report.title}
+                link={report.link}
+                backgroundClass={report.backgroundClass}
+                navigateTo={report.page}
+              />
+            ))}
+          </div>
+        )}
+
+        {showExtendedContent && (
+          <div className="mb-12">
+            <NewsletterSignup />
+          </div>
+        )}
+
         {/* Header */}
         <div className="mb-10 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-3xl font-bold text-blue-900 sm:text-4xl">CTI Highlights & Reports</h2>
@@ -123,13 +191,6 @@ const CTIHighlights: React.FC = () => {
           <svg className="h-4 w-4 rotate-90 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
-        </div>
-
-        {/* Featured Reports */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {featuredReports.map((report, index) => (
-            <FeaturedCard key={index} title={report.title} link={report.link} background={report.background} />
-          ))}
         </div>
       </div>
     </section>

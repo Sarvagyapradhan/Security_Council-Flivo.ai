@@ -77,11 +77,11 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
         <div className="absolute right-[59px] top-[197px] w-[54px] h-[208px] bg-black/70 blur-[4.5px]"></div>
 
         {/* Background Images */}
-        <img className="absolute right-[241px] top-[154px] w-[90px] h-[245px] border-2 border-white" 
+        <img className="absolute right-[295px] top-[154px] w-[90px] h-[245px] border-2 border-white" 
           src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-        <img className="absolute right-[51px] top-[156px] w-[90px] h-[245px] border-2 border-white" 
+        <img className="absolute right-[60px] top-[156px] w-[90px] h-[245px] border-2 border-white" 
           src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-        <img className="absolute right-[162px] top-[108px] w-[90px] h-[245px] border-2 border-white" 
+        <img className="absolute right-[174px] top-[108px] w-[90px] h-[245px] border-2 border-white" 
           src="/who-we-guide/team/member-portrait-3.jpg" alt="" />
 
         {/* Main Text Content */}

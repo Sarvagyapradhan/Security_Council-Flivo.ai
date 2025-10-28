@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 interface MainNavProps {
   currentPage: string;
@@ -8,27 +8,7 @@ interface MainNavProps {
 
 const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const lastScrollYRef = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY || 0;
-      // Show only when near the very top or scrolling up
-      if (currentY < 10) {
-        setIsVisible(true);
-        lastScrollYRef.current = currentY;
-        return;
-      }
-
-      // scrolling down → hide; scrolling up → show
-      setIsVisible(currentY < lastScrollYRef.current);
-      lastScrollYRef.current = currentY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Always visible navbar
 
   // no measurement needed; spacer uses fixed responsive heights
 
@@ -39,7 +19,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
 
   return (
     <>
-    <nav className={`fixed left-0 right-0 z-50 border-b bg-white shadow-sm transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'} ${isAtTop ? 'top-[36px] sm:top-[40px] lg:top-[44px]' : 'top-0'}`}>
+    <nav className={`fixed left-0 right-0 z-50 border-b bg-white shadow-sm ${isAtTop ? 'top-[36px] sm:top-[40px] lg:top-[44px]' : 'top-0'}`}>
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <button
           onClick={() => handleNavigateAndClose('home')}

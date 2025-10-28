@@ -34,10 +34,7 @@ const App = () => {
     const [isContactOpen, setIsContactOpen] = useState(false);
 
     useEffect(() => {
-        const onScroll = () => setIsAtTop((window.scrollY || 0) < 10);
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+        setIsAtTop(true);
     }, []);
 
     const handleNavigate = (page: string) => {
@@ -127,7 +124,7 @@ const App = () => {
         <div className="min-h-screen bg-white">
             {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
-                    <UtilityNav isAtTop={isAtTop} />
+                    <UtilityNav />
                     <MainNav currentPage={currentPage} onNavigate={handleNavigate} isAtTop={isAtTop} />
                 </>
             )}

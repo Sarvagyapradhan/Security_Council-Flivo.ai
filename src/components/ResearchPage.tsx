@@ -22,7 +22,7 @@ const ResearchPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Page-specific navbar */}
-      <nav className="w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-baseline gap-2">
             <span className="text-[#002856] text-base font-bold sm:text-lg">Security Council</span>
@@ -45,6 +45,8 @@ const ResearchPage: React.FC = () => {
           </button>
         </div>
       </nav>
+      {/* Spacer to offset fixed nav height */}
+      <div className="h-[52px] sm:h-[56px]" />
 
       {/* Hero section with layered gradients and background */}
       <section className="relative min-h-[420px] overflow-hidden md:min-h-[620px] bg-gradient-to-b from-[#0A2847] via-[#0B2A4C] to-[#0C1C3E]">

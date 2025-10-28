@@ -15,7 +15,7 @@ const AgendaPage: React.FC = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <nav className="w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-baseline gap-2">
             <span className="text-[#002856] text-base font-bold sm:text-lg">Security Council</span>
@@ -34,6 +34,8 @@ const AgendaPage: React.FC = () => {
           </button>
         </div>
       </nav>
+      {/* Spacer to offset fixed nav height */}
+      <div className="h-[52px] sm:h-[56px]" />
 
       <main className="flex-1">
         <section className="relative overflow-hidden bg-[#0A2847] text-white">

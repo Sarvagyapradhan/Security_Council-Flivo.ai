@@ -1,7 +1,6 @@
 import React from 'react';
 
-type Props = { isAtTop?: boolean };
-const UtilityNav: React.FC<Props> = ({ isAtTop = true }) => {
+const UtilityNav: React.FC = () => {
 
   return (
     <div className={`fixed top-0 left-0 right-0 z-[60] bg-[#F4F4F4] border-b border-[#E0E0E0] box-border h-[36px] sm:h-[40px] lg:h-[44px]`}>

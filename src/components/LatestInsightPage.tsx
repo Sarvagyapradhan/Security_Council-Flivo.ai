@@ -11,7 +11,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
   const [activeFilter, setActiveFilter] = useState('All Research');
   const [selectedSort, setSelectedSort] = useState<'Latest' | 'Analyst' | 'Topic' | 'Most Downloaded'>('Latest');
 
-  const researchData = [
+  const researchData = useMemo(() => ([
     {
       title: "Dark Web Ransomware Trends: 8-Month Intelligence Study",
       date: "June 28, 2025",
@@ -68,7 +68,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
       source: "Teresa Walsh Chief Intelligence Officer FS-ISAC",
       link: "View Weekly Threat Brief"
     }
-  ];
+  ]), []);
 
   const filterButtons = [
     "All Research",
@@ -208,11 +208,11 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
 
               {sortDropdownOpen && (
                 <div className="absolute top-[50px] sm:top-[55px] lg:top-[60px] left-0 w-full bg-white border border-[#002C60] shadow-lg z-50">
-                  {['Latest', 'Analyst', 'Topic', 'Most Downloaded'].map((option, index) => (
+                  {(['Latest', 'Analyst', 'Topic', 'Most Downloaded'] as const).map((option, index) => (
                     <button
                       key={index}
                       className="w-full h-[25px] sm:h-[28px] lg:h-[29px] px-2 sm:px-3 text-sm sm:text-base lg:text-[16px] text-[#002856]/78 hover:bg-gray-50 border-b border-[#C3C3C3] last:border-b-0 text-left"
-                      onClick={() => { setSelectedSort(option as any); setSortDropdownOpen(false); }}
+                      onClick={() => { setSelectedSort(option); setSortDropdownOpen(false); }}
                     >
                       {option}
                     </button>

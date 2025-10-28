@@ -124,7 +124,7 @@ const App = () => {
         <div className="min-h-screen bg-white">
             {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
-                    <UtilityNav isAtTop={isAtTop} />
+                    <UtilityNav />
                     <MainNav currentPage={currentPage} onNavigate={handleNavigate} isAtTop={isAtTop} />
                 </>
             )}

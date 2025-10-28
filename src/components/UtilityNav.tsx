@@ -4,7 +4,7 @@ type Props = { isAtTop?: boolean };
 const UtilityNav: React.FC<Props> = ({ isAtTop = true }) => {
 
   return (
-    <div className={`fixed top-0 left-0 right-0 z-[60] bg-[#F4F4F4] border-b border-[#E0E0E0] h-[36px] sm:h-[40px] lg:h-[44px] transition-transform duration-300 ${isAtTop ? 'translate-y-0' : '-translate-y-full'}`}>
+    <div className={`fixed top-0 left-0 right-0 z-[60] bg-[#F4F4F4] border-b border-[#E0E0E0] box-border h-[36px] sm:h-[40px] lg:h-[44px]`}>
       <div className="mx-auto flex h-full w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-4 text-xs font-medium text-[#002856] sm:px-6 md:text-[13px]">
         <div className="flex flex-wrap items-center gap-3 md:gap-5">
           <a href="#" className="hover:text-blue-700 transition-colors">

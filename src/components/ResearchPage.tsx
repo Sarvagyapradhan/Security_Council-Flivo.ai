@@ -11,6 +11,14 @@ const navigateTo = (path: string) => {
 
 const ResearchPage: React.FC = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const heroImage = typeof window !== 'undefined' ? (() => {
+    try {
+      const p = new URLSearchParams(window.location.search).get('image');
+      return p ? decodeURIComponent(p) : null;
+    } catch {
+      return null;
+    }
+  })() : null;
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Page-specific navbar */}
@@ -40,8 +48,12 @@ const ResearchPage: React.FC = () => {
 
       {/* Hero section with layered gradients and background */}
       <section className="relative min-h-[420px] overflow-hidden md:min-h-[620px] bg-gradient-to-b from-[#0A2847] via-[#0B2A4C] to-[#0C1C3E]">
-        {/* Background image */}
-        <div className="absolute inset-0 research-hero-bg" />
+        {/* Background image (supports ?image=... override) */}
+        {heroImage ? (
+          <img src={heroImage} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+        ) : (
+          <div className="absolute inset-0 research-hero-bg" />
+        )}
         {/* Gradient overlays as requested */}
         <div className="absolute inset-0 research-hero-overlays" />
 
@@ -248,8 +260,8 @@ const ResearchPage: React.FC = () => {
           </div>
 
           <div className="flex justify-center mt-10 md:mt-12">
-            <a href="/events" className="section4-cta">
-              Explore Full Agenda ↗
+            <a href="/agenda" className="section4-cta">
+              Explore Full Agenda
             </a>
           </div>
         </div>

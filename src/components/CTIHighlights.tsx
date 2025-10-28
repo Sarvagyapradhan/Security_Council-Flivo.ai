@@ -1,4 +1,5 @@
 import React from 'react';
+import { getInsightRouteForTitle } from './insightRoutes';
 import NewsletterSignup from './NewsletterSignup';
 import './CTIHighlights.css';
 
@@ -175,12 +176,25 @@ const CTIHighlights: React.FC<CTIHighlightsProps> = ({ variant = 'full', onNavig
               <h3 className="text-lg font-semibold leading-7 text-blue-900 sm:text-xl">
                 {report.title}
               </h3>
-              <a href="#" className="inline-flex items-center text-sm font-semibold text-blue-700 transition-colors hover:text-blue-900 sm:text-base">
-                {report.link}
-                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
-                </svg>
-              </a>
+              {getInsightRouteForTitle(report.title) && onNavigate ? (
+                <button
+                  type="button"
+                  onClick={() => onNavigate(getInsightRouteForTitle(report.title)!)}
+                  className="inline-flex items-center text-sm font-semibold text-blue-700 transition-colors hover:text-blue-900 sm:text-base"
+                >
+                  {report.link}
+                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
+                  </svg>
+                </button>
+              ) : (
+                <span className="inline-flex items-center text-sm font-semibold text-blue-700 sm:text-base">
+                  {report.link}
+                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
+                  </svg>
+                </span>
+              )}
             </div>
           ))}
         </div>

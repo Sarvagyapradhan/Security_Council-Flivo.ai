@@ -45,7 +45,7 @@ const LocationEventFilter: React.FC<LocationEventFilterProps> = ({ title, placeh
           {/* Dropdown List - Only show when open */}
           {isOpen && (
             <div
-              className="absolute top-[64px] left-0 w-full max-h-[200px] overflow-y-auto rounded-lg shadow-lg bg-white border border-black/10 z-10"
+              className="absolute top-[64px] left-0 w-full max-h-[200px] overflow-y-auto rounded-lg shadow-lg bg-white border border-black/10 z-10 scroll-touch"
               onWheel={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
@@ -56,10 +56,7 @@ const LocationEventFilter: React.FC<LocationEventFilterProps> = ({ title, placeh
               onScroll={(e) => {
                 e.stopPropagation();
               }}
-              style={{
-                overscrollBehavior: 'contain',
-                WebkitOverflowScrolling: 'touch'
-              }}
+
             >
               {options.map((option, index) => (
                 <button

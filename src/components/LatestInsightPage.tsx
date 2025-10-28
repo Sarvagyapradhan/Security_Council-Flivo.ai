@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { getInsightRouteForTitle } from './insightRoutes';
 
 interface LatestInsightPageProps {
   onNavigate?: (page: string) => void;
@@ -6,6 +7,9 @@ interface LatestInsightPageProps {
 
 const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState('All Research');
+  const [selectedSort, setSelectedSort] = useState<'Latest' | 'Analyst' | 'Topic' | 'Most Downloaded'>('Latest');
 
   const researchData = [
     {
@@ -74,6 +78,41 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
     "Intelligence Briefs"
   ];
 
+  const deriveCategory = (title: string): string => {
+    const t = title.toLowerCase();
+    if (t.includes('weekly') || t.includes('brief')) return 'Intelligence Briefs';
+    if (t.includes('threat actor')) return 'Threat Actor Studies';
+    if (t.includes('sector') || t.includes('industry') || t.includes('healthcare') || t.includes('financial') || t.includes('infrastructure')) return 'Industry Analysis';
+    if (t.includes('emerging') || t.includes('ransomware') || t.includes('ai-powered') || t.includes('credential')) return 'Emerging Threats';
+    return 'All Research';
+  };
+
+  type InsightItem = typeof researchData[number] & { category: string };
+
+  const filteredSortedData: InsightItem[] = useMemo(() => {
+    const withCategory: InsightItem[] = researchData.map((item) => ({ ...item, category: deriveCategory(item.title) }));
+    const q = searchQuery.trim().toLowerCase();
+    const matchesQuery = (item: InsightItem) =>
+      q === '' || item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q) || item.source.toLowerCase().includes(q);
+    const matchesFilter = (item: InsightItem) => activeFilter === 'All Research' || item.category === activeFilter;
+    const filtered = withCategory.filter((i) => matchesQuery(i) && matchesFilter(i));
+    const parseDate = (d: string) => new Date(d).getTime() || 0;
+    filtered.sort((a, b) => {
+      switch (selectedSort) {
+        case 'Analyst':
+          return a.source.localeCompare(b.source);
+        case 'Topic':
+          return a.category.localeCompare(b.category) || b.title.localeCompare(a.title);
+        case 'Most Downloaded':
+          return parseDate(b.date) - parseDate(a.date);
+        case 'Latest':
+        default:
+          return parseDate(b.date) - parseDate(a.date);
+      }
+    });
+    return filtered;
+  }, [researchData, searchQuery, activeFilter, selectedSort]);
+
   const metrics = [
     { value: "500+", label: "Reports Published", image: "/latest-insights/metrics/reports-published.jpg" },
     { value: "15+", label: "Analysts", image: "/latest-insights/metrics/analysts.jpg" },
@@ -131,6 +170,8 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
               type="text"
               placeholder={"Search Reports \"Dark Web Ransomware Trends\""}
               className="flex-1 text-lg sm:text-xl lg:text-[28px] text-[#002856]/48 placeholder-[#002856]/48 outline-none ml-2 sm:ml-4"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
@@ -139,7 +180,8 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
             {filterButtons.map((button, index) => (
               <button
                 key={index}
-                className="bg-[#0050AC] border border-[#D1D1D1] rounded-[16px] sm:rounded-[20px] px-3 sm:px-4 py-1 sm:py-2 text-white text-sm sm:text-lg lg:text-[20px] shadow-md hover:bg-blue-700 transition-colors whitespace-nowrap"
+                className={`border border-[#D1D1D1] rounded-[16px] sm:rounded-[20px] px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-lg lg:text-[20px] shadow-md transition-colors whitespace-nowrap ${activeFilter === button ? 'bg-[#0000D3] text-white' : 'bg-[#0050AC] text-white/90 hover:bg-blue-700'}`}
+                onClick={() => setActiveFilter(button)}
               >
                 {button}
               </button>
@@ -152,13 +194,13 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
           <h3 className="text-2xl sm:text-3xl lg:text-[41px] font-bold text-[#002856]">Insights</h3>
 
           {/* Sort Dropdown */}
-          <div className="w-[120px] sm:w-[140px] lg:w-[144px]">
+          <div className="w-[164px] sm:w-[184px] lg:w-[192px]">
             <div className="relative">
               <button
                 onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
                 className="w-full h-[40px] sm:h-[45px] lg:h-[48px] bg-white border border-[#002C60] rounded-lg px-2 sm:px-3 flex items-center justify-between shadow-lg"
               >
-                <span className="text-sm sm:text-lg lg:text-[20px] text-[#002856]/78">Sort By</span>
+                <span className="text-sm sm:text-lg lg:text-[20px] text-[#002856]/78 whitespace-nowrap overflow-hidden text-ellipsis">{selectedSort}</span>
                 <svg className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-[#002856]/78" viewBox="0 0 25 25" fill="currentColor">
                   <path d="M13.0762 15.985C12.9356 16.1255 12.745 16.2043 12.5462 16.2043C12.3475 16.2043 12.1568 16.1255 12.0162 15.985L6.01621 9.98501C5.87576 9.84438 5.79688 9.65376 5.79688 9.45501C5.79688 9.25626 5.87576 9.06563 6.01621 8.92501H19.0762C19.2167 9.06563 19.2956 9.25626 19.2956 9.45501C19.2956 9.65376 19.2167 9.84438 19.0762 9.98501L13.0762 15.985Z"/>
                 </svg>
@@ -170,7 +212,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
                     <button
                       key={index}
                       className="w-full h-[25px] sm:h-[28px] lg:h-[29px] px-2 sm:px-3 text-sm sm:text-base lg:text-[16px] text-[#002856]/78 hover:bg-gray-50 border-b border-[#C3C3C3] last:border-b-0 text-left"
-                      onClick={() => setSortDropdownOpen(false)}
+                      onClick={() => { setSelectedSort(option as any); setSortDropdownOpen(false); }}
                     >
                       {option}
                     </button>
@@ -184,7 +226,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
         {/* Research Cards Grid */}
         <div className="w-full max-w-[1280px] px-4 sm:px-8 lg:px-0 mx-auto mt-4 sm:mt-6 lg:mt-0 lg:absolute lg:left-1/2 lg:top-[422px] lg:transform lg:-translate-x-1/2">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-[27px] justify-items-center lg:justify-items-stretch place-items-center lg:place-items-stretch">
-            {researchData.map((item, index) => (
+            {filteredSortedData.map((item, index) => (
               <div key={index} className="w-full max-w-[400px] lg:max-w-[402px] h-auto lg:h-[476px] bg-white border border-[#002856]/56 rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 flex flex-col">
                 <h4 className="text-lg sm:text-xl lg:text-[24px] font-bold text-[#002856] leading-tight lg:leading-[28px] mb-3 sm:mb-4 min-h-[3rem] lg:min-h-[56px]">
                   {item.title}
@@ -206,7 +248,11 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
 
                 <button
                   className="flex items-center gap-2 text-sm sm:text-base lg:text-[18px] font-bold text-[#0000D3] hover:text-blue-800 transition-colors mt-auto"
-                  onClick={() => onNavigate?.(`insight-${index + 1}`)}
+                  onClick={() => {
+                    const absoluteIndex = researchData.findIndex((d) => d.title === item.title);
+                    const route = getInsightRouteForTitle(item.title) || `insight-${absoluteIndex + 1}`;
+                    onNavigate?.(route);
+                  }}
                 >
                   {item.link}
                   <svg className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" viewBox="0 0 13 14" fill="none">

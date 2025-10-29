@@ -10,7 +10,7 @@ const SecondaryNav: React.FC = () => (
             <a href="#" className="hover:text-blue-700">Who we guide</a>
             <a href="#" className="hover:text-blue-700">Our Intelligence</a>
             <a href="#" className="hover:text-blue-700">Latest Insight</a>
-            <a href="#" className="hover:text-blue-700">Briefings</a>
+            <a href="#" className="hover:text-blue-700">Event</a>
         </div>
 
         {/* CTA and Phone */}

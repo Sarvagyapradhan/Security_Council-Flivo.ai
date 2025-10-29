@@ -1,6 +1,10 @@
 import React from 'react';
 
-const WhyChooseUs: React.FC = () => {
+interface WhyChooseUsProps {
+  onBriefingClick?: () => void;
+}
+
+const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onBriefingClick }) => {
   const features = [
     {
       image: "/features/independent-unbiased.jpg",
@@ -84,7 +88,10 @@ const WhyChooseUs: React.FC = () => {
             <p className="text-sm leading-6 sm:text-base">
               When standard visibility isn’t enough and conventional approaches fall short, Security Council delivers the intelligence and evidence to act with confidence—exposing what others miss, discreetly and with full strategic context.
             </p>
-            <button className="inline-flex items-center justify-center gap-2 rounded border-2 border-white bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-[#002856]">
+            <button 
+              onClick={onBriefingClick}
+              className="inline-flex items-center justify-center gap-2 rounded border-2 border-white bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-[#002856]"
+            >
               Request a Confidential Briefing
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />

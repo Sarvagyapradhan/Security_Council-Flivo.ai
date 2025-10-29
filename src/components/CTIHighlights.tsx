@@ -88,15 +88,15 @@ const CTIHighlights: React.FC<CTIHighlightsProps> = ({ variant = 'full', onNavig
                 className="inline-flex items-center gap-2 text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg"
               >
                 <span>{link}</span>
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 17l10-10M17 7H7v10" />
+                <svg className="h-5 w-5" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             ) : (
               <a href="#" className="inline-flex items-center gap-2 text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg">
                 <span>{link}</span>
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 17l10-10M17 7H7v10" />
+                <svg className="h-5 w-5" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
             )}
@@ -183,15 +183,15 @@ const CTIHighlights: React.FC<CTIHighlightsProps> = ({ variant = 'full', onNavig
                   className="inline-flex items-center text-sm font-semibold text-blue-700 transition-colors hover:text-blue-900 sm:text-base"
                 >
                   {report.link}
-                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
+                  <svg className="ml-2 h-4 w-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
               ) : (
                 <span className="inline-flex items-center text-sm font-semibold text-blue-700 sm:text-base">
                   {report.link}
-                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l10-10M17 7H7v10" />
+                  <svg className="ml-2 h-4 w-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
               )}
@@ -202,8 +202,8 @@ const CTIHighlights: React.FC<CTIHighlightsProps> = ({ variant = 'full', onNavig
         {/* View More Link */}
         <div className="mb-12 flex items-center justify-center space-x-2 sm:mb-16">
           <span className="text-base font-semibold text-blue-700 sm:text-lg">View More</span>
-          <svg className="h-4 w-4 rotate-90 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <svg className="h-4 w-4 text-blue-700" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>

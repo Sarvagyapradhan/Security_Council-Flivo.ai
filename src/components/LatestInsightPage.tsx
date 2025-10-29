@@ -78,6 +78,14 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
     "Intelligence Briefs"
   ];
 
+  const splitFilterButtons = (() => {
+    const midPoint = Math.ceil(filterButtons.length / 2);
+    return [
+      filterButtons.slice(0, midPoint),
+      filterButtons.slice(midPoint)
+    ].filter((group) => group.length > 0);
+  })();
+
   const deriveCategory = (title: string): string => {
     const t = title.toLowerCase();
     if (t.includes('weekly') || t.includes('brief')) return 'Intelligence Briefs';
@@ -151,50 +159,74 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
 
 
       {/* Main Content Section */}
-      <div className="bg-[#FEFEFE] relative mt-0 sm:min-h-[1800px] lg:min-h-[2028px]">
+      <div className="bg-[#FEFEFE] relative mt-0 pb-16 sm:pb-24 lg:pb-32">
         {/* Blue Header */}
-        <div className="w-full h-[200px] sm:h-[250px] lg:h-[277px] bg-[#0050AC] relative flex flex-col items-center justify-center">
+        <div className="w-full bg-[#0050AC] relative flex flex-col items-center justify-center px-4 sm:px-8 lg:px-20 py-10 sm:py-12 lg:py-16 gap-4 sm:gap-6 lg:gap-8">
           {/* Title - Centered */}
-          <div className="text-center mb-3 sm:mb-5 lg:mb-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-[41px] font-bold leading-tight text-white">
+          <div className="text-center px-2">
+            <h2 className="text-xl sm:text-3xl lg:text-[41px] font-bold leading-tight text-white">
               Latest Cybersecurity Research & Intelligence Reports
             </h2>
           </div>
 
           {/* Search Bar - Centered */}
-          <div className="w-[90%] sm:w-[80%] lg:w-[830px] max-w-[900px] h-[50px] sm:h-[60px] lg:h-[66px] bg-white rounded-[20px] lg:rounded-[26px] border border-[#B1B1B1] shadow-lg flex items-center px-3 mb-4 sm:mb-6 lg:mb-8">
-            <svg className="w-6 sm:w-8 lg:w-10 h-6 sm:h-8 lg:h-10 ml-2 sm:ml-3" viewBox="0 0 40 40" fill="none">
+          <div className="w-full max-w-[900px]">
+            <div className="w-full h-[50px] sm:h-[58px] lg:h-[66px] bg-white rounded-[18px] sm:rounded-[22px] lg:rounded-[26px] border border-[#B1B1B1] shadow-lg flex items-center px-3 sm:px-4">
+              <svg className="w-6 sm:w-7 lg:w-10 h-6 sm:h-7 lg:h-10 ml-1 sm:ml-2" viewBox="0 0 40 40" fill="none">
               <path fillRule="evenodd" clipRule="evenodd" d="M17.5014 3.33252C15.2424 3.33271 13.0162 3.87313 11.0085 4.90868C9.00081 5.94423 7.26989 7.44488 5.96013 9.28544C4.65036 11.126 3.79975 13.2531 3.47925 15.4893C3.15874 17.7254 3.37765 20.0058 4.1177 22.1402C4.85774 24.2745 6.09748 26.2009 7.73346 27.7587C9.36944 29.3165 11.3542 30.4605 13.5223 31.0952C15.6903 31.7299 17.9786 31.8369 20.1964 31.4074C22.4142 30.9778 24.4971 30.0241 26.2714 28.6259L32.3581 34.7125C32.6724 35.0161 33.0934 35.1841 33.5304 35.1803C33.9674 35.1765 34.3854 35.0012 34.6944 34.6922C35.0034 34.3832 35.1787 33.9652 35.1825 33.5282C35.1863 33.0912 35.0183 32.6702 34.7147 32.3559L28.6281 26.2692C30.2747 24.1802 31.3 21.6699 31.5866 19.0254C31.8731 16.3809 31.4094 13.7092 30.2484 11.316C29.0875 8.9228 27.2762 6.90478 25.0219 5.49291C22.7676 4.08103 20.1613 3.33234 17.5014 3.33252ZM6.66807 17.4992C6.66807 14.626 7.80943 11.8705 9.84108 9.83886C11.8727 7.80722 14.6282 6.66585 17.5014 6.66585C20.3746 6.66585 23.1301 7.80722 25.1617 9.83886C27.1934 11.8705 28.3347 14.626 28.3347 17.4992C28.3347 20.3724 27.1934 23.1279 25.1617 25.1595C23.1301 27.1912 20.3746 28.3325 17.5014 28.3325C14.6282 28.3325 11.8727 27.1912 9.84108 25.1595C7.80943 23.1279 6.66807 20.3724 6.66807 17.4992Z" fill="#002856" fillOpacity="0.48"/>
             </svg>
-            <input
-              type="text"
-              placeholder={"Search Reports \"Dark Web Ransomware Trends\""}
-              className="flex-1 text-lg sm:text-xl lg:text-[28px] text-[#002856]/48 placeholder-[#002856]/48 outline-none ml-2 sm:ml-4"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+              <input
+                type="text"
+                placeholder={"Search Reports \"Dark Web Ransomware Trends\""}
+                className="flex-1 text-base sm:text-lg lg:text-[26px] text-[#002856]/48 placeholder-[#002856]/48 outline-none ml-2 sm:ml-3"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
 
           {/* Filter Buttons - Centered in horizontal row */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 lg:gap-[33px] items-center px-3">
-            {filterButtons.map((button, index) => (
-              <button
-                key={index}
-                className={`border border-[#D1D1D1] rounded-[16px] sm:rounded-[20px] px-3 sm:px-4 py-1 sm:py-2 text-sm sm:text-lg lg:text-[20px] shadow-md transition-colors whitespace-nowrap ${activeFilter === button ? 'bg-[#0000D3] text-white' : 'bg-[#0050AC] text-white/90 hover:bg-blue-700'}`}
-                onClick={() => setActiveFilter(button)}
-              >
-                {button}
-              </button>
-            ))}
+          <div className="w-full max-w-[900px]">
+            <div className="hidden lg:flex flex-nowrap justify-center items-center gap-3 lg:gap-[24px] px-1 sm:px-3 pb-1" role="tablist" aria-label="Filter categories" aria-orientation="horizontal">
+              {filterButtons.map((button, index) => (
+                <button
+                  key={`desktop-${index}`}
+                  type="button"
+                  role="tab"
+                  className={`flex-shrink-0 border border-[#D1D1D1] rounded-[20px] px-4 py-2 text-sm lg:text-[20px] shadow-md transition-colors whitespace-nowrap ${activeFilter === button ? 'bg-[#0000D3] text-white' : 'bg-[#0C5ACC] text-white/90 hover:bg-blue-700'}`}
+                  onClick={() => setActiveFilter(button)}
+                >
+                  {button}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-2 w-full px-1 sm:px-3 lg:hidden" role="tablist" aria-label="Filter categories (mobile)" aria-orientation="horizontal">
+              {splitFilterButtons.map((group, groupIndex) => (
+                <div key={`mobile-group-${groupIndex}`} className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                  {group.map((button, index) => (
+                    <button
+                      key={`mobile-${groupIndex}-${index}`}
+                      type="button"
+                      role="tab"
+                      className={`min-w-[108px] sm:min-w-[130px] border border-[#D1D1D1] rounded-[16px] px-3 py-2 text-xs sm:text-sm shadow-md transition-colors text-center whitespace-nowrap ${activeFilter === button ? 'bg-[#0000D3] text-white' : 'bg-[#0C5ACC] text-white/90 hover:bg-blue-700'}`}
+                      onClick={() => setActiveFilter(button)}
+                    >
+                      {button}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Insights Section Header and Sort Controls */}
-        <div className="w-full max-w-[1280px] px-4 sm:px-8 lg:px-0 mx-auto flex items-center justify-between mt-6 sm:mt-8 lg:mt-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-[326px] lg:z-40 z-40">
+        <div className="w-full max-w-[1280px] px-4 sm:px-8 lg:px-0 mx-auto flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-6 mt-6 sm:mt-8 lg:mt-10">
           <h3 className="text-2xl sm:text-3xl lg:text-[41px] font-bold text-[#002856]">Insights</h3>
 
           {/* Sort Dropdown */}
-          <div className="w-[164px] sm:w-[184px] lg:w-[192px]">
+          <div className="w-full sm:max-w-[240px] lg:w-[192px] lg:ml-auto">
             <div className="relative">
               <button
                 onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
@@ -224,7 +256,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
         </div>
 
         {/* Research Cards Grid */}
-        <div className="w-full max-w-[1280px] px-4 sm:px-8 lg:px-0 mx-auto mt-4 sm:mt-6 lg:mt-0 lg:absolute lg:left-1/2 lg:top-[422px] lg:transform lg:-translate-x-1/2">
+        <div className="w-full max-w-[1280px] px-4 sm:px-8 lg:px-0 mx-auto mt-4 sm:mt-6 lg:mt-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-[27px] justify-items-center lg:justify-items-stretch place-items-center lg:place-items-stretch">
             {filteredSortedData.map((item, index) => (
               <div key={index} className="w-full max-w-[400px] lg:max-w-[402px] h-auto lg:h-[476px] bg-white border border-[#002856]/56 rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 flex flex-col">
@@ -264,10 +296,10 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
           </div>
 
           {/* View More Button (moved to follow the grid) */}
-          <div className="flex items-center justify-center gap-3 mt-8 sm:mt-10">
+          <div className="flex items-center justify-center gap-3 mt-8 sm:mt-10 lg:mt-12">
             <span className="text-sm sm:text-base lg:text-[18px] font-bold text-[#0000D3]">View More</span>
             <svg className="w-4 h-4 text-[#0000D3]" viewBox="0 0 16 16" fill="none">
-              <path d="M6 3L11 8L6 13" stroke="#0000D3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M4 6L8 10L12 6" stroke="#0000D3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
         </div>

@@ -3,7 +3,11 @@ import EventCard from './EventCard';
 import FAQItem from './FAQItem';
 import LocationEventFilter from './LocationEventFilter';
 
-const EventsPage: React.FC = () => {
+interface EventsPageProps {
+  onNavigate?: (page: string, options?: { search?: string }) => void;
+}
+
+const EventsPage: React.FC<EventsPageProps> = ({ onNavigate }) => {
   const [openFAQ, setOpenFAQ] = useState<string | null>(null);
 
   const handleFAQToggle = (id: string) => {
@@ -169,8 +173,8 @@ const EventsPage: React.FC = () => {
              {/*CTA Button*/}
              <button className="flex items-center gap-2 bg-[#0000D3] text-white px-6 py-6 rounded-md hover:bg-blue-800 transition-colors">
               <span className="font-bold text-[24px] leading-[26px]">Explore More</span>
-              <svg className="w-5 h-5 transform rotate-[-51.546deg]" fill="white" stroke="white" strokeWidth={3} viewBox="0 0 19 20">
-                <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584239 15.2667 0.67868L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535512 3.87891C0.629954 4.70194 1.37371 5.29258 2.19673 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
+              <svg className="w-5 h-5" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6L8 10L12 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </div>
@@ -214,9 +218,7 @@ const EventsPage: React.FC = () => {
                   showViewButton={event.id === 1}
                   onViewResearch={() => {
                     const imagePath = '/images/events/event-card.jpg';
-                    const targetUrl = `/research?image=${encodeURIComponent(imagePath)}`;
-                    window.history.pushState({}, '', targetUrl);
-                    window.dispatchEvent(new Event('popstate'));
+                    onNavigate?.('research', { search: `?image=${encodeURIComponent(imagePath)}` });
                   }}
                 />
               </div>
@@ -227,8 +229,8 @@ const EventsPage: React.FC = () => {
           <div className="flex justify-center">
             <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
               <span className="text-[#0000D3] font-bold text-lg">View More</span>
-              <svg className="w-4 h-4 transform rotate-90" fill="#0000D3" viewBox="0 0 16 18">
-                <path d="M9 1.37207C9 0.819786 8.55228 0.37207 8 0.37207C7.44772 0.37207 7 0.819786 7 1.37207H8H9ZM7.29289 17.0792C7.68342 17.4697 8.31658 17.4697 8.70711 17.0792L15.0711 10.7152C15.4616 10.3247 15.4616 9.69153 15.0711 9.301C14.6805 8.91048 14.0474 8.91048 13.6569 9.301L8 14.9579L2.34315 9.301C1.95262 8.91048 1.31946 8.91048 0.928932 9.301C0.538408 9.69153 0.538408 10.3247 0.928932 10.7152L7.29289 17.0792ZM8 1.37207H7L7 16.3721H8H9L9 1.37207H8Z"/>
+              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6L8 10L12 6" stroke="#0000D3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
           </div>

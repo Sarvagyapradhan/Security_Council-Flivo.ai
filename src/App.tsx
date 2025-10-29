@@ -9,6 +9,7 @@ import TestimonialsSection from './components/TestimonialsSection';
 import LifeAtSecurityCouncil from './components/LifeAtSecurityCouncil';
 import Footer from './components/Footer';
 import ContactPopup from './components/ContactPopup';
+import RequestPopup from './components/RequestPopup';
 import WhoWeGuidePage from './components/WhoWeGuidePage';
 import OurIntelligencePage from './components/OurIntelligencePage';
 import LatestInsightPage from './components/LatestInsightPage';
@@ -32,17 +33,19 @@ const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
     const [isAtTop, setIsAtTop] = useState(true);
     const [isContactOpen, setIsContactOpen] = useState(false);
+    const [isBriefingOpen, setIsBriefingOpen] = useState(false);
 
     useEffect(() => {
         setIsAtTop(true);
     }, []);
 
-    const handleNavigate = (page: string) => {
+    const handleNavigate = (page: string, options?: { search?: string }) => {
         setCurrentPage(page);
 
         if (typeof window !== 'undefined') {
-            const targetPath = page === 'home' ? '/' : `/${page}`;
-            if (window.location.pathname !== targetPath) {
+            const basePath = page === 'home' ? '/' : `/${page}`;
+            const targetPath = `${basePath}${options?.search ?? ''}`;
+            if (window.location.pathname + window.location.search !== targetPath) {
                 window.history.pushState({ page }, '', targetPath);
             }
             window.scrollTo({ top: 0, behavior: 'auto' });
@@ -66,7 +69,7 @@ const App = () => {
             <HeroSection onNavigate={handleNavigate} />
             <CTIHighlights variant="cards-only" onNavigate={handleNavigate} />
             <FeaturesSection />
-            <WhyChooseUs />
+            <WhyChooseUs onBriefingClick={() => setIsBriefingOpen(true)} />
             <TestimonialsSection />
             <LifeAtSecurityCouncil />
         </>
@@ -102,7 +105,7 @@ const App = () => {
             case 'insight-8':
                 return <Insight8Page />;
             case 'events':
-                return <EventsPage />;
+                return <EventsPage onNavigate={handleNavigate} />;
             case 'ai-threats':
                 return <AIThreatsPage />;
             case 'threat-actor':
@@ -125,7 +128,12 @@ const App = () => {
             {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
                     <UtilityNav />
-                    <MainNav currentPage={currentPage} onNavigate={handleNavigate} isAtTop={isAtTop} />
+                    <MainNav
+                        currentPage={currentPage}
+                        onNavigate={handleNavigate}
+                        isAtTop={isAtTop}
+                        onThreatReportClick={() => setIsBriefingOpen(true)}
+                    />
                 </>
             )}
             {renderCurrentPage()}
@@ -136,6 +144,10 @@ const App = () => {
                         isOpen={isContactOpen}
                         onClose={() => setIsContactOpen(false)}
                         showTrigger={false}
+                    />
+                    <RequestPopup
+                        isOpen={isBriefingOpen}
+                        onClose={() => setIsBriefingOpen(false)}
                     />
                 </>
             )}

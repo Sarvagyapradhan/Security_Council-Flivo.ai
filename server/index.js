@@ -5,11 +5,10 @@ import mysql from "mysql2/promise";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
-import nodemailer from "nodemailer";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const currentDir = path.dirname(currentFilePath);
-dotenv.config({ path: path.join(currentDir, ".env") });
+dotenv.config({ path: path.join(currentDir, ".env"), override: true });
 const projectRoot = path.join(currentDir, "..");
 const distPath = path.join(projectRoot, "dist");
 
@@ -80,16 +79,104 @@ function createMysqlPoolFromEnv() {
 
 const pool = createMysqlPoolFromEnv();
 
-// Email transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587,
-  secure: String(process.env.SMTP_SECURE).toLowerCase() === "true",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+const graphConfig = {
+  clientId: process.env.MS_GRAPH_CLIENT_ID,
+  clientSecret: process.env.MS_GRAPH_CLIENT_SECRET,
+  tenantId: process.env.MS_GRAPH_TENANT_ID,
+  sender: process.env.MS_GRAPH_SENDER,
+};
+
+const graphConfigured = Boolean(
+  graphConfig.clientId && graphConfig.clientSecret && graphConfig.tenantId && graphConfig.sender
+);
+
+async function fetchApi(...args) {
+  if (typeof fetch === "function") {
+    return fetch(...args);
+  }
+  const { default: nodeFetch } = await import("node-fetch");
+  return nodeFetch(...args);
+}
+
+async function acquireGraphToken() {
+  const tokenUrl = `https://login.microsoftonline.com/${graphConfig.tenantId}/oauth2/v2.0/token`;
+  const params = new URLSearchParams({
+    client_id: graphConfig.clientId,
+    client_secret: graphConfig.clientSecret,
+    scope: "https://graph.microsoft.com/.default",
+    grant_type: "client_credentials",
+  });
+
+  const response = await fetchApi(tokenUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params,
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text().catch(() => "");
+    throw new Error(`Failed to obtain Microsoft Graph token: ${response.status} ${errorBody}`);
+  }
+
+  const data = await response.json();
+  return data.access_token;
+}
+
+async function sendMailViaGraph({ to, subject, html, text, replyTo }) {
+  const accessToken = await acquireGraphToken();
+
+  const message = {
+    subject,
+    body: {
+      contentType: html ? "HTML" : "Text",
+      content: html || text || "",
+    },
+    from: {
+      emailAddress: { address: graphConfig.sender },
+    },
+    toRecipients: (Array.isArray(to) ? to : [to]).map((address) => ({
+      emailAddress: { address },
+    })),
+  };
+
+  if (replyTo) {
+    const replyList = Array.isArray(replyTo) ? replyTo : [replyTo];
+    message.replyTo = replyList.map((address) => ({ emailAddress: { address } }));
+  }
+
+  const graphResponse = await fetchApi(
+    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(graphConfig.sender)}/sendMail`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message, saveToSentItems: false }),
+    }
+  );
+
+  if (!graphResponse.ok) {
+    const errorBody = await graphResponse.text().catch(() => "");
+    throw new Error(`Failed to send mail via Microsoft Graph: ${graphResponse.status} ${errorBody}`);
+  }
+}
+
+async function sendMail({ to, subject, html, text, replyTo }) {
+  if (!graphConfigured) {
+    throw new Error("Microsoft Graph email credentials are not configured.");
+  }
+
+  await sendMailViaGraph({ to, subject, html, text, replyTo });
+}
+
+const escapeHtml = (value = "") =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 
 async function ensureSchema() {
   const createTableSql = `
@@ -166,34 +253,141 @@ app.post("/api/contact", async (req, res) => {
     } finally {
       conn.release();
     }
-    // fire-and-forget email notification
-    const toEmail = process.env.EMAIL_TO || process.env.SMTP_USER;
-    const html = `
-      <div>
-        <h2>New Contact Submission</h2>
-        <p><strong>Email:</strong> ${String(email).trim()}</p>
-        <p><strong>Company:</strong> ${String(companyName).trim()}</p>
-        <p><strong>Phone:</strong> ${phoneCountryCode ? String(phoneCountryCode).trim() + " " : ""}${String(
-      phoneNumber
-    ).trim()}</p>
-        <p><strong>IP:</strong> ${ipAddress}</p>
-        <p><strong>User-Agent:</strong> ${userAgent}</p>
-        <p style="margin-top:12px;">This message contains information regarding the customer that just filled the contact form and submitted it.</p>
-      </div>`;
-    transporter
-      .sendMail({
-        from: `Security Council <${process.env.SMTP_USER}>`,
+    const toEmail = process.env.EMAIL_TO || graphConfig.sender;
+    const submissionDate = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+    }).format(new Date());
+
+    const plainEmail = String(email).trim();
+    const plainCompany = String(companyName).trim();
+    const plainPhone = `${phoneCountryCode ? `${phoneCountryCode.trim()} ` : ""}${String(phoneNumber).trim()}`;
+    const escapedEmail = escapeHtml(plainEmail);
+    const escapedCompany = escapeHtml(plainCompany);
+    const escapedPhone = escapeHtml(plainPhone);
+    const escapedIp = escapeHtml(ipAddress || "N/A");
+    const escapedUserAgent = escapeHtml(userAgent || "N/A");
+
+    const ownerSubject = `New Contact Request – ${escapedCompany || "Unknown Company"}`;
+    const ownerHtml = `<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <title>${ownerSubject}</title>
+        </head>
+        <body style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color:#f5f7fb; padding:24px; color:#0a1640;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px; margin:0 auto; background:#ffffff; border-radius:12px; box-shadow:0 12px 24px rgba(10,22,64,0.08); overflow:hidden;">
+            <tr style="background:#002856;">
+              <td style="padding:22px 28px;">
+                <h1 style="margin:0; font-size:20px; color:#ffffff; letter-spacing:0.3px;">Security Council · Contact Request</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px;">
+                <p style="margin:0 0 18px; font-size:15px; color:#304067;">Hello team,</p>
+                <p style="margin:0 0 22px; font-size:15px; color:#304067;">A new contact submission has been captured on the Security Council website. The details are summarized below:</p>
+                <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="width:160px; padding:8px 12px; font-weight:600; color:#0a1640;">Submitted At</td>
+                      <td style="padding:8px 12px; color:#304067;">${submissionDate}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Email</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedEmail}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Company</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedCompany}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Phone</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedPhone}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">IP Address</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedIp}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">User Agent</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedUserAgent}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="margin:24px 0 0; font-size:14px; color:#304067; line-height:1.6;">Please follow up with the contact as soon as possible. This email was generated automatically by the Security Council contact workflow.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 28px; background:#f4f6fb; font-size:12px; color:#7181a6;">&copy; ${new Date().getFullYear()} Security Council. All rights reserved.</td>
+            </tr>
+          </table>
+        </body>
+      </html>`;
+    const ownerText = `New contact submission\n\nSubmitted At: ${submissionDate}\nEmail: ${plainEmail}\nCompany: ${plainCompany}\nPhone: ${plainPhone}\nIP Address: ${ipAddress || "N/A"}\nUser Agent: ${userAgent || "N/A"}`;
+
+    const customerSubject = "We received your request – Security Council";
+    const customerHtml = `<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <title>${customerSubject}</title>
+        </head>
+        <body style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color:#f5f7fb; padding:24px; color:#0a1640;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px; margin:0 auto; background:#ffffff; border-radius:12px; box-shadow:0 12px 24px rgba(10,22,64,0.08); overflow:hidden;">
+            <tr style="background:#002856;">
+              <td style="padding:24px 30px;">
+                <h1 style="margin:0; font-size:22px; color:#ffffff; letter-spacing:0.4px;">Thank you for reaching out</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:30px;">
+                <p style="margin:0 0 18px; font-size:15px; color:#304067;">Hi there,</p>
+                <p style="margin:0 0 18px; font-size:15px; color:#304067; line-height:1.6;">Thank you for contacting Security Council. Our team has received your request and one of our specialists will connect with you shortly.</p>
+                <div style="margin:26px 0; padding:18px 20px; border:1px solid #dde3f1; border-radius:10px; background:#f7f9ff;">
+                  <p style="margin:0 0 10px; font-size:13px; font-weight:600; color:#0a1640; text-transform:uppercase; letter-spacing:1.1px;">Request Summary</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Email:</strong> ${escapedEmail}</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Company:</strong> ${escapedCompany}</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Phone:</strong> ${escapedPhone}</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Submitted:</strong> ${submissionDate}</p>
+                </div>
+                <p style="margin:0 0 18px; font-size:15px; color:#304067; line-height:1.6;">If your inquiry is urgent, feel free to call us directly at <strong style="color:#002856;">+44 (0) 33 3060 3806</strong>. Otherwise, we appreciate your patience and we look forward to working with you.</p>
+                <p style="margin:24px 0 0; font-size:15px; color:#304067;">Warm regards,<br/><span style="font-weight:600; color:#0a1640;">Security Council Client Services</span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 30px; background:#f4f6fb; font-size:12px; color:#7181a6;">&copy; ${new Date().getFullYear()} Security Council. All rights reserved.</td>
+            </tr>
+          </table>
+        </body>
+      </html>`;
+    const customerText = `Thank you for contacting Security Council.\n\nWe have received your request and one of our specialists will reach out shortly.\n\nSummary\nEmail: ${plainEmail}\nCompany: ${plainCompany}\nPhone: ${plainPhone}\nSubmitted: ${submissionDate}\n\nIf you need immediate assistance, call +44 (0) 33 3060 3806.\n\nSecurity Council Client Services`;
+
+    await Promise.all([
+      sendMail({
         to: toEmail,
-        subject: "New Contact Form Submission",
-        html,
-      })
-      .catch(() => {
-        // Ignore email errors for the client response path
-      });
+        subject: ownerSubject,
+        html: ownerHtml,
+        text: ownerText,
+        replyTo: plainEmail,
+      }),
+      sendMail({
+        to: plainEmail,
+        subject: customerSubject,
+        html: customerHtml,
+        text: customerText,
+        replyTo: toEmail,
+      }),
+    ]);
 
     res.status(201).json({ message: "Submission stored" });
   } catch (err) {
     // Duplicate handling or generic error
+    console.error("/api/contact error", err);
     res.status(500).json({ message: "Failed to store submission", error: String(err) });
   }
 });

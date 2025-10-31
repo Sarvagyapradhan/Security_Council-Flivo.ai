@@ -28,6 +28,7 @@ import ThreatIntelligencePage from './components/ThreatIntelligencePage';
 import ResearchPage from './components/ResearchPage';
 import SpeakersPage from './components/SpeakersPage';
 import AgendaPage from './components/AgendaPage';
+import RequestLandingPage from './components/RequestLandingPage';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -118,6 +119,8 @@ const App = () => {
                 return <SpeakersPage />;
             case 'agenda':
                 return <AgendaPage />;
+            case 'request':
+                return <RequestLandingPage />;
             default:
                 return renderHomePage();
         }

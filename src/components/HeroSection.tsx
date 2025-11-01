@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 type HeroSectionProps = {
   onNavigate?: (page: string) => void;
@@ -25,10 +26,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
 
         <div className="order-1 flex justify-center lg:order-2">
           <div className="relative w-full max-w-[420px] overflow-hidden rounded-xl border-8 border-white shadow-2xl sm:max-w-[520px] lg:max-w-[620px]">
-            <img
-              src="/hero/background.jpg"
+            <OptimizedImage
+              src="/hero/background.webp"
               alt="Security professionals working"
               className="h-full w-full object-cover"
+              eager
             />
           </div>
         </div>

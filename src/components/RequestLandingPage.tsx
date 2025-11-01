@@ -3,6 +3,7 @@ import UtilityNav from './UtilityNav';
 import MainNav from './MainNav';
 import Footer from './Footer';
 import RequestPopup from './RequestPopup';
+import OptimizedImage from './OptimizedImage';
 
 const INITIAL_FORM_STATE = {
   email: '',
@@ -22,37 +23,37 @@ const RequestLandingPage: React.FC = () => {
   // Copied content sources
   const whyChooseFeatures = [
     {
-      image: "/features/independent-unbiased.jpg",
+      image: "/features/independent-unbiased.webp",
       title: "Independent and Unbiased",
       description:
         "We are not tied to any product, platform, or provider. Our intelligence is neutral, research-driven and free from commercial influence, a trusted source for those who need facts, not sales narratives.",
     },
     {
-      image: "/features/data-rich-insights.jpg",
+      image: "/features/data-rich-insights.webp",
       title: "Data-Rich, Research-Led Insights",
       description:
         "Our findings are built on proprietary research, threat landscape telemetry and active adversary mapping, providing high-context insights that go beyond surface-level indicators or recycled reports.",
     },
     {
-      image: "/features/strategic-decision-makers.jpg",
+      image: "/features/strategic-decision-makers.webp",
       title: "Built for Strategic Decision-Makers",
       description:
         "From CISOs and CIOs to government security teams, we equip leadership with intelligence that's not just technical, it's strategic, contextual and designed to shape executive response.",
     },
     {
-      image: "/features/global-threat-visibility.jpg",
+      image: "/features/global-threat-visibility.webp",
       title: "Global Threat Visibility. Local Relevance.",
       description:
         "We monitor cross-border threat trends, cybercriminal economies and geopolitical risks, then distill what matters to your sector, your region and your infrastructure.",
     },
     {
-      image: "/features/confidential-trusted.jpg",
+      image: "/features/confidential-trusted.webp",
       title: "Confidential. Trusted. Discreet.",
       description:
         "We don't operate in the open. Our briefings, advisories and simulations are confidential, high-trust and often NDA-governed. You won't find them published and that's the point.",
     },
     {
-      image: "/features/bold-enough.jpg",
+      image: "/features/bold-enough.webp",
       title: "Bold Enough to Say What Others Won't",
       description:
         "We speak plainly about the risks others downplay. We uncover overlooked attack surfaces, challenge false assurance and reveal hard truths, even when they're uncomfortable.",
@@ -108,7 +109,7 @@ const RequestLandingPage: React.FC = () => {
       <MainNav currentPage="request" onNavigate={() => {}} isAtTop />
 
       <main>
-        <section className="relative isolate flex items-center justify-center bg-cover bg-center bg-[url('/Page%20Components/Background.png')] w-screen min-h-[883px] -mt-[100px] sm:-mt-[108px] lg:-mt-[116px] px-0">
+            <section className="relative isolate flex items-center justify-center bg-cover bg-center bg-[url('/Page%20Components/Background.webp')] w-screen min-h-[883px] -mt-[100px] sm:-mt-[108px] lg:-mt-[116px] px-0">
           <div className="absolute inset-0 bg-[rgba(0,0,0,0.68)]" />
 
           <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-start gap-8 px-2 sm:px-4 py-12 text-left lg:gap-10 lg:py-20">
@@ -133,7 +134,7 @@ const RequestLandingPage: React.FC = () => {
                     <p className="text-[13px] leading-6 text-white/95 sm:text-[14px]">
                       We don’t speculate. We reveal what’s already at risk, mapped to the exact threat domains we operate in. Before you act, you need visibility. That’s where we come in. Executive-level briefing clarity, designed for rapid decision-making.
                     </p>
-                    
+
                     <div className="space-y-2 text-white">
                       <h3 className="text-[18px] font-bold">Or give us a call</h3>
                       <p className="text-[18px] font-semibold">+44 (0) 33 3060 3806</p>
@@ -304,7 +305,7 @@ const RequestLandingPage: React.FC = () => {
                     <div className="relative flex h-20 w-20 items-center justify-center">
                       <div className="h-20 w-20 rounded-tr-2xl bg-blue-600" />
                       <div className="absolute top-1 left-1 h-20 w-20 rounded-tr-2xl bg-black/40 blur-sm" />
-                      <img
+                      <OptimizedImage
                         src={feature.image}
                         alt={feature.title}
                         className="absolute inset-y-0 left-3 h-20 w-20 rounded-tr-2xl object-cover"
@@ -341,9 +342,9 @@ const RequestLandingPage: React.FC = () => {
 
               <div className="flex justify-center gap-4">
                 {[1, 2, 3].map((member) => (
-                  <img
+                  <OptimizedImage
                     key={member}
-                    src={`/team/member-${member}.jpg`}
+                    src={`/team/member-${member}.webp`}
                     alt={`Team member ${member}`}
                     className="h-48 w-20 rounded-xl border-2 border-white object-cover"
                   />
@@ -379,8 +380,8 @@ const RequestLandingPage: React.FC = () => {
             </button>
           </div>
           <div className="absolute right-[98px] top-[179px] w-[332px] h-[217px] border border-white"></div>
-          <img className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg" 
-            src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="" />
+          <OptimizedImage className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg"
+            src="/who-we-guide/backgrounds/reputational-stakes.webp" alt="" />   
         </section>
 
         {/* Section 4 - copied from OurIntelligencePage highlights */}

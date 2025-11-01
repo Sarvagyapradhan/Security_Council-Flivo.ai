@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import OptimizedImage from './OptimizedImage';
 
 interface MainNavProps {
   currentPage: string;
@@ -27,10 +28,11 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
           aria-label="Go to home"
           className="flex items-center"
         >
-          <img
-            src="/logo_sc.png"
+          <OptimizedImage
+            src="/logo_sc.webp"
             alt="Security Council"
             className="h-7 w-auto sm:h-8 lg:h-9"
+            eager
           />
         </button>
 

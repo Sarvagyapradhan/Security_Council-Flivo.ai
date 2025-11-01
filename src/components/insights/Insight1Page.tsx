@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReportDownloadModal from '../insights/ReportDownloadModal';
+import OptimizedImage from '../OptimizedImage';
 
 const Insight1Page: React.FC = () => {
   const [isReportOpen, setIsReportOpen] = useState(false);
@@ -26,10 +27,11 @@ const Insight1Page: React.FC = () => {
               </div>
               <div className="relative mt-2 w-full sm:w-auto lg:mt-0 lg:w-[360px]">
                 <div className="pointer-events-none absolute -top-2 -left-2 h-[calc(100%+0px)] w-[calc(100%+0px)] border border-[#00285633]"></div>
-                <img
-                  src="/images/aiimg1.jpg"
+                <OptimizedImage
+                  src="/images/aiimg1.webp"
                   alt="Dark web code screenshot indicating threat activity"
                   className="relative z-10 w-full rounded-sm border border-[#D0D7E2] shadow-sm"
+                  eager
                 />
                 <div className="absolute bottom-2 left-2 right-2 z-20 rounded bg-black/60 px-2 py-1 text-[10px] font-medium leading-3 text-white">
                   Analyst‑Verified | Risk Score: 8.9 | Source: Dark Web Market X-74
@@ -57,7 +59,7 @@ const Insight1Page: React.FC = () => {
               <h2 className="text-2xl font-bold leading-tight text-[#002856] sm:text-3xl">
                 II. Key Findings
               </h2>
-              <img src="/images/warning.png" alt="Warning icon" className="h-24 w-24 sm:h-32 sm:w-32" />
+              <OptimizedImage src="/images/warning.webp" alt="Warning icon" className="h-24 w-24 sm:h-32 sm:w-32" />
             </div>
           </div>
           <div className="relative md:col-span-7 lg:col-span-8 pl-4 lg:pl-8">
@@ -134,7 +136,7 @@ const Insight1Page: React.FC = () => {
         </div>
         {/* Background Image */}
         <div className="absolute right-[98px] top-[179px] w-[332px] h-[217px] border border-white"></div>
-        <img className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg" src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="" />
+        <OptimizedImage className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg" src="/who-we-guide/backgrounds/reputational-stakes.webp" alt="" />
       </section>
 
       {/* More Insights duplicated at page end */}

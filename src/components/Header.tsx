@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 const Header: React.FC = () => (
     <header className="bg-teal-900 text-white flex items-center justify-between px-8 py-4">
@@ -14,7 +15,7 @@ const Header: React.FC = () => (
 
         {/* User Actions */}
         <div className="flex items-center space-x-3">
-            <img src="/avatars/default-avatar.jpg" alt="User avatar" className="w-8 h-8 rounded-full"/>
+            <OptimizedImage src="/avatars/default-avatar.webp" alt="User avatar" className="w-8 h-8 rounded-full" eager/>
             <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Share Prototype</button>
         </div>
     </header>

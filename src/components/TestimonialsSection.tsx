@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 const TestimonialsSection: React.FC = () => {
   return (
@@ -33,8 +34,8 @@ const TestimonialsSection: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-2xl shadow-xl">
-            <img
-              src="/testimonials/healthcare-case-study.jpg"
+            <OptimizedImage
+              src="/testimonials/healthcare-case-study.webp"
               alt="Healthcare case study visualization"
               className="h-full w-full object-cover"
             />

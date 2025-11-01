@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import EventCard from './EventCard';
 import FAQItem from './FAQItem';
 import LocationEventFilter from './LocationEventFilter';
+import OptimizedImage from './OptimizedImage';
 
 interface EventsPageProps {
   onNavigate?: (page: string, options?: { search?: string }) => void;
@@ -217,7 +218,7 @@ const EventsPage: React.FC<EventsPageProps> = ({ onNavigate }) => {
                   event={event}
                   showViewButton={event.id === 1}
                   onViewResearch={() => {
-                    const imagePath = '/images/events/event-card.jpg';
+                    const imagePath = '/images/events/event-card.webp';
                     onNavigate?.('research', { search: `?image=${encodeURIComponent(imagePath)}` });
                   }}
                 />
@@ -265,8 +266,8 @@ const EventsPage: React.FC<EventsPageProps> = ({ onNavigate }) => {
      {/* Right Column - Image with decorative offset border */}
      <div className="lg:col-span-5 relative">
        <div className="absolute -right-3 -bottom-3 w-full h-full border-2 border-white/40 rounded-md hidden md:block"></div>
-       <img
-         src="/images/events/why-attend.jpg"
+       <OptimizedImage
+         src="/images/events/why-attend.webp"
          alt="Security council meeting"
          className="relative z-10 w-full max-w-md lg:max-w-none rounded-md shadow-lg mx-auto"
        />

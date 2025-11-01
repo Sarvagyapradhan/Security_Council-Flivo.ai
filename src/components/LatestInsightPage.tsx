@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { getInsightRouteForTitle } from './insightRoutes';
+import OptimizedImage from './OptimizedImage';
 
 interface LatestInsightPageProps {
   onNavigate?: (page: string) => void;
@@ -122,10 +123,10 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
   }, [researchData, searchQuery, activeFilter, selectedSort]);
 
   const metrics = [
-    { value: "500+", label: "Reports Published", image: "/latest-insights/metrics/reports-published.jpg" },
-    { value: "15+", label: "Analysts", image: "/latest-insights/metrics/analysts.jpg" },
-    { value: "24", label: "Countries Studied", image: "/latest-insights/metrics/countries-studied.jpg" },
-    { value: "Updated Weekly", label: "", image: "/latest-insights/metrics/updated-weekly.jpg" }
+    { value: "500+", label: "Reports Published", image: "/latest-insights/metrics/reports-published.webp" },
+    { value: "15+", label: "Analysts", image: "/latest-insights/metrics/analysts.webp" },
+    { value: "24", label: "Countries Studied", image: "/latest-insights/metrics/countries-studied.webp" },
+    { value: "Updated Weekly", label: "", image: "/latest-insights/metrics/updated-weekly.webp" }
   ];
 
   return (
@@ -358,7 +359,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 px-4 sm:px-8 lg:px-20">
           {metrics.map((metric, index) => (
             <div key={index} className="w-[280px] sm:w-[299px] h-[250px] sm:h-[282px] relative border border-white">
-              <img
+              <OptimizedImage
                 src={metric.image}
                 alt=""
                 className="w-full h-full object-cover"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import OptimizedImage from './OptimizedImage';
 import Footer from './Footer';
 import ContactPopup from './ContactPopup';
 
@@ -104,12 +105,12 @@ const SpeakersPage: React.FC = () => {
                   <div className="hexagon-row hexagon-row-1">
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <img src="/event_page_components/Speakers/hexagon_image1.jpg" alt="Speaker 1" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image1.webp" alt="Speaker 1" className="hexagon-img" />
                       </div>
                     </div>
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <img src="/event_page_components/Speakers/hexagon_image2.png" alt="Speaker 2" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image2.webp" alt="Speaker 2" className="hexagon-img" />
                       </div>
                     </div>
                   </div>
@@ -118,12 +119,12 @@ const SpeakersPage: React.FC = () => {
                   <div className="hexagon-row hexagon-row-2">
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <img src="/event_page_components/Speakers/hexagon_image3.png" alt="Speaker 3" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image3.webp" alt="Speaker 3" className="hexagon-img" />
                       </div>
                     </div>
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <img src="/event_page_components/Speakers/hexagon_image4.jpg" alt="Speaker 4" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image4.webp" alt="Speaker 4" className="hexagon-img" />
                       </div>
                     </div>
                   </div>
@@ -132,12 +133,12 @@ const SpeakersPage: React.FC = () => {
                   <div className="hexagon-row hexagon-row-3">
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <img src="/event_page_components/Speakers/hexagon_image5.png" alt="Speaker 5" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image5.webp" alt="Speaker 5" className="hexagon-img" />
                       </div>
                     </div>
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <img src="/event_page_components/Speakers/hexagon_image6.png" alt="Speaker 6" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image6.webp" alt="Speaker 6" className="hexagon-img" />
                       </div>
                     </div>
                   </div>
@@ -161,7 +162,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image1.png" alt="Jane Mitchell" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image1.webp" alt="Jane Mitchell" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Jane Mitchell</h3>
                     <p className="speaker-title">A Global Chief Information Security Officer (CISO)</p>
@@ -192,7 +193,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image2.png" alt="Dr. Rajesh Patel" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image2.webp" alt="Dr. Rajesh Patel" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Dr. Rajesh Patel</h3>
                     <p className="speaker-title">Chief executive officer (CEO)</p>
@@ -224,7 +225,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image3.png" alt="Maria Gonzales" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image3.webp" alt="Maria Gonzales" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Maria Gonzales</h3>
                     <p className="speaker-title">Chief Information Security Officer (CISO)</p>
@@ -255,7 +256,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image4.png" alt="Thomas Lee" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image4.webp" alt="Thomas Lee" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Thomas Lee</h3>
                     <p className="speaker-title">Chief executive officer (CEO)</p>
@@ -286,7 +287,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image5.png" alt="Amira Khan" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image5.webp" alt="Amira Khan" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Amira Khan</h3>
                     <p className="speaker-title">Chief Security Strategist</p>
@@ -318,7 +319,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image6.png" alt="David Chen" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image6.webp" alt="David Chen" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">David Chen</h3>
                     <p className="speaker-title">Head of Cyber Risk</p>
@@ -349,7 +350,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image7.png" alt="Michael Roberts" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image7.webp" alt="Michael Roberts" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Michael Roberts</h3>
                     <p className="speaker-title">Former CISO</p>
@@ -380,7 +381,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image8.png" alt="Elena Petrova" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image8.webp" alt="Elena Petrova" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Elena Petrova</h3>
                     <p className="speaker-title">VP Cyber Threat Intelligence</p>
@@ -441,7 +442,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <img src="/event_page_components/Speakers/Section 2/person_image10.png" alt="James Walker" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image10.webp" alt="James Walker" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">James Walker</h3>
                     <p className="speaker-title">Chief executive officer (CEO)</p>

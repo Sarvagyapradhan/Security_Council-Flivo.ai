@@ -7,7 +7,7 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({ src, eager = false, loading, alt = "", ...rest }) => {
   const webpSrc = src.match(/\.(png|jpe?g)$/i) ? src.replace(/\.(png|jpe?g)$/i, '.webp') : undefined;
-  const finalLoading: "lazy" | "eager" = eager ? "eager" : (loading as any) ?? "lazy";
+  const finalLoading: "lazy" | "eager" = eager ? "eager" : (loading ?? "lazy");
 
   return (
     <picture>

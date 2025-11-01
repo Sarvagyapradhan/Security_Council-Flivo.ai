@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import OptimizedImage from './OptimizedImage';
 
 interface WhoWeGuidePageProps {
   onNavigate?: (page: string) => void;
@@ -37,7 +38,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
             'We provide them with upstream threat intelligence: actor patterns, breach entry paths and infrastructure clues that sharpen prioritization and accelerate containment.',
             'When timelines collapse, our guidance delivers the signal before the chaos.',
           ]}
-          images={{ frontSrc: '/images/Who We guide Page-2a.png', backSrc: '/images/Who We guide Page-2b.png' }}
+          images={{ frontSrc: '/images/Who We guide Page-2a.webp', backSrc: '/images/Who We guide Page-2b.webp' }}
           imagePosition="left"
         />
 
@@ -48,7 +49,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
             "They don't need dashboards. They need clarity. We guide CISOs, CTOs and senior security heads through exposures that aren't yet public and decisions that can't wait for alerts.",
             'From zero-day visibility to adversary intent, our intelligence supports high-stakes risk judgment, not post-breach reaction.',
           ]}
-          images={{ frontSrc: '/images/Who We guide Page-1a.png', backSrc: '/images/Who We guide Page-1b.png' }}
+          images={{ frontSrc: '/images/Who We guide Page-1a.webp', backSrc: '/images/Who We guide Page-1b.webp' }}
           imagePosition="right"
         />
 
@@ -59,7 +60,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
             'For teams who hunt threats before they materialize, depth matters. We work with researchers, CTI analysts and red teams to expose evolving TTPs, adversary overlaps and the weak links others miss.',
             "This is not generic feed intel, it's targeted, mapped and high-fidelity.",
           ]}
-          images={{ frontSrc: '/images/Who We guide Page-3a.png', backSrc: '/images/Who We guide Page-3b.png' }}
+          images={{ frontSrc: '/images/Who We guide Page-3a.webp', backSrc: '/images/Who We guide Page-3b.webp' }}
           imagePosition="left"
         />
       </section>
@@ -77,12 +78,12 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
         <div className="absolute right-[59px] top-[197px] w-[54px] h-[208px] bg-black/70 blur-[4.5px]"></div>
 
         {/* Background Images */}
-        <img className="absolute right-[295px] top-[154px] w-[90px] h-[245px] border-2 border-white" 
-          src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-        <img className="absolute right-[60px] top-[156px] w-[90px] h-[245px] border-2 border-white" 
-          src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-        <img className="absolute right-[174px] top-[108px] w-[90px] h-[245px] border-2 border-white" 
-          src="/who-we-guide/team/member-portrait-3.jpg" alt="" />
+        <OptimizedImage className="absolute right-[295px] top-[154px] w-[90px] h-[245px] border-2 border-white"
+          src="/who-we-guide/team/member-portrait-1.webp" alt="" />
+        <OptimizedImage className="absolute right-[60px] top-[156px] w-[90px] h-[245px] border-2 border-white"
+          src="/who-we-guide/team/member-portrait-2.webp" alt="" />
+        <OptimizedImage className="absolute right-[174px] top-[108px] w-[90px] h-[245px] border-2 border-white"
+          src="/who-we-guide/team/member-portrait-3.webp" alt="" />
 
         {/* Main Text Content */}
         <div className="absolute left-[88px] top-[70px]">
@@ -157,14 +158,14 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
             {/*<div className="absolute -left-[615px] top-0 w-[325px] h-[328px]">
               <div className="absolute -left-px top-0 w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
               <img className="absolute left-0 top-0 w-[290px] h-[328px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
+                src="/who-we-guide/team/member-portrait-1.webp" alt="" />
               <div className="absolute left-1 top-0.5 w-[268px] h-[324px] bg-black/10 backdrop-blur-sm"></div>
             </div>*/}
             
             {/*<div className="absolute -left-[465px] top-[138px] w-[297px] h-[327px]">
               <div className="absolute left-0 top-3.5 w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
               <img className="absolute left-[21px] top-0 w-[276px] h-[313px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
+                src="/who-we-guide/team/member-portrait-2.webp" alt="" />
               <div className="absolute left-[25px] top-1 w-[268px] h-[304px] bg-black/10 backdrop-blur-sm"></div>
             </div> */}
 
@@ -196,7 +197,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
           <p className="mb-8 text-lg font-semibold leading-8">This is intelligence that clarifies not just what happened, but what could.</p>
           <button className="inline-flex w-full items-center justify-center gap-2 rounded border-2 border-white bg-white px-5 py-4 font-semibold text-[#002856] transition-colors hover:bg-gray-100 sm:w-auto">Request Private Assessment</button>
           <div className="mt-8 overflow-hidden rounded-3xl border border-white/40 shadow-lg">
-            <img src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="Reputational stakes" className="h-full w-full object-cover" loading="lazy" />
+            <OptimizedImage src="/who-we-guide/backgrounds/reputational-stakes.webp" alt="Reputational stakes" className="h-full w-full object-cover" />
           </div>
         </div>
       </section>
@@ -229,8 +230,8 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
         
         {/* Background Image */}
         <div className="absolute right-[98px] top-[179px] w-[332px] h-[217px] border border-white"></div>
-        <img className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg" 
-          src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="" />
+        <OptimizedImage className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg"
+          src="/who-we-guide/backgrounds/reputational-stakes.webp" alt="" />
       </section>
 
       {/* Featured Articles Section - Responsive */}
@@ -239,7 +240,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
           <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {/* Article 1 */}
             <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
-              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/ai-powered-threats.jpg')` }}>
+              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/ai-powered-threats.webp')` }}>
               <div className="relative flex flex-1 flex-col p-6 sm:p-7">
                 <div>
                   <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
@@ -259,7 +260,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
 
             {/* Article 2 */}
             <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
-              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/emerging-threat-actor.jpg')` }}>
+              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/emerging-threat-actor.webp')` }}>
               <div className="relative flex flex-1 flex-col p-6 sm:p-7">
                 <div>
                   <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
@@ -279,7 +280,7 @@ const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
 
             {/* Article 3 */}
             <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
-              style={{ backgroundImage: `url('/who-we-guide/articles/threat-intelligence-methodology.jpg')` }}>
+              style={{ backgroundImage: `url('/who-we-guide/articles/threat-intelligence-methodology.webp')` }}>
               <div className="relative flex flex-1 flex-col p-6 sm:p-7">
                 <div>
                   <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
@@ -360,7 +361,7 @@ const MobileImagePair: React.FC<{ frontSrc: string; backSrc: string }> = ({ fron
 
   return (
     <div ref={ref} className="relative h-48 w-40 sm:h-56 sm:w-48" aria-hidden>
-      <img
+      <OptimizedImage
         src={backSrc}
         alt=""
         loading="lazy"
@@ -368,7 +369,7 @@ const MobileImagePair: React.FC<{ frontSrc: string; backSrc: string }> = ({ fron
           inView ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
         }`}
       />
-      <img
+      <OptimizedImage
         src={frontSrc}
         alt=""
         loading="lazy"
@@ -406,16 +407,16 @@ function AnimatedExecImagePair(): React.ReactElement {
       aria-hidden
     >
       {/* Back image (b), lower-right and slightly smaller */}
-      <img
-        src="/images/Who We guide Page-1b.png"
+      <OptimizedImage
+        src="/images/Who We guide Page-1b.webp"
         alt=""
         className={`${inView ? 'translate-x-0 opacity-100' : 'translate-x-28 opacity-0'}
           transition-transform duration-[900ms] ease-out absolute left-[150px] top-[120px] w-[352px] h-[352px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
       />
 
       {/* Front image (a), upper-left and above */}
-      <img
-        src="/images/Who We guide Page-1a.png"
+      <OptimizedImage
+        src="/images/Who We guide Page-1a.webp"
         alt=""
         className={`${inView ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}
           transition-transform duration-[700ms] ease-out absolute left-[0px] top-[-20px] w-[376px] h-[376px] object-cover z-20 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
@@ -450,16 +451,16 @@ function AnimatedOpsImagePair(): React.ReactElement {
       aria-hidden
     >
       {/* Back image (2b) */}
-      <img
-        src="/images/Who We guide Page-2b.png"
+      <OptimizedImage
+        src="/images/Who We guide Page-2b.webp"
         alt=""
         className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-16 opacity-0'}
           transition-transform duration-[900ms] ease-out absolute left-[150px] top-[70px] w-[360px] h-[370px] object-cover z-30 drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]`}
       />
 
       {/* Front image (2a) */}
-      <img
-        src="/images/Who We guide Page-2a.png"
+      <OptimizedImage
+        src="/images/Who We guide Page-2a.webp"
         alt=""
         className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}
           transition-transform duration-[700ms] ease-out absolute left-[20px] top-[-20px] w-[360px] h-[360px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
@@ -494,16 +495,16 @@ function AnimatedResearchersImagePair(): React.ReactElement {
       aria-hidden
     >
       {/* Back image (3b) */}
-      <img
-        src="/images/Who We guide Page-3b.png"
+      <OptimizedImage
+        src="/images/Who We guide Page-3b.webp"
         alt=""
         className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-16 opacity-0'}
           transition-transform duration-[900ms] ease-out absolute left-[150px] top-[90px] w-[360px] h-[370px] object-cover z-30 drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]`}
       />
 
       {/* Front image (3a) */}
-      <img
-        src="/images/Who We guide Page-3a.png"
+      <OptimizedImage
+        src="/images/Who We guide Page-3a.webp"
         alt=""
         className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}
           transition-transform duration-[700ms] ease-out absolute left-[20px] top-[-20px] w-[360px] h-[360px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}

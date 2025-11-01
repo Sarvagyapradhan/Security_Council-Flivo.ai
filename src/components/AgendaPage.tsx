@@ -3,6 +3,7 @@ import Footer from './Footer';
 import ContactPopup from './ContactPopup';
 import './AgendaPage.css';
 import TimelineClock from './TimelineClock';
+import OptimizedImage from './OptimizedImage';
 
 const navigateTo = (path: string) => {
   if (typeof window !== 'undefined') {
@@ -40,10 +41,11 @@ const AgendaPage: React.FC = () => {
       <main className="flex-1">
         <section className="relative overflow-hidden bg-[#0A2847] text-white">
           <div className="absolute inset-0">
-            <img
-              src="/event_page_components/Agenda/background.png"
+            <OptimizedImage
+              src="/event_page_components/Agenda/background.webp"
               alt="Summit background"
               className="h-full w-full object-cover"
+              eager
             />
             <div className="absolute inset-0 agenda-page__gradient-overlay" />
           </div>
@@ -61,27 +63,27 @@ const AgendaPage: React.FC = () => {
           <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden lg:block">
             {/* Outer ring thumbnails */}
             <div className="agenda-hero__thumb agenda-hero__outer-thumb1">
-              <img src="/event_page_components/Agenda/outer1.png" alt="Outer ring participant 1" />
+              <OptimizedImage src="/event_page_components/Agenda/outer1.webp" alt="Outer ring participant 1" eager className="h-full w-full object-cover" />
             </div>
             <div className="agenda-hero__thumb agenda-hero__outer-thumb2">
-              <img src="/event_page_components/Agenda/outer2.png" alt="Outer ring participant 2" />
+              <OptimizedImage src="/event_page_components/Agenda/outer2.webp" alt="Outer ring participant 2" eager className="h-full w-full object-cover" />
             </div>
             <div className="agenda-hero__thumb agenda-hero__outer-thumb3">
-              <img src="/event_page_components/Agenda/outer3.png" alt="Outer ring participant 3" />
+              <OptimizedImage src="/event_page_components/Agenda/outer3.webp" alt="Outer ring participant 3" eager className="h-full w-full object-cover" />
             </div>
 
             {/* Inner ring thumbnails */}
             <div className="agenda-hero__thumb agenda-hero__inner-thumb1">
-              <img src="/event_page_components/Agenda/mid1.png" alt="Inner ring participant 1" />
+              <OptimizedImage src="/event_page_components/Agenda/mid1.webp" alt="Inner ring participant 1" eager className="h-full w-full object-cover" />
             </div>
             <div className="agenda-hero__thumb agenda-hero__inner-thumb2">
-              <img src="/event_page_components/Agenda/mid2.png" alt="Inner ring participant 2" />
+              <OptimizedImage src="/event_page_components/Agenda/mid2.webp" alt="Inner ring participant 2" eager className="h-full w-full object-cover" />
             </div>
             <div className="agenda-hero__thumb agenda-hero__inner-thumb3">
-              <img src="/event_page_components/Agenda/mid3.png" alt="Inner ring participant 3" />
+              <OptimizedImage src="/event_page_components/Agenda/mid3.webp" alt="Inner ring participant 3" eager className="h-full w-full object-cover" />
             </div>
             <div className="agenda-hero__thumb agenda-hero__inner-thumb4">
-              <img src="/event_page_components/Agenda/mid4.png" alt="Inner ring participant 4" />
+              <OptimizedImage src="/event_page_components/Agenda/mid4.webp" alt="Inner ring participant 4" eager className="h-full w-full object-cover" />
             </div>
           </div>
           <div className="relative z-[2] mx-auto flex w-full max-w-[1426px] min-h-[781px] flex-col gap-12 px-6 py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20">
@@ -122,19 +124,21 @@ const AgendaPage: React.FC = () => {
         <section className="relative w-full overflow-hidden bg-[#0A2847]">
           {/* Background image */}
           <div className="absolute inset-0">
-            <img
-              src="/event_page_components/Agenda/Section 2/background.png"
+            <OptimizedImage
+              src="/event_page_components/Agenda/Section 2/background.webp"
               alt="Event audience background"
               className="h-full w-full object-cover"
+              eager
             />
             <div className="absolute inset-0 agenda-section2__gradient-overlay" />
           </div>
 
           {/* Right-side decorative pattern */}
-          <img
-            src="/event_page_components/Agenda/Section 2/Pattern Container.png"
+          <OptimizedImage
+            src="/event_page_components/Agenda/Section 2/Pattern Container.webp"
             alt="Decorative pattern"
             className="pointer-events-none absolute right-0 top-0 z-[1] h-full w-auto max-w-none"
+            eager
           />
 
           {/* Content */}
@@ -164,8 +168,8 @@ const AgendaPage: React.FC = () => {
             {/* Right image card */}
             <figure className="ml-6 hidden shrink-0 sm:block">
               <div className="relative overflow-hidden rounded-xl border border-white/20 bg-white/5 shadow-xl">
-                <img
-                  src="/event_page_components/Agenda/Section 2/card image.png"
+                <OptimizedImage
+                  src="/event_page_components/Agenda/Section 2/card image.webp"
                   alt="McCormick Place Convention Center, Chicago"
                   className="block h-[280px] w-[360px] object-cover sm:h-[300px] sm:w-[380px]"
                 />
@@ -192,10 +196,11 @@ const AgendaPage: React.FC = () => {
         <section className="relative w-full overflow-hidden bg-[#0A2847] min-h-[4239px]">
           {/* Background image */}
           <div className="absolute inset-0">
-            <img
-              src="/event_page_components/Agenda/Section 3/background.png"
+            <OptimizedImage
+              src="/event_page_components/Agenda/Section 3/background.webp"
               alt="Agenda schedule background"
               className="h-full w-full object-cover"
+              eager
             />
             <div className="absolute inset-0 agenda-section3__gradient-overlay" />
           </div>

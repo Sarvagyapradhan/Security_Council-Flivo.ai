@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 interface Event {
   id: number;
@@ -18,10 +19,11 @@ const EventCard: React.FC<EventCardProps> = ({ event, showViewButton = false, on
   return (
     <div className="w-[419px] h-[550px] relative overflow-hidden group transition-transform duration-300 ease-out hover:-translate-y-3">
       {/* Main Event Image */}
-      <img
-        src="/images/events/event-card.jpg"
+      <OptimizedImage
+        src="/images/events/event-card.webp"
         alt={event.title}
         className="w-[418px] h-[550px] object-cover absolute left-0 top-0 transition-transform duration-500 ease-out group-hover:scale-105"
+        eager
       />
       
       {/* Date/Location Header */}

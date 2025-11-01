@@ -1,46 +1,47 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 const focusAreas = [
   {
     title: 'Adversary Tracking & Threat Actor Profiling',
     description:
       'We monitor attacker ecosystems in real time, from ransomware affiliates and APT groups to low-signal threat actors operating on closed networks. Our profiling work maps motivations, infrastructure and behavioral patterns to expose risk before impact.',
-    image: '/images/adversary-tracking-figma.jpg',
+    image: '/images/adversary-tracking-figma.webp',
     alt: 'Analyst monitoring adversaries'
   },
   {
     title: 'Dark Web Observation & Leak Intelligence',
     description:
       "Beyond indexed data dumps, we track live mentions, exposed credentials, active tokens and exploit discussions in dark web forums, encrypted channels and deep marketplaces. Leak detection is just the surface, we focus on exploitation patterns and how they map to your environment.",
-    image: '/images/dark-web-figma.jpg',
+    image: '/images/dark-web-figma.webp',
     alt: 'Dark web intelligence visualization'
   },
   {
     title: 'Infrastructure Exposure & Attack Surface Discovery',
     description:
       "We identify vulnerable assets that are often missed: orphaned endpoints, shadow IT, forgotten cloud keys and misconfigured integrations. This isn't just external scanning, it's exposure mapping through the lens of how attackers think.",
-    image: '/images/infrastructure-exposure-figma.jpg',
+    image: '/images/infrastructure-exposure-figma.webp',
     alt: 'Infrastructure exposure map'
   },
   {
     title: 'Insider Risk & Behavioral Anomalies',
     description:
       'Our analysts flag risk not just by roles, but by actions. From privilege drift to silent data exfiltration, we surface internal movements that could signal policy bypass or breach preparation.',
-    image: '/images/insider-risk-figma.jpg',
+    image: '/images/insider-risk-figma.webp',
     alt: 'Insider risk monitoring'
   },
   {
     title: 'Third-Party Risk Analysis',
     description:
       "Breaches don't always start within your perimeter. We assess digital interdependencies, third-party toolkits and vendor platforms for signs of indirect compromise and lateral risk exposure.",
-    image: '/images/third-party-risk-figma.jpg',
+    image: '/images/third-party-risk-figma.webp',
     alt: 'Third-party risk assessment'
   },
   {
     title: 'Sector-Specific Threat Intelligence',
     description:
       'Different industries face different breaches, our models are built for it. From finance and critical infrastructure to SaaS platforms and healthcare, we provide contextual intelligence that reflects your actual threat environment, not generic feeds.',
-    image: '/images/sector-specific-figma.jpg',
+    image: '/images/sector-specific-figma.webp',
     alt: 'Sector specific briefing'
   }
 ];
@@ -77,10 +78,11 @@ const OurIntelligencePage: React.FC = () => {
     <div className="min-h-screen bg-white text-[#002856]">
       {/* Hero */}
       <section className="relative overflow-hidden mb-0 sm:mb-[4.00rem] bg-white">
-        <img
-          src="/images/hero-background-figma2.jpg"
+        <OptimizedImage
+          src="/images/hero-background-figma2.webp"
           alt="Abstract intelligence background"
           className="w-full object-cover object-[100%_50%] md:object-center h-[180px] sm:h-[240px] md:h-[340px] lg:h-[360px] transform scale-[3.6] sm:scale-[2.8] md:scale-100"
+          eager
         />
       </section>
 
@@ -113,8 +115,8 @@ const OurIntelligencePage: React.FC = () => {
             <div className="flex-1 order-1 md:order-2">
               <div className="relative mx-auto w-full overflow-hidden rounded-tr-[48px] rounded-bl-[48px] shadow-[0_18px_45px_rgba(0,0,0,0.25)] max-w-[320px] sm:max-w-[590px] md:max-w-[740px] lg:max-w-[890px] translate-y-0 sm:-translate-y-12 sm:translate-x-4 md:-translate-y-16 md:translate-x-8">
                 <div className="absolute inset-0 translate-x-5 translate-y-5 rounded-tr-[48px] rounded-bl-[48px] bg-black/30 blur-2xl" />
-                <img
-                  src="/images/where-we-focus-figma.jpg"
+                <OptimizedImage
+                  src="/images/where-we-focus-figma.webp"
                   alt="Security analysts collaborating"
                   className="relative z-10 w-full h-auto object-cover"
                 />
@@ -137,7 +139,7 @@ const OurIntelligencePage: React.FC = () => {
                       {/* Blue layer */}
                       <div className="absolute inset-0 translate-x-1 translate-y-1 rounded-tr-[32px] rounded-bl-[32px] bg-[#0050AC]" />
                       {/* Image */}
-                      <img
+                      <OptimizedImage
                         src={image}
                         alt={alt}
                         className="relative z-10 w-full h-full object-cover rounded-tr-[32px] rounded-bl-[32px]"
@@ -197,8 +199,8 @@ const OurIntelligencePage: React.FC = () => {
 
           <div className="relative mx-auto w-full max-w-xs overflow-hidden rounded-lg border border-white/40 shadow-xl sm:max-w-sm md:mx-0">
             <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-lg border border-white/30" />
-            <img
-              src="/images/cta-background-figma.jpg"
+            <OptimizedImage
+              src="/images/cta-background-figma.webp"
               alt="Security briefing discussion"
               className="relative z-10 w-full object-cover"
             />

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import OptimizedImage from "./OptimizedImage";
 // Replacing external icon dependency to avoid missing module issues
 
 type ContactPopupProps = {
@@ -50,10 +51,9 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onOpen, onClose, sh
           <div className="relative z-10 w-[92%] max-w-5xl rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-200">
             <div className="flex flex-col md:flex-row">
               <div className="w-full md:w-[30%] h-48 md:h-[560px]">
-                <img
-                  src="/contact-bg.jpg"
+                <OptimizedImage
+                  src="/contact-bg.webp"
                   alt="Analyst at workstation"
-                  loading="lazy"
                   className="h-full w-full object-cover [object-position:22%_center] sm:[object-position:28%_center] md:[object-position:38%_center] lg:[object-position:42%_center]"
                 />
               </div>

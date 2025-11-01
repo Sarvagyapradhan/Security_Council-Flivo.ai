@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Footer from './Footer';
 import ContactPopup from './ContactPopup';
+import OptimizedImage from './OptimizedImage';
 
 const navigateTo = (path: string) => {
   if (typeof window !== 'undefined') {
@@ -52,7 +53,7 @@ const ResearchPage: React.FC = () => {
       <section className="relative min-h-[420px] overflow-hidden md:min-h-[620px] bg-gradient-to-b from-[#0A2847] via-[#0B2A4C] to-[#0C1C3E]">
         {/* Background image (supports ?image=... override) */}
         {heroImage ? (
-          <img src={heroImage} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+          <OptimizedImage src={heroImage} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" eager />
         ) : (
           <div className="absolute inset-0 research-hero-bg" />
         )}
@@ -66,13 +67,13 @@ const ResearchPage: React.FC = () => {
         <div className="absolute inset-y-0 right-0 z-10 hidden research-right-w research-oval-overlay items-center justify-start pointer-events-none md:flex">
           <div className="research-ovals w-full h-full translate-y-[-3%] md:translate-y-[-14%]">
             <div className="oval oval-sm translate-y-[-6%] md:w-[149px] md:h-[384px]">
-              <img src="/event_page_components/person2.png" alt="Speaker 1" className="w-full h-full object-cover object-[30%_center]" />
+              <OptimizedImage src="/event_page_components/person2.webp" alt="Speaker 1" className="w-full h-full object-cover object-[30%_center]" eager />
             </div>
             <div className="oval oval-lg md:w-[149px] md:h-[467px]">
-              <img src="/event_page_components/person.png" alt="Speaker 2" className="w-full h-full object-cover object-[25%_center]" />
+              <OptimizedImage src="/event_page_components/person.webp" alt="Speaker 2" className="w-full h-full object-cover object-[25%_center]" eager />
             </div>
             <div className="oval oval-md translate-y-[-10%] md:w-[149px] md:h-[274px] md:translate-y-[-96px]">
-              <img src="/event_page_components/person3.png" alt="Speaker 3" className="w-full h-full object-cover" />
+              <OptimizedImage src="/event_page_components/person3.webp" alt="Speaker 3" className="w-full h-full object-cover" eager />
             </div>
           </div>
         </div>
@@ -152,20 +153,18 @@ const ResearchPage: React.FC = () => {
           <div className="relative md:w-5/12 flex justify-end">
             {/* Foreground large image card positioned to the right */}
             <div className="section2-img-card ar-square w-[260px] sm:w-[300px] md:w-[320px] md:translate-x-[18px] md:translate-y-[12px]">
-              <img
-                src="/event_page_components/Section 2/image 2.png"
-                alt="Keynote hall at cyber summit"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
+                <OptimizedImage
+                  src="/event_page_components/Section 2/image 2.webp"
+                  alt="Keynote hall at cyber summit"
+                  className="h-full w-full object-cover"
+                />
             </div>
             <div className="mt-4 md:absolute md:bottom-[-190px] md:right-[20px] md:mt-0">
               <div className="section2-img-card ar-5-6 w-[200px] sm:w-[220px] md:w-[240px]">
-                <img
-                  src="/event_page_components/Section 2/image 3.png"
+                <OptimizedImage
+                  src="/event_page_components/Section 2/image 3.webp"
                   alt="Panel session at cyber summit"
                   className="h-full w-full object-cover"
-                  loading="lazy"
                 />
               </div>
             </div>
@@ -357,8 +356,8 @@ const ResearchPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
             {/* Left: devices on stage, raw PNGs with transparent bg */}
             <div className="section7-devices-stage">
-              <img src="/event_page_components/Section 7/image 1.png" alt="Laptop with Stage-X" className="section7-laptop section7-laptop-pos" />
-              <img src="/event_page_components/Section 7/image 2.png" alt="Phone with Stage-X" className="section7-phone section7-phone-pos" />
+              <OptimizedImage src="/event_page_components/Section 7/image 1.webp" alt="Laptop with Stage-X" className="section7-laptop section7-laptop-pos" />
+              <OptimizedImage src="/event_page_components/Section 7/image 2.webp" alt="Phone with Stage-X" className="section7-phone section7-phone-pos" />
             </div>
 
             {/* Right: panel with copy and CTA */}
@@ -380,8 +379,8 @@ const ResearchPage: React.FC = () => {
                 </a>
               </div>
               <div className="mt-10">
-                <img 
-                  src="/event_page_components/Section 7/Stage x logo 1.png" 
+                <OptimizedImage 
+                  src="/event_page_components/Section 7/Stage x logo 1.webp" 
                   alt="Stage X" 
                   className="section7-logo" 
                 />

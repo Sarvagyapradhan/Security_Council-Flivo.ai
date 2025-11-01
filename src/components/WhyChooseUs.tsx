@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 interface WhyChooseUsProps {
   onBriefingClick?: () => void;
@@ -7,32 +8,32 @@ interface WhyChooseUsProps {
 const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onBriefingClick }) => {
   const features = [
     {
-      image: "/features/independent-unbiased.jpg",
+      image: "/features/independent-unbiased.webp",
       title: "Independent and Unbiased",
       description: "We are not tied to any product, platform, or provider. Our intelligence is neutral, research-driven and free from commercial influence, a trusted source for those who need facts, not sales narratives."
     },
     {
-      image: "/features/data-rich-insights.jpg",
+      image: "/features/data-rich-insights.webp",
       title: "Data-Rich, Research-Led Insights",
       description: "Our findings are built on proprietary research, threat landscape telemetry and active adversary mapping, providing high-context insights that go beyond surface-level indicators or recycled reports."
     },
     {
-      image: "/features/strategic-decision-makers.jpg",
+      image: "/features/strategic-decision-makers.webp",
       title: "Built for Strategic Decision-Makers",
       description: "From CISOs and CIOs to government security teams, we equip leadership with intelligence that's not just technical, it's strategic, contextual and designed to shape executive response."
     },
     {
-      image: "/features/global-threat-visibility.jpg",
+      image: "/features/global-threat-visibility.webp",
       title: "Global Threat Visibility. Local Relevance.",
       description: "We monitor cross-border threat trends, cybercriminal economies and geopolitical risks, then distill what matters to your sector, your region and your infrastructure."
     },
     {
-      image: "/features/confidential-trusted.jpg",
+      image: "/features/confidential-trusted.webp",
       title: "Confidential. Trusted. Discreet.",
       description: "We don't operate in the open. Our briefings, advisories and simulations are confidential, high-trust and often NDA-governed. You won't find them published and that's the point."
     },
     {
-      image: "/features/bold-enough.jpg",
+      image: "/features/bold-enough.webp",
       title: "Bold Enough to Say What Others Won't",
       description: "We speak plainly about the risks others downplay. We uncover overlooked attack surfaces, challenge false assurance and reveal hard truths, even when they're uncomfortable."
     }
@@ -63,7 +64,7 @@ const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onBriefingClick }) => {
                 <div className="relative flex h-20 w-20 items-center justify-center">
                   <div className="h-20 w-20 rounded-tr-2xl bg-blue-600" />
                   <div className="absolute top-1 left-1 h-20 w-20 rounded-tr-2xl bg-black/40 blur-sm" />
-                  <img
+                  <OptimizedImage
                     src={feature.image}
                     alt={feature.title}
                     className="absolute inset-y-0 left-3 h-20 w-20 rounded-tr-2xl object-cover"
@@ -101,9 +102,9 @@ const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onBriefingClick }) => {
 
           <div className="flex justify-center gap-4">
             {[1, 2, 3].map((member) => (
-              <img
+              <OptimizedImage
                 key={member}
-                src={`/team/member-${member}.jpg`}
+                src={`/team/member-${member}.webp`}
                 alt={`Team member ${member}`}
                 className="h-48 w-20 rounded-xl border-2 border-white object-cover"
               />

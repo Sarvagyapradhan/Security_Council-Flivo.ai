@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 const ThreatActorPage: React.FC = () => {
   // Section data for the follow-up block
@@ -46,10 +47,11 @@ const ThreatActorPage: React.FC = () => {
               <div className="relative mt-2 w-full sm:w-auto lg:mt-0 lg:w-[360px]">
                 {/* decorative rectangle outline behind the image */}
                 <div className="pointer-events-none absolute -top-2 -left-2 h-[calc(100%+0px)] w-[calc(100%+0px)] border border-[#00285633]"></div>
-                <img
-                  src="/images/aiimg1.jpg"
+                <OptimizedImage
+                  src="/images/aiimg1.webp"
                   alt="Dark web code screenshot indicating threat activity"
                   className="relative z-10 w-full rounded-sm border border-[#D0D7E2] shadow-sm"
+                  eager
                 />
                 <div className="absolute bottom-2 left-2 right-2 z-20 rounded bg-black/60 px-2 py-1 text-[10px] font-medium leading-3 text-white">
                   Analyst‑Verified | Risk Score: 8.9 | Source: Dark Web Market X-74

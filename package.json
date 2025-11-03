@@ -7,7 +7,7 @@
     "dev": "vite",
     "server": "node server/index.js",
     "dev:full": "concurrently -k -r \"npm:server\" \"npm:dev\"",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build --mode production",
     "start": "node server/index.js",
     "lint": "eslint .",
     "preview": "vite preview"

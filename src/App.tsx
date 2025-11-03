@@ -29,6 +29,7 @@ import ResearchPage from './components/ResearchPage';
 import SpeakersPage from './components/SpeakersPage';
 import AgendaPage from './components/AgendaPage';
 import RequestLandingPage from './components/RequestLandingPage';
+import Seo from './components/Seo';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -126,8 +127,26 @@ const App = () => {
         }
     };
 
+    const titles: Record<string, { t: string; d: string }> = {
+        home: { t: 'Security Council – Intelligence That Clarifies', d: 'Objective research intelligence and executive guidance to act with confidence.' },
+        'our-intelligence': { t: 'Our Intelligence – Security Council', d: 'Explore our methodology, threat domains, and how we deliver clarity.' },
+        'who-we-guide': { t: 'Who We Guide – Security Council', d: 'We guide boards, CISOs, and leaders where context matters most.' },
+        'latest-insight': { t: 'Latest Insights – Security Council', d: 'Read our latest research, briefings, and cyber threat insights.' },
+        events: { t: 'Events – Security Council', d: 'Upcoming and past events, briefings, and research presentations.' },
+        'ai-threats': { t: 'AI Threats – Security Council', d: 'Analysis of AI-powered threats and real-world exposure.' },
+        'threat-actor': { t: 'Threat Actor Research – Security Council', d: 'Profiles and assessments of emerging threat actors.' },
+        'threat-intelligence': { t: 'Threat Intelligence – Security Council', d: 'Intelligence services and reporting to inform executive action.' },
+        research: { t: 'Research – Security Council', d: 'Deep-dive research with evidence-driven findings and context.' },
+        speakers: { t: 'Speakers – Security Council', d: 'Meet our speakers and subject-matter experts.' },
+        agenda: { t: 'Agenda – Security Council', d: 'Event agenda and session details.' },
+        request: { t: 'Request a Briefing – Security Council', d: 'Request a confidential executive briefing from Security Council.' },
+    };
+
+    const currentMeta = titles[currentPage] ?? titles.home;
+
     return (
         <div className="min-h-screen bg-white">
+            <Seo title={currentMeta.t} description={currentMeta.d} />
             {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
                     <UtilityNav />

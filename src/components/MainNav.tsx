@@ -28,26 +28,26 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
           : 'top-0 bg-white/80 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur-md'
       }`}
     >
-      <div className="mx-auto flex w-full max-w-none items-center justify-start px-3 py-4 sm:px-4 lg:px-6">
+      <div className="mx-auto flex w-full max-w-none items-center justify-start px-3 py-3 sm:px-4 sm:py-4 lg:px-6">
         <button
           onClick={() => handleNavigateAndClose('home')}
           aria-label="Go to home"
-          className="ml-4 sm:ml-6 lg:ml-10 flex items-center"
+          className="ml-2 sm:ml-4 md:ml-6 lg:ml-10 flex items-center"
         >
           <OptimizedImage
             src="/logo_sc.webp"
             alt="Security Council"
-            className="h-7 w-auto sm:h-8 lg:h-9"
+            className="h-6 w-auto sm:h-7 md:h-8 lg:h-9"
             eager
           />
         </button>
 
-        <div className="flex items-center gap-4 lg:hidden">
-          <button className="rounded bg-[#0000D3] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-blue-800 sm:text-sm" onClick={() => handleNavigateAndClose('events')}>
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:hidden ml-auto">
+          <button className="rounded bg-[#0000D3] px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-800 sm:px-3 sm:py-2 sm:text-sm" onClick={() => handleNavigateAndClose('events')}>
             Request Report
           </button>
           <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded border border-[#002856]/20 text-[#002856]"
+            className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded border border-[#002856]/20 text-[#002856]"
             aria-label="Toggle navigation menu"
             onClick={() => setMenuOpen((prev) => !prev)}
           >
@@ -108,7 +108,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
       )}
     </nav>
     {/* Spacer to offset fixed nav height */}
-    <div className="h-[100px] sm:h-[108px] lg:h-[116px]" />
+    <div className={`${isAtTop ? 'h-[88px] sm:h-[96px] lg:h-[116px]' : 'h-[64px] sm:h-[72px] lg:h-[116px]'}`} />
     </>
   );
 };

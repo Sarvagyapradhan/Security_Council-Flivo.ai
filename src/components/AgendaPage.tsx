@@ -19,7 +19,12 @@ const AgendaPage: React.FC = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-[#002856] text-base font-bold sm:text-lg">Security Council</span>
+            <button 
+              onClick={() => navigateTo('/')}
+              className="text-[#002856] text-base font-bold sm:text-lg hover:text-blue-700 transition-colors cursor-pointer"
+            >
+              Security Council
+            </button>
             <span className="text-[#002856]/70 text-xs font-semibold tracking-wide">Events</span>
           </div>
           <div className="hidden items-center gap-8 md:flex">
@@ -193,7 +198,7 @@ const AgendaPage: React.FC = () => {
         </section>
 
         {/* Section 3 */}
-        <section className="relative w-full overflow-hidden bg-[#0A2847] min-h-[4239px]">
+        <section className="relative w-full overflow-hidden bg-[#0A2847]">
           {/* Background image */}
           <div className="absolute inset-0">
             <OptimizedImage
@@ -206,9 +211,9 @@ const AgendaPage: React.FC = () => {
           </div>
 
           {/* Content */}
-          <div className="relative z-[2] mx-auto w-full max-w-[1426px] px-6 py-16 sm:px-8">
+          <div className="relative z-[2] mx-auto w-full max-w-[1426px] px-6 py-12 sm:px-8 pb-16">
             {/* Section Header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-[48px] font-bold leading-tight text-white mb-2">
                 Cyber Leadership 2025 Agenda
               </h2>
@@ -218,7 +223,7 @@ const AgendaPage: React.FC = () => {
             </div>
 
             {/* Timeline Items */}
-            <div className="space-y-8">
+            <div className="space-y-4">
               {/* Timeline Item 1 */}
               <div className="flex items-center gap-6 w-full text-white">
                 <TimelineClock time="09:00" subtitle="09:20" />

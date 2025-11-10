@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
 import UtilityNav from './components/UtilityNav';
 import MainNav from './components/MainNav';
-import HeroSection from './components/HeroSection';
 import CTIHighlights from './components/CTIHighlights';
-import FeaturesSection from './components/FeaturesSection';
-import WhyChooseUs from './components/WhyChooseUs';
-import TestimonialsSection from './components/TestimonialsSection';
-import LifeAtSecurityCouncil from './components/LifeAtSecurityCouncil';
 import Footer from './components/Footer';
 import ContactPopup from './components/ContactPopup';
 import RequestPopup from './components/RequestPopup';
@@ -24,12 +19,15 @@ import Insight5Page from './components/insights/Insight5Page';
 import Insight6Page from './components/insights/Insight6Page';
 import Insight7Page from './components/insights/Insight7Page';
 import Insight8Page from './components/insights/Insight8Page';
+import Insight9Page from './components/insights/Insight9Page';
 import ThreatIntelligencePage from './components/ThreatIntelligencePage';
 import ResearchPage from './components/ResearchPage';
 import SpeakersPage from './components/SpeakersPage';
 import AgendaPage from './components/AgendaPage';
 import RequestLandingPage from './components/RequestLandingPage';
 import Seo from './components/Seo';
+import Home from './components/Home';
+import PrevHome from './components/PrevHome';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -66,19 +64,13 @@ const App = () => {
         return () => window.removeEventListener('popstate', syncFromLocation);
     }, []);
 
-    const renderHomePage = () => (
-        <>
-            <HeroSection onNavigate={handleNavigate} />
-            <CTIHighlights variant="cards-only" onNavigate={handleNavigate} />
-            <FeaturesSection />
-            <WhyChooseUs onBriefingClick={() => setIsBriefingOpen(true)} />
-            <TestimonialsSection />
-            <LifeAtSecurityCouncil />
-        </>
-    );
 
     const renderCurrentPage = () => {
         switch (currentPage) {
+            case 'home':
+                return <Home />;
+            case 'prev-home':
+                return <PrevHome onNavigate={handleNavigate} onBriefingClick={() => setIsBriefingOpen(true)} />;
             case 'our-intelligence':
                 return <OurIntelligencePage />;
             case 'who-we-guide':
@@ -106,6 +98,8 @@ const App = () => {
                 return <Insight7Page />;
             case 'insight-8':
                 return <Insight8Page />;
+            case 'insight-9':
+                return <Insight9Page />;
             case 'events':
                 return <EventsPage onNavigate={handleNavigate} />;
             case 'ai-threats':
@@ -123,12 +117,13 @@ const App = () => {
             case 'request':
                 return <RequestLandingPage />;
             default:
-                return renderHomePage();
+                return <Home />;
         }
     };
 
     const titles: Record<string, { t: string; d: string }> = {
-        home: { t: 'Security Council – Intelligence That Clarifies', d: 'Objective research intelligence and executive guidance to act with confidence.' },
+        home: { t: 'Security Council – Intelligence That Clarifies', d: 'Independent Cyber Threat Research. Trusted by Leaders. Backed by Analysts.' },
+        'prev-home': { t: 'Previous Home – Security Council', d: 'Objective research intelligence and executive guidance to act with confidence.' },
         'our-intelligence': { t: 'Our Intelligence – Security Council', d: 'Explore our methodology, threat domains, and how we deliver clarity.' },
         'who-we-guide': { t: 'Who We Guide – Security Council', d: 'We guide boards, CISOs, and leaders where context matters most.' },
         'latest-insight': { t: 'Latest Insights – Security Council', d: 'Read our latest research, briefings, and cyber threat insights.' },
@@ -149,17 +144,17 @@ const App = () => {
             <Seo title={currentMeta.t} description={currentMeta.d} />
             {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
                 <>
-                    <UtilityNav />
+                    {currentPage !== 'home' && <UtilityNav />}
                     <MainNav
                         currentPage={currentPage}
                         onNavigate={handleNavigate}
-                        isAtTop={isAtTop}
+                        isAtTop={currentPage === 'home' ? false : isAtTop}
                         onThreatReportClick={() => setIsBriefingOpen(true)}
                     />
                 </>
             )}
             {renderCurrentPage()}
-            {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && (
+            {currentPage !== 'research' && currentPage !== 'speakers' && currentPage !== 'agenda' && currentPage !== 'request' && (
                 <>
                     <Footer onContactClick={() => setIsContactOpen(true)} />
                     <ContactPopup

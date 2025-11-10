@@ -74,7 +74,7 @@
 
 .agenda-section3__connector {
   width: 4px;
-  height: 128px;
+  height: 80px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 9999px;
   flex-shrink: 0;

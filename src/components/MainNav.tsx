@@ -21,12 +21,18 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
 
   return (
     <>
-    <nav className={`fixed left-0 right-0 z-50 border-b bg-white shadow-sm ${isAtTop ? 'top-[36px] sm:top-[40px] lg:top-[44px]' : 'top-0'}`}>
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+    <nav
+      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
+        isAtTop
+          ? 'top-[36px] sm:top-[40px] lg:top-[44px] bg-white/95'
+          : 'top-0 bg-white/80 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur-md'
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-none items-center justify-start px-3 py-4 sm:px-4 lg:px-6">
         <button
           onClick={() => handleNavigateAndClose('home')}
           aria-label="Go to home"
-          className="flex items-center"
+          className="ml-4 sm:ml-6 lg:ml-10 flex items-center"
         >
           <OptimizedImage
             src="/logo_sc.webp"
@@ -55,12 +61,12 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
           </button>
         </div>
 
-        <div className="hidden items-center gap-8 text-[#002856] lg:flex">
+        <div className="hidden items-center ml-6 lg:ml-10 gap-6 lg:gap-8 pt-1 text-[#002856] lg:flex">
           {NAV_LINKS.map(({ id, label }) => (
             <button
               key={id}
               onClick={() => handleNavigateAndClose(id)}
-              className={`pb-2 text-sm font-medium transition-colors hover:text-blue-700 ${
+              className={`pb-2 text-[15px] font-medium transition-colors hover:text-blue-700 ${
                 currentPage === id ? 'border-b-2 border-[#0000D3]' : 'border-b-2 border-transparent'
               }`}
             >
@@ -69,7 +75,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
           ))}
         </div>
 
-        <div className="hidden flex-col items-end lg:flex">
+        <div className="hidden flex-col items-end ml-auto pt-1 lg:flex">
           <button
             className="relative flex h-[52px] w-[300px] items-center justify-center rounded border border-[#0000D3] bg-[#0000D3] text-sm font-bold text-white transition-colors hover:bg-blue-800"
             onClick={onThreatReportClick}
@@ -84,7 +90,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
       </div>
 
       {menuOpen && (
-        <div className="border-t border-[#E5E7EB] bg-white px-4 py-4 sm:px-6 lg:hidden">
+        <div className="border-t border-[#E5E7EB] bg-white/90 supports-[backdrop-filter]:backdrop-blur px-4 py-4 sm:px-6 lg:hidden">
           <div className="flex flex-col gap-4 text-[#002856]">
             {NAV_LINKS.map(({ id, label }) => (
               <button
@@ -111,7 +117,7 @@ const NAV_LINKS = [
   { id: 'who-we-guide', label: 'Who we guide' },
   { id: 'our-intelligence', label: 'Our Intelligence' },
   { id: 'latest-insight', label: 'Latest Insight' },
-  { id: 'events', label: 'Event' },
+  { id: 'events', label: 'Events' },
 ];
 
 export default MainNav;

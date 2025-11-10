@@ -5,6 +5,7 @@ import mysql from "mysql2/promise";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
+import compression from "compression";
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const currentDir = path.dirname(currentFilePath);
@@ -49,6 +50,19 @@ app.use(
 );
 
 app.use(express.json());
+
+// Compression middleware (gzip/Brotli)
+app.use(compression({
+  filter: (req, res) => {
+    // Compress all responses except if explicitly disabled
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    return compression.filter(req, res);
+  },
+  level: 6, // Balance between compression and CPU usage
+  threshold: 1024, // Only compress responses larger than 1KB
+}));
 
 // MySQL pool
 function createMysqlPoolFromEnv() {
@@ -408,9 +422,34 @@ app.use("/api", (_req, res) => res.status(404).json({ message: "Not Found" }));
 
 // Serve frontend if built (production) - register LAST and exclude /api paths
 if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-  // Any non-API GET should return index.html for SPA routing
+  // Static files with long-term caching
+  app.use(express.static(distPath, {
+    maxAge: '1y', // 1 year for immutable assets
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, filePath) => {
+      // Set aggressive caching for hashed assets (JS/CSS from Vite)
+      if (/\.(js|css|woff2?|png|jpg|jpeg|webp|svg|ico)$/.test(filePath)) {
+        // Check if file has hash in name (Vite build pattern: asset-[hash].ext)
+        if (/[a-f0-9]{8,}\.(js|css|woff2?|png|jpg|jpeg|webp|svg)$/i.test(path.basename(filePath))) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+          // For non-hashed assets, use shorter cache
+          res.setHeader('Cache-Control', 'public, max-age=86400'); // 1 day
+        }
+      }
+      // Images get long cache
+      if (/\.(png|jpg|jpeg|webp|svg|gif|ico)$/i.test(filePath)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+    },
+  }));
+  
+  // HTML files should not be cached
   app.get(/^\/(?!api)(.*)/, (_req, res) => {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     res.sendFile(path.join(distPath, "index.html"));
   });
 }

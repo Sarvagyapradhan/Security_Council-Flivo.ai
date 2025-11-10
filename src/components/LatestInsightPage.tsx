@@ -10,7 +10,7 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All Research');
-  const [selectedSort, setSelectedSort] = useState<'Latest' | 'Analyst' | 'Topic' | 'Most Downloaded'>('Latest');
+  const [selectedSort, setSelectedSort] = useState<'Latest' | 'Analyst' | 'Topic' | 'Most Downloaded'>('Topic');
 
   const researchData = useMemo(() => ([
     {
@@ -68,6 +68,13 @@ const LatestInsightPage: React.FC<LatestInsightPageProps> = ({ onNavigate }) => 
       description: "Comprehensive analysis of recent cyber incidents, ransomware activity, phishing campaigns and emerging exploits, providing leadership teams with timely, actionable intelligence for rapid decision-making.",
       source: "Teresa Walsh Chief Intelligence Officer FS-ISAC",
       link: "View Weekly Threat Brief"
+    },
+    {
+      title: "Outsmart Threats Before They Strike with Proactive Pre-Breach Intelligence",
+      date: "June 10, 2025",
+      description: "Discover how pre-breach intelligence helps organisations detect cyber threats early, prevent attacks, and stay ahead with proactive AI-driven cybersecurity strategies.",
+      source: "Michael Rodriguez, Security Researcher",
+      link: "Access pre-breach intelligence"
     }
   ]), []);
 

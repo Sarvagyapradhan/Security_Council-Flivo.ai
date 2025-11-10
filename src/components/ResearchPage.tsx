@@ -26,7 +26,12 @@ const ResearchPage: React.FC = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-[#002856] text-base font-bold sm:text-lg">Security Council</span>
+            <button 
+              onClick={() => navigateTo('/')}
+              className="text-[#002856] text-base font-bold sm:text-lg hover:text-blue-700 transition-colors cursor-pointer"
+            >
+              Security Council
+            </button>
             <span className="text-[#002856]/70 text-xs font-semibold tracking-wide">Events</span>
           </div>
           <div className="hidden items-center gap-8 md:flex">

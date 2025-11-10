@@ -18,7 +18,12 @@ const SpeakersPage: React.FC = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-[#002856] text-base font-bold sm:text-lg">Security Council</span>
+            <button 
+              onClick={() => navigateTo('/')}
+              className="text-[#002856] text-base font-bold sm:text-lg hover:text-blue-700 transition-colors cursor-pointer"
+            >
+              Security Council
+            </button>
             <span className="text-[#002856]/70 text-xs font-semibold tracking-wide">Events</span>
           </div>
           <div className="hidden items-center gap-8 md:flex">
@@ -133,7 +138,7 @@ const SpeakersPage: React.FC = () => {
                   <div className="hexagon-row hexagon-row-3">
                     <div className="hexagon-wrapper">
                       <div className="hexagon-inner">
-                        <OptimizedImage src="/event_page_components/Speakers/hexagon_image5.webp" alt="Speaker 5" className="hexagon-img" />
+                        <OptimizedImage src="/event_page_components/person2.webp" alt="Speaker 5" className="hexagon-img" />
                       </div>
                     </div>
                     <div className="hexagon-wrapper">
@@ -162,7 +167,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image1.webp" alt="Jane Mitchell" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Section 5/image1.webp" alt="Jane Mitchell" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Jane Mitchell</h3>
                     <p className="speaker-title">A Global Chief Information Security Officer (CISO)</p>
@@ -287,7 +292,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image5.webp" alt="Amira Khan" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Section 5/image2.webp" alt="Amira Khan" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Amira Khan</h3>
                     <p className="speaker-title">Chief Security Strategist</p>
@@ -381,7 +386,7 @@ const SpeakersPage: React.FC = () => {
             <div className="speaker-card-wrapper">
               <div className="speaker-card-left">
                 <div className="speaker-image-container">
-                  <OptimizedImage src="/event_page_components/Speakers/Section 2/person_image8.webp" alt="Elena Petrova" className="speaker-image" />
+                  <OptimizedImage src="/event_page_components/Section 5/image3.webp" alt="Elena Petrova" className="speaker-image" />
                   <div className="speaker-info-overlay">
                     <h3 className="speaker-name">Elena Petrova</h3>
                     <p className="speaker-title">VP Cyber Threat Intelligence</p>

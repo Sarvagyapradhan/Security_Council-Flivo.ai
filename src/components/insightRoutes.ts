@@ -17,6 +17,7 @@ const knownInsightRoutes: Record<string, string> = {
   [normalizeTitle('Emerging Cyber Regulations: Global Analysis')]: 'insight-7',
   [normalizeTitle('Emerging Cyber Regulations: Global Risk Analysis for Legal & Compliance Leaders')]: 'insight-7',
   [normalizeTitle('Weekly Threat Intelligence Brief – August 2025')]: 'insight-8',
+  [normalizeTitle('Outsmart Threats Before They Strike with Proactive Pre-Breach Intelligence')]: 'insight-9',
 };
 
 export function getInsightRouteForTitle(title: string | undefined | null): string | undefined {

@@ -3,6 +3,7 @@ import UtilityNav from './UtilityNav';
 import MainNav from './MainNav';
 import Footer from './Footer';
 import RequestPopup from './RequestPopup';
+import ContactPopup from './ContactPopup';
 import OptimizedImage from './OptimizedImage';
 
 const INITIAL_FORM_STATE = {
@@ -19,6 +20,7 @@ const INITIAL_FORM_STATE = {
 const RequestLandingPage: React.FC = () => {
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [isRequestOpen, setIsRequestOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Copied content sources
   const whyChooseFeatures = [
@@ -109,8 +111,17 @@ const RequestLandingPage: React.FC = () => {
       <MainNav currentPage="request" onNavigate={() => {}} isAtTop />
 
       <main>
-            <section className="relative isolate flex items-center justify-center bg-cover bg-center bg-[url('/Page%20Components/Background.webp')] w-screen min-h-[883px] -mt-[100px] sm:-mt-[108px] lg:-mt-[116px] px-0">
-          <div className="absolute inset-0 bg-[rgba(0,0,0,0.68)]" />
+            <section className="relative isolate flex items-center justify-center w-screen min-h-[883px] -mt-[100px] sm:-mt-[108px] lg:-mt-[116px] px-0 overflow-hidden">
+              <div className="absolute inset-0 z-0">
+                <OptimizedImage
+                  src="/Page Components/Background.webp"
+                  alt=""
+                  className="h-full w-full object-cover"
+                  eager
+                  aria-hidden="true"
+                />
+              </div>
+          <div className="absolute inset-0 bg-[rgba(0,0,0,0.68)] z-10" />
 
           <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-start gap-8 px-2 sm:px-4 py-12 text-left lg:gap-10 lg:py-20">
             <div className="max-w-4xl space-y-3 text-white">
@@ -413,7 +424,12 @@ const RequestLandingPage: React.FC = () => {
         </section>
       </main>
 
-      <Footer />
+      <Footer onContactClick={() => setIsContactOpen(true)} />
+      <ContactPopup
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        showTrigger={false}
+      />
     </div>
   );
 };

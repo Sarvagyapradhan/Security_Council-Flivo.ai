@@ -267,7 +267,7 @@ const EventsPage: React.FC<EventsPageProps> = ({ onNavigate }) => {
      <div className="lg:col-span-5 relative">
        <div className="absolute -right-3 -bottom-3 w-full h-full border-2 border-white/40 rounded-md hidden md:block"></div>
        <OptimizedImage
-         src="/images/events/why-attend.webp"
+         src="/images/cta-background-figma.webp"
          alt="Security council meeting"
          className="relative z-10 w-full max-w-md lg:max-w-none rounded-md shadow-lg mx-auto"
        />

@@ -17,7 +17,7 @@ body {
   overscroll-behavior: contain;
 }
 
-.who-we-guide-hero { background-image: url('/who-we-guide/backgrounds/hero-background.jpg'); background-size: cover; background-position: center; }
+.who-we-guide-hero { background-image: url('/who-we-guide/backgrounds/hero-background.webp'); background-size: cover; background-position: center; }
 
 /* Custom dropdown styles */
 .dropdown-open {
@@ -25,16 +25,16 @@ body {
 }
 
 /* Latest Insights hero background helper to avoid inline style lint warning */
-.li-hero-bg { background-image: url('/latest-insights/backgrounds/hero-background.jpg'); background-repeat: no-repeat; background-position: center center; background-size: cover; }
+.li-hero-bg { background-image: url('/latest-insights/backgrounds/hero-background.webp'); background-repeat: no-repeat; background-position: center center; background-size: cover; }
 
 /* Latest Insights: hero background (no inline styles) */
-.latest-insights-hero { background-image: url('/latest-insights/backgrounds/hero-background.jpg'); background-repeat: no-repeat; background-position: center center; background-size: cover; }
+.latest-insights-hero { background-image: url('/latest-insights/backgrounds/hero-background.webp'); background-repeat: no-repeat; background-position: center center; background-size: cover; }
 
 /* Events Page: hero gradient background (no inline styles) */
 .hero-gradient-bg {
   background-image:
     linear-gradient(270deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.8) 44.46%),
-    url('/images/events/hero-background.jpg');
+    url('/images/events/hero-background.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -44,7 +44,7 @@ body {
 .hero-bg-overlay {
   background:
     linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.8) 44.46%),
-    url('/images/events/hero-background.jpg');
+    url('/images/events/hero-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -58,7 +58,7 @@ body {
 
 /* Research Page: hero background and overlays (remove inline styles) */
 .research-hero-bg {
-  background-image: url('/event_page_components/event_hero_background.png');
+  background-image: url('/event_page_components/Agenda/background.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -70,12 +70,59 @@ body {
     linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(1, 53, 115, 0.99) 98.24%);
 }
 
+/* Home hero: background image overlay gradients (no inline styles) */
+.home-hero-overlays {
+  background:
+    linear-gradient(0deg, rgba(0, 0, 211, 0.14), rgba(0, 0, 211, 0.14)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 68.16%);
+}
+
+/* Force monochrome white for logos placed over tinted backgrounds */
+.logo-white {
+  filter: brightness(0) invert(1);
+}
+
+/* Intelligence panel cards (home hero) */
+.intel-card {
+  position: relative;
+  display: block;
+  padding: 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #0A2A57;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.intel-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -14px; /* subtle overhang seen in reference */
+  bottom: 0;
+  width: 14px;
+  border-radius: 0 10px 10px 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.06) 100%);
+  opacity: .55;
+  pointer-events: none;
+}
+
+.intel-card:hover {
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+.intel-card-title { font-size: 13px; font-weight: 700; line-height: 1.25; }
+.intel-card-cta { margin-top: 8px; display:flex; align-items:center; gap:4px; font-size: 12px; font-weight: 700; color: #0A2A57; }
+
 /* Right-side grid covering 30% of the viewport width */
 .research-right-grid {
   background:
     /* Strong top blend to match hero's bottom gradient seamlessly */
     linear-gradient(180deg, rgba(1, 53, 115, 0.99) 0%, rgba(1, 53, 115, 0.9) 3%, rgba(1, 53, 115, 0.7) 8%, rgba(1, 53, 115, 0.4) 15%, rgba(1, 53, 115, 0.15) 22%, transparent 30%),
-    url('/event_page_components/Square_art.png');
+    url('/event_page_components/Square_art.webp');
   background-repeat: no-repeat;
   background-position: center right;
   background-size: cover;
@@ -109,7 +156,7 @@ body {
     linear-gradient(269.06deg, rgba(1, 61, 132, 0.4) 22.97%, rgba(0, 0, 0, 0.4) 49.97%),
     linear-gradient(180deg, #013573 3.64%, rgba(0, 0, 0, 0) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0) 82.62%, rgba(1, 53, 115, 0.8) 100%),
-    url('/event_page_components/Section 2/image 1.png');
+    url('/event_page_components/Agenda/Section 2/background.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -135,17 +182,17 @@ body {
     linear-gradient(178.52deg, rgba(1, 53, 115, 0.7) 5.89%, rgba(0, 76, 163, 0) 77.6%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.9) 15.15%, rgba(0, 0, 0, 0) 43.63%),
     linear-gradient(270.02deg, rgba(0, 0, 0, 0.5) 0.02%, rgba(1, 53, 115, 0.5) 43.27%),
-    url('/event_page_components/Section 3/Background Pattern & Mask.png') center center / cover no-repeat,
-    url('/event_page_components/Section 3/background_section3.png') center center / cover no-repeat;
+    url('/event_page_components/Section 3/Background Pattern & Mask.webp') center center / cover no-repeat,
+    url('/event_page_components/Section 3/background_section3.webp') center center / cover no-repeat;
 }
 .section3-card { border-radius: 16px; outline: 3px solid rgba(255,255,255,.7); box-shadow: 0 10px 24px rgba(0,0,0,.35); overflow: hidden; }
 .section3-card-overlay { background: linear-gradient(180deg, rgba(0,0,0,0) 10%, rgba(0,0,0,.6) 55%, rgba(0,0,0,.9) 100%); }
 
 /* Section 3: card background images */
-.section3-card-img1 { background-image: url('/event_page_components/Section 3/image1.png'); background-size: cover; background-position: center; }
-.section3-card-img2 { background-image: url('/event_page_components/Section 3/image2.png'); background-size: cover; background-position: center; }
-.section3-card-img3 { background-image: url('/event_page_components/Section 3/image3.png'); background-size: cover; background-position: center; }
-.section3-card-img4 { background-image: url('/event_page_components/Section 3/image4.png'); background-size: cover; background-position: center; }
+.section3-card-img1 { background-image: url('/event_page_components/Section 3/image1.webp'); background-size: cover; background-position: center; }
+.section3-card-img2 { background-image: url('/event_page_components/Section 2/image 3.webp'); background-size: cover; background-position: center; }
+.section3-card-img3 { background-image: url('/event_page_components/Section 3/image3.webp'); background-size: cover; background-position: center; }
+.section3-card-img4 { background-image: url('/event_page_components/Section 2/image 2.webp'); background-size: cover; background-position: center; }
 
 /* Section 4 helpers */
 .section4-bg {
@@ -153,7 +200,7 @@ body {
     linear-gradient(178.52deg, rgba(1, 53, 115, 0.7) 5.89%, rgba(0, 76, 163, 0) 77.6%),
     linear-gradient(270.02deg, rgba(0, 0, 0, 0.5) 0.02%, rgba(1, 53, 115, 0.5) 43.27%),
     linear-gradient(180deg, rgba(0, 40, 86, 0) 0%, #002856 105.15%),
-    url('/event_page_components/Section 4/background section4.jpg');
+    url('/event_page_components/Agenda/Section 2/card image.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -169,9 +216,9 @@ body {
   pointer-events: none;
 }
 .section4-card-frame { border-radius: 16px; overflow: hidden; position: relative; outline: 3px solid rgba(255,255,255,.75); box-shadow: 0 14px 30px rgba(0,0,0,.55); }
-.section4-card-img1 { background-image: url('/event_page_components/Section 4/image1.png'); background-size: cover; background-position: center; }
-.section4-card-img2 { background-image: url('/event_page_components/Section 4/image2.png'); background-size: cover; background-position: center; }
-.section4-card-img3 { background-image: url('/event_page_components/Section 4/image3.png'); background-size: cover; background-position: center; }
+.section4-card-img1 { background-image: url('/event_page_components/Agenda/mid4.webp'); background-size: cover; background-position: center; }
+.section4-card-img2 { background-image: url('/event_page_components/Agenda/outer3.webp'); background-size: cover; background-position: center; }
+.section4-card-img3 { background-image: url('/event_page_components/Agenda/outer1.webp'); background-size: cover; background-position: center; }
 .section4-pill { position:absolute; left:18px; top:18px; background:#fff; color:#0C1C3E; font-weight:800; padding:10px 16px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,.25); }
 .section4-caption { position:absolute; left:18px; right:18px; bottom:18px; background:#fff; color:#0C1C3E; border-radius:12px; padding:14px 16px; font-weight:800; line-height:1.25; box-shadow:0 6px 18px rgba(0,0,0,.25); }
 .section4-cta { display:inline-flex; align-items:center; justify-content:center; background:#0000D3; color:#fff; font-weight:800; padding:16px 22px; border-radius:10px; transition:background .2s; }
@@ -183,7 +230,7 @@ body {
     linear-gradient(178.52deg, rgba(1, 53, 115, 0.7) 5.89%, rgba(0, 76, 163, 0) 77.6%),
     linear-gradient(270.02deg, rgba(0, 0, 0, 0.5) 0.02%, rgba(1, 53, 115, 0.5) 43.27%),
     linear-gradient(180deg, rgba(0, 40, 86, 0) 0%, #002856 105.15%),
-    url('/event_page_components/Section 5/background_section5.png');
+    url('/event_page_components/Agenda/outer3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -192,8 +239,8 @@ body {
 /* Layer both vector hexagon assets for backdrop */
 .section5-hexes {
   background:
-    url('/event_page_components/Section 5/Vector.png') center center / contain no-repeat,
-    url('/event_page_components/Section 5/Vector (1).png') center center / contain no-repeat;
+    url('/event_page_components/Section 5/Vector.webp') center center / contain no-repeat,
+    url('/event_page_components/Section 5/Vector (1).webp') center center / contain no-repeat;
   filter: drop-shadow(0 8px 24px rgba(0,0,0,.35));
 }
 
@@ -262,9 +309,9 @@ body {
 .section5-button:hover { background: #0b1bbf; }
 
 /* Speaker image helpers */
-.section5-img1 { background-image: url('/event_page_components/Section 5/image1.png'); background-size: cover; background-position: center; }
-.section5-img2 { background-image: url('/event_page_components/Section 5/image2.png'); background-size: cover; background-position: center; }
-.section5-img3 { background-image: url('/event_page_components/Section 5/image3.png'); background-size: cover; background-position: center; }
+.section5-img1 { background-image: url('/event_page_components/Section 5/image1.webp'); background-size: cover; background-position: center; }
+.section5-img2 { background-image: url('/event_page_components/Section 5/image2.webp'); background-size: cover; background-position: center; }
+.section5-img3 { background-image: url('/event_page_components/Section 5/image3.webp'); background-size: cover; background-position: center; }
 
 /* Section 6 helpers */
 .section6-bg {
@@ -272,7 +319,7 @@ body {
     linear-gradient(178.52deg, rgba(1, 53, 115, 0.7) 5.89%, rgba(0, 76, 163, 0) 77.6%),
     linear-gradient(270.02deg, rgba(0, 0, 0, 0.5) 0.02%, rgba(1, 53, 115, 0.5) 43.27%),
     linear-gradient(180deg, rgba(0, 40, 86, 0) 0%, #002856 105.15%),
-    url('/event_page_components/Section 6/background.png');
+    url('/event_page_components/Agenda/outer3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -287,7 +334,7 @@ body {
 }
 
 .section6-card-img {
-  background-image: url('/event_page_components/Section 6/card.png');
+  background-image: url('/event_page_components/Agenda/Section 2/card image.webp');
   background-size: cover;
   background-position: center;
 }
@@ -324,7 +371,7 @@ body {
 .section7-bg {
   background:
     linear-gradient(180deg, rgba(0, 40, 86, 0.00) 0%, rgba(0, 40, 86, 0.80) 100%),
-    url('/event_page_components/Section 7/background.png');
+    url('/event_page_components/Agenda/outer3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -387,8 +434,8 @@ body {
   transform: translateY(0);
 }
 
-.section7-img1 { background-image: url('/event_page_components/Section 7/image 1.png'); background-size: cover; background-position: center; }
-.section7-img2 { background-image: url('/event_page_components/Section 7/image 2.png'); background-size: cover; background-position: center; }
+.section7-img1 { background-image: url('/event_page_components/Section 7/image 1.webp'); background-size: cover; background-position: center; }
+.section7-img2 { background-image: url('/event_page_components/Section 7/image 2.webp'); background-size: cover; background-position: center; }
 .section7-logo { width: 140px; height: auto; margin-top: 8px; }
 
 /* Section 7: device imgs without frames */
@@ -423,7 +470,7 @@ body {
   background:
     linear-gradient(260.04deg, rgba(0, 80, 172, 0.8) 10.84%, rgba(0, 0, 0, 0.48) 68.27%),
     linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(1, 53, 115, 0.99) 98.24%),
-    url('/event_page_components/Speakers/background.png');
+    url('/event_page_components/Agenda/background.webp');
   background-size: cover;
   background-position: center;
 }
@@ -531,7 +578,7 @@ body {
     linear-gradient(269.06deg, rgba(1, 61, 132, 0.4) 22.97%, rgba(0, 0, 0, 0.4) 49.97%),
     linear-gradient(180deg, #013573 3.64%, rgba(0, 0, 0, 0) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0) 82.62%, rgba(1, 53, 115, 0.8) 100%),
-    url('/event_page_components/Speakers/Section 2/background.png');
+    url('/event_page_components/Agenda/Section 3/background.webp');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

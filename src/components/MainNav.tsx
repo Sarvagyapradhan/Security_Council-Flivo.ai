@@ -24,25 +24,25 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
     <nav
       className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
         isAtTop
-          ? 'top-[36px] sm:top-[40px] lg:top-[44px] bg-white/95'
+          ? 'top-[36px] sm:top-[40px] 2xl:top-[44px] bg-white/95'
           : 'top-0 bg-white/80 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur-md'
       }`}
     >
-      <div className="mx-auto flex w-full max-w-none items-center justify-start px-3 py-3 sm:px-4 sm:py-4 lg:px-6">
+      <div className="mx-auto flex w-full max-w-none items-center justify-start px-3 py-3 sm:px-4 sm:py-4 2xl:px-6">
         <button
           onClick={() => handleNavigateAndClose('home')}
           aria-label="Go to home"
-          className="ml-2 sm:ml-4 md:ml-6 lg:ml-10 flex items-center"
+          className="ml-2 sm:ml-4 md:ml-6 2xl:ml-10 flex items-center"
         >
           <OptimizedImage
             src="/logo_sc.webp"
             alt="Security Council"
-            className="h-6 w-auto sm:h-7 md:h-8 lg:h-9"
+            className="h-6 w-auto sm:h-7 md:h-8 2xl:h-9"
             eager
           />
         </button>
 
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:hidden ml-auto">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 2xl:hidden ml-auto">
           <button className="rounded bg-[#0000D3] px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-800 sm:px-3 sm:py-2 sm:text-sm" onClick={() => handleNavigateAndClose('events')}>
             Request Report
           </button>
@@ -61,7 +61,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
           </button>
         </div>
 
-        <div className="hidden items-center ml-6 lg:ml-10 gap-6 lg:gap-8 pt-1 text-[#002856] lg:flex">
+        <div className="hidden items-center ml-6 2xl:ml-10 gap-6 2xl:gap-8 pt-1 text-[#002856] 2xl:flex">
           {NAV_LINKS.map(({ id, label }) => (
             <button
               key={id}
@@ -75,7 +75,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
           ))}
         </div>
 
-        <div className="hidden flex-col items-end ml-auto pt-1 lg:flex">
+        <div className="hidden flex-col items-end ml-auto pt-1 2xl:flex">
           <button
             className="relative flex h-[52px] w-[300px] items-center justify-center rounded border border-[#0000D3] bg-[#0000D3] text-sm font-bold text-white transition-colors hover:bg-blue-800"
             onClick={onThreatReportClick}
@@ -90,7 +90,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
       </div>
 
       {menuOpen && (
-        <div className="border-t border-[#E5E7EB] bg-white/90 supports-[backdrop-filter]:backdrop-blur px-4 py-4 sm:px-6 lg:hidden">
+        <div className="border-t border-[#E5E7EB] bg-white/90 supports-[backdrop-filter]:backdrop-blur px-4 py-4 sm:px-6 2xl:hidden">
           <div className="flex flex-col gap-4 text-[#002856]">
             {NAV_LINKS.map(({ id, label }) => (
               <button
@@ -108,7 +108,7 @@ const MainNav: React.FC<MainNavProps> = ({ currentPage, onNavigate, isAtTop = tr
       )}
     </nav>
     {/* Spacer to offset fixed nav height */}
-    <div className={`${isAtTop ? 'h-[88px] sm:h-[96px] lg:h-[116px]' : 'h-[64px] sm:h-[72px] lg:h-[116px]'}`} />
+    <div className={`${isAtTop ? 'h-[88px] sm:h-[96px] 2xl:h-[116px]' : 'h-[64px] sm:h-[72px] 2xl:h-[116px]'}`} />
     </>
   );
 };
@@ -118,6 +118,7 @@ const NAV_LINKS = [
   { id: 'our-intelligence', label: 'Our Intelligence' },
   { id: 'latest-insight', label: 'Latest Insight' },
   { id: 'events', label: 'Events' },
+  { id: 'new-intelligent', label: 'New Intelligent' },
 ];
 
 export default MainNav;

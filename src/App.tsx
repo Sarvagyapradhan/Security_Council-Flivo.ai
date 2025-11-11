@@ -28,6 +28,7 @@ import RequestLandingPage from './components/RequestLandingPage';
 import Seo from './components/Seo';
 import Home from './components/Home';
 import PrevHome from './components/PrevHome';
+import NewIntelligentPage from './components/NewIntelligentPage';
 
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home');
@@ -116,6 +117,8 @@ const App = () => {
                 return <AgendaPage />;
             case 'request':
                 return <RequestLandingPage />;
+            case 'new-intelligent':
+                return <NewIntelligentPage />;
             default:
                 return <Home />;
         }
@@ -135,6 +138,7 @@ const App = () => {
         speakers: { t: 'Speakers – Security Council', d: 'Meet our speakers and subject-matter experts.' },
         agenda: { t: 'Agenda – Security Council', d: 'Event agenda and session details.' },
         request: { t: 'Request a Briefing – Security Council', d: 'Request a confidential executive briefing from Security Council.' },
+        'new-intelligent': { t: 'New Intelligent – Security Council', d: 'Explore Security Council intelligence and newsletter resources.' },
     };
 
     const currentMeta = titles[currentPage] ?? titles.home;

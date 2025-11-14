@@ -115,6 +115,15 @@ const App = () => {
                 return <RequestLandingPage />;
             case 'new-intelligent':
                 return <NewIntelligentPage />;
+            case 'old-who-we-guide':
+                return (
+                    <>
+                        <WhoWeGuidePage onNavigate={handleNavigate} />
+                        <CTIHighlights variant="grid-only" onNavigate={handleNavigate} />
+                    </>
+                );
+            case 'old-our-intelligence':
+                return <OurIntelligencePage />;
             default:
                 return <Home />;
         }

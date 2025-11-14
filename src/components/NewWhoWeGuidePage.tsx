@@ -3,159 +3,63 @@ import OptimizedImage from './OptimizedImage';
 
 const focusAreas = [
     {
-        title: 'Adversary Tracking & Threat Actor Profiling',
+        title: 'Executives & Cybersecurity Leaders:',
         description:
-            'We monitor attacker ecosystems in real time, from ransomware affiliates and APT groups to low-signal threat actors operating on closed networks. Our profiling work maps motivations, infrastructure and behavioral patterns to expose risk before impact.',
+            "They don't need dashboards. They need clarity. We guide CISOs, CTOs and senior security heads through exposures that aren't yet public and decisions that can't wait for alerts. From zero-day visibility to adversary intent, our intelligence supports high-stakes risk judgment, not post-breach reaction.",
     },
     {
-        title: 'Dark Web Observation & Leak Intelligence',
+        title: 'Executives & Cybersecurity Leaders:',
         description:
-            "Beyond indexed data dumps, we track live mentions, exposed credentials, active tokens and exploit discussions in dark web forums, encrypted channels and deep marketplaces. Leak detection is just the surface, we focus on exploitation patterns and how they map to your environment.",
+            "They don't need dashboards. They need clarity. We guide CISOs, CTOs and senior security heads through exposures that aren't yet public and decisions that can't wait for alerts. From zero-day visibility to adversary intent, our intelligence supports high-stakes risk judgment, not post-breach reaction.",
     },
     {
-        title: 'Infrastructure Exposure & Attack Surface Discovery',
+        title: 'Executives & Cybersecurity Leaders:',
         description:
-            "We identify vulnerable assets that are often missed: orphaned endpoints, shadow IT, forgotten cloud keys and misconfigured integrations. This isn't just external scanning, it's exposure mapping through the lens of how attackers think.",
-    },
-    {
-        title: 'Insider Risk & Behavioral Anomalies',
-        description:
-            'Our analysts flag risk not just by roles, but by actions. From privilege drift to silent data exfiltration, we surface internal movements that could signal policy bypass or breach preparation.',
-    },
-    {
-        title: 'Third-Party Risk Analysis',
-        description:
-            "Breaches don't always start within your perimeter. We assess digital interdependencies, third-party toolkits and vendor platforms for signs of indirect compromise and lateral risk exposure.",
-    },
-    {
-        title: 'Sector-Specific Threat Intelligence',
-        description:
-            'Different industries face different breaches, our models are built for it. From finance and critical infrastructure to SaaS platforms and healthcare, we provide contextual intelligence that reflects your actual threat environment, not generic feeds.',
+            "They don't need dashboards. They need clarity. We guide CISOs, CTOs and senior security heads through exposures that aren't yet public and decisions that can't wait for alerts. From zero-day visibility to adversary intent, our intelligence supports high-stakes risk judgment, not post-breach reaction.",
     },
 ];
 
 const focusAreaIcons: React.ReactNode[] = [
     (
         <svg
-            key="shield"
+            key="clipboard-person"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
         >
-            <path
-                d="M12 3L5 6V11C5 15.4183 8.13401 19.4022 12 21C15.866 19.4022 19 15.4183 19 11V6L12 3Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M10 12L11.5 13.5L14 11"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
+            <rect x="8" y="4" width="8" height="12" rx="1" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M10 2C10 1.44772 10.4477 1 11 1H13C13.5523 1 14 1.44772 14 2V3H10V2Z" stroke="currentColor" strokeWidth="1.6" />
+            <circle cx="12" cy="9" r="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M8 14C8 12.8954 8.89543 12 10 12H14C15.1046 12 16 12.8954 16 14V16H8V14Z" stroke="currentColor" strokeWidth="1.6" />
         </svg>
     ),
     (
         <svg
-            key="radar"
+            key="clipboard-person-2"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
         >
-            <path
-                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-            />
-            <path
-                d="M12 7V12L15 15"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+            <rect x="8" y="4" width="8" height="12" rx="1" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M10 2C10 1.44772 10.4477 1 11 1H13C13.5523 1 14 1.44772 14 2V3H10V2Z" stroke="currentColor" strokeWidth="1.6" />
+            <circle cx="12" cy="9" r="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M8 14C8 12.8954 8.89543 12 10 12H14C15.1046 12 16 12.8954 16 14V16H8V14Z" stroke="currentColor" strokeWidth="1.6" />
         </svg>
     ),
     (
         <svg
-            key="network"
+            key="clipboard-person-3"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
         >
-            <circle cx="12" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-            <circle cx="6" cy="17" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-            <circle cx="18" cy="17" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-            <path d="M10.5 6.8L7.5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            <path d="M13.5 6.8L16.5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            <path d="M8.5 17H15.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        </svg>
-    ),
-    (
-        <svg
-            key="insight"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-        >
-            <path
-                d="M12 5C7.58172 5 4 8.13401 4 12C4 15.866 7.58172 19 12 19C16.4183 19 20 15.866 20 12"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-            />
-            <path
-                d="M12 9V12L14 14"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-        </svg>
-    ),
-    (
-        <svg
-            key="risk"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-        >
-            <path
-                d="M4 17L9 12L13 15L20 8"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path d="M16 8H20V12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M4 21H20" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        </svg>
-    ),
-    (
-        <svg
-            key="sectors"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-        >
-            <path
-                d="M4 7H10V4H4V7ZM14 7H20V4H14V7ZM14 20H20V11H14V20ZM4 20H10V11H4V20Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-            />
+            <rect x="8" y="4" width="8" height="12" rx="1" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M10 2C10 1.44772 10.4477 1 11 1H13C13.5523 1 14 1.44772 14 2V3H10V2Z" stroke="currentColor" strokeWidth="1.6" />
+            <circle cx="12" cy="9" r="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M8 14C8 12.8954 8.89543 12 10 12H14C15.1046 12 16 12.8954 16 14V16H8V14Z" stroke="currentColor" strokeWidth="1.6" />
         </svg>
     ),
 ];
@@ -179,7 +83,7 @@ const ctiCards = [
     },
 ];
 
-const NewIntelligentPage: React.FC = () => (
+const NewWhoWeGuidePage: React.FC = () => (
     <main className="bg-white">
         {/* Section 1 - Hero */}
         <section className="relative bg-white overflow-hidden" aria-label="Inside the Threat Landscape">
@@ -188,9 +92,9 @@ const NewIntelligentPage: React.FC = () => (
                 <div className="relative bg-white py-12 sm:py-16 lg:py-20 lg:h-[288px] flex items-center">
                     <div className="mx-auto w-full">
                         <h1 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-[#0A2A57]">
-                            Inside the Threat Landscape
+                            We Don't Serve the Industry.
                             <br />
-                            We Know Best
+                            We Guide Its Decision-Makers.
                         </h1>
                     </div>
                 </div>
@@ -199,11 +103,11 @@ const NewIntelligentPage: React.FC = () => (
                 <div className="relative mt-0 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[577px] overflow-visible pb-[40px]">
                     {/* Full-bleed background image spanning viewport width */}
                     <div className="absolute top-0 left-1/2 z-0 h-[calc(100%-30px)] w-screen max-w-none -translate-x-1/2">
-                        <OptimizedImage
-                            src="/Our Intelligence/background.jpg"
+                        <img
+                            src="/new-who-we-guide/background.png"
                             alt="Business meeting"
                             className="h-full w-full object-cover"
-                            eager
+                            loading="eager"
                         />
                         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]" />
                         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,211,0)_0%,rgba(0,0,211,0.2)_100%)]" />
@@ -235,17 +139,19 @@ const NewIntelligentPage: React.FC = () => (
             <div className="absolute inset-0 z-10 bg-[linear-gradient(0deg,rgba(0,0,0,0.45),rgba(0,0,0,0.45))]" />
             <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,211,0)_0%,rgba(0,0,211,0.45)_100%)]" />
             <div className="relative z-20 mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-0 py-16 sm:py-20 lg:py-24 text-white">
-                <div className="mx-auto max-w-3xl text-center">
+                <div className="mx-auto max-w-5xl text-center">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white">
-                        Where We Focus
+                        Cyber Intelligence Designed for
+                         <br /> 
+                         Decision-Makers
                     </h2>
                 </div>
                 <div className="mt-4 -mx-4 sm:-mx-6 lg:mx-0 w-full lg:w-screen lg:max-w-none lg:relative lg:left-1/2 lg:-translate-x-1/2 rounded-lg px-6 pt-4 pb-4 sm:px-8 sm:pt-5 sm:pb-6" style={{ backgroundColor: 'rgba(0, 40, 86, 1)' }}>
-                    <div className="mx-auto max-w-3xl text-center">
+                    <div className="mx-auto max-w-4xl text-center">
                         <p className="text-base sm:text-lg md:text-xl leading-relaxed text-white">
-                            Our intelligence spans across critical threat zones each monitored, dissected and analyzed by real
-                            humans with precision and intent. These are the environments where blind spots begin and where
-                            Security Council brings clarity.
+                            Security Council works upstream, before the breach, before the alert, before the exposure. <br />
+                            We guide those responsible for understanding risk at its root: the executives, analysts
+                            and security teams who make decisions when noise isn't an option.
                         </p>
                         <div className="mt-4">
                             <a
@@ -549,4 +455,5 @@ const NewIntelligentPage: React.FC = () => (
     </main>
 );
 
-export default NewIntelligentPage;
+export default NewWhoWeGuidePage;
+

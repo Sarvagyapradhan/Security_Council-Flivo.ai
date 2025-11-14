@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mysql from "mysql2/promise";
+import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
@@ -115,6 +116,40 @@ const graphConfigured = Boolean(
   graphConfig.clientId && graphConfig.clientSecret && graphConfig.tenantId && graphConfig.sender
 );
 
+let smtpTransporter;
+function getSmtpTransporter() {
+  if (smtpTransporter) return smtpTransporter;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  if (!user || !pass) return null;
+
+  const service = process.env.SMTP_SERVICE;
+  const host = process.env.SMTP_HOST || "smtp.gmail.com";
+  const port = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587;
+  const secure =
+    process.env.SMTP_SECURE?.toLowerCase() === "true" || port === 465;
+
+  const transportConfig = service
+    ? {
+        service,
+        auth: { user, pass },
+      }
+    : {
+        host,
+        port,
+        secure,
+        auth: { user, pass },
+      };
+
+  // Allow opt-out of TLS verification for local testing if needed
+  if (process.env.SMTP_TLS_REJECT_UNAUTHORIZED === "false") {
+    transportConfig.tls = { rejectUnauthorized: false };
+  }
+
+  smtpTransporter = nodemailer.createTransport(transportConfig);
+  return smtpTransporter;
+}
+
 async function fetchApi(...args) {
   if (typeof fetch === "function") {
     return fetch(...args);
@@ -188,11 +223,25 @@ async function sendMailViaGraph({ to, subject, html, text, replyTo }) {
 }
 
 async function sendMail({ to, subject, html, text, replyTo }) {
-  if (!graphConfigured) {
-    throw new Error("Microsoft Graph email credentials are not configured.");
+  const transporter = getSmtpTransporter();
+  if (!transporter) {
+    if (graphConfigured) {
+      await sendMailViaGraph({ to, subject, html, text, replyTo });
+      return;
+    }
+    throw new Error("No email transport configured (Graph or SMTP).");
   }
 
-  await sendMailViaGraph({ to, subject, html, text, replyTo });
+  const recipients = Array.isArray(to) ? to.join(",") : to;
+
+  await transporter.sendMail({
+    from: process.env.EMAIL_FROM || transporter.options.auth.user,
+    to: recipients,
+    subject,
+    html,
+    text,
+    replyTo,
+  });
 }
 
 const escapeHtml = (value = "") =>
@@ -204,7 +253,7 @@ const escapeHtml = (value = "") =>
     .replace(/'/g, "&#39;");
 
 async function ensureSchema() {
-  const createTableSql = `
+  const createContactTableSql = `
     CREATE TABLE IF NOT EXISTS contact_submissions (
       id INT AUTO_INCREMENT PRIMARY KEY,
       email VARCHAR(255) NOT NULL,
@@ -217,9 +266,27 @@ async function ensureSchema() {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
   `;
 
+  const createRequestTableSql = `
+    CREATE TABLE IF NOT EXISTS request_submissions (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      email VARCHAR(255) NOT NULL,
+      job_title VARCHAR(255) NOT NULL,
+      first_name VARCHAR(255) NOT NULL,
+      last_name VARCHAR(255) NOT NULL,
+      company_name VARCHAR(255) NOT NULL,
+      job_function VARCHAR(255) NOT NULL,
+      phone VARCHAR(64) NOT NULL,
+      country_region VARCHAR(255) NOT NULL,
+      user_agent VARCHAR(512) DEFAULT NULL,
+      ip_address VARCHAR(64) DEFAULT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `;
+
   const conn = await pool.getConnection();
   try {
-    await conn.query(createTableSql);
+    await conn.query(createContactTableSql);
+    await conn.query(createRequestTableSql);
   } finally {
     conn.release();
   }
@@ -239,6 +306,9 @@ app.get("/api/health", async (_req, res) => {
 
 // Optional: clarify method support for /api/contact
 app.get("/api/contact", (_req, res) => res.status(405).json({ message: "Method Not Allowed" }));
+
+// Optional: clarify method support for /api/request
+app.get("/api/request", (_req, res) => res.status(405).json({ message: "Method Not Allowed" }));
 
 // Contact submission endpoint
 app.post("/api/contact", async (req, res) => {
@@ -414,6 +484,230 @@ app.post("/api/contact", async (req, res) => {
     // Duplicate handling or generic error
     console.error("/api/contact error", err);
     res.status(500).json({ message: "Failed to store submission", error: String(err) });
+  }
+});
+
+app.post("/api/request", async (req, res) => {
+  const {
+    email,
+    jobTitle,
+    firstName,
+    lastName,
+    companyName,
+    jobFunction,
+    phone,
+    countryRegion,
+  } = req.body || {};
+
+  if (!email || !jobTitle || !firstName || !lastName || !companyName || !jobFunction || !phone || !countryRegion) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  const emailRegex = /.+@.+\..+/;
+  if (!emailRegex.test(String(email))) {
+    return res.status(400).json({ message: "Invalid email" });
+  }
+
+  const ipAddress =
+    (req.headers["x-forwarded-for"]?.toString().split(",")[0] || req.socket.remoteAddress || "").toString();
+  const userAgent = (req.headers["user-agent"] || "").toString();
+
+  try {
+    const insertSql = `
+      INSERT INTO request_submissions (
+        email,
+        job_title,
+        first_name,
+        last_name,
+        company_name,
+        job_function,
+        phone,
+        country_region,
+        user_agent,
+        ip_address
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const params = [
+      String(email).trim(),
+      String(jobTitle).trim(),
+      String(firstName).trim(),
+      String(lastName).trim(),
+      String(companyName).trim(),
+      String(jobFunction).trim(),
+      String(phone).trim(),
+      String(countryRegion).trim(),
+      userAgent,
+      ipAddress,
+    ];
+
+    const conn = await pool.getConnection();
+    try {
+      await conn.execute(insertSql, params);
+    } finally {
+      conn.release();
+    }
+
+    const toEmail = process.env.EMAIL_TO || graphConfig.sender;
+    const submissionDate = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+    }).format(new Date());
+
+    const plainValues = {
+      email: String(email).trim(),
+      jobTitle: String(jobTitle).trim(),
+      firstName: String(firstName).trim(),
+      lastName: String(lastName).trim(),
+      companyName: String(companyName).trim(),
+      jobFunction: String(jobFunction).trim(),
+      phone: String(phone).trim(),
+      countryRegion: String(countryRegion).trim(),
+    };
+
+    const escapedValues = Object.fromEntries(
+      Object.entries(plainValues).map(([key, value]) => [key, escapeHtml(value)])
+    );
+    const escapedIp = escapeHtml(ipAddress || "N/A");
+    const escapedUserAgent = escapeHtml(userAgent || "N/A");
+
+    const ownerSubject = `New Briefing Request – ${escapedValues.companyName || "Unknown Company"}`;
+    const ownerHtml = `<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <title>${ownerSubject}</title>
+        </head>
+        <body style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color:#f5f7fb; padding:24px; color:#0a1640;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width:720px; margin:0 auto; background:#ffffff; border-radius:12px; box-shadow:0 12px 24px rgba(10,22,64,0.08); overflow:hidden;">
+            <tr style="background:#002856;">
+              <td style="padding:24px 30px;">
+                <h1 style="margin:0; font-size:20px; color:#ffffff;">Security Council · Briefing Request</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 32px;">
+                <p style="margin:0 0 20px; font-size:15px; color:#304067;">A new executive briefing request was submitted on the site:</p>
+                <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="width:180px; padding:8px 12px; font-weight:600; color:#0a1640;">Submitted At</td>
+                      <td style="padding:8px 12px; color:#304067;">${submissionDate}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Email</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.email}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Name</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.firstName} ${escapedValues.lastName}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Company</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.companyName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Job Title</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.jobTitle}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Job Function</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.jobFunction}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Phone</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.phone}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">Country / Region</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedValues.countryRegion}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">IP Address</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedIp}</td>
+                    </tr>
+                    <tr style="background:#f4f6fb;">
+                      <td style="padding:8px 12px; font-weight:600; color:#0a1640;">User Agent</td>
+                      <td style="padding:8px 12px; color:#304067;">${escapedUserAgent}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 30px; background:#f4f6fb; font-size:12px; color:#7181a6;">&copy; ${new Date().getFullYear()} Security Council. All rights reserved.</td>
+            </tr>
+          </table>
+        </body>
+      </html>`;
+
+    const ownerText = `New briefing request\n\nSubmitted At: ${submissionDate}\nEmail: ${plainValues.email}\nName: ${plainValues.firstName} ${plainValues.lastName}\nCompany: ${plainValues.companyName}\nJob Title: ${plainValues.jobTitle}\nJob Function: ${plainValues.jobFunction}\nPhone: ${plainValues.phone}\nCountry / Region: ${plainValues.countryRegion}\nIP Address: ${ipAddress || "N/A"}\nUser Agent: ${userAgent || "N/A"}`;
+
+    const customerSubject = "We received your briefing request – Security Council";
+    const customerHtml = `<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <title>${customerSubject}</title>
+        </head>
+        <body style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color:#f5f7fb; padding:24px; color:#0a1640;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px; margin:0 auto; background:#ffffff; border-radius:12px; box-shadow:0 12px 24px rgba(10,22,64,0.08); overflow:hidden;">
+            <tr style="background:#002856;">
+              <td style="padding:24px 30px;">
+                <h1 style="margin:0; font-size:22px; color:#ffffff; letter-spacing:0.4px;">Thank you for requesting a briefing</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:30px;">
+                <p style="margin:0 0 18px; font-size:15px; color:#304067;">Hi ${escapedValues.firstName},</p>
+                <p style="margin:0 0 18px; font-size:15px; color:#304067; line-height:1.6;">We appreciate your interest in Security Council. A member of our executive briefing team will review your request and reach out shortly with next steps.</p>
+                <div style="margin:26px 0; padding:18px 20px; border:1px solid #dde3f1; border-radius:10px; background:#f7f9ff;">
+                  <p style="margin:0 0 10px; font-size:13px; font-weight:600; color:#0a1640; text-transform:uppercase; letter-spacing:1.1px;">Request Summary</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Email:</strong> ${escapedValues.email}</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Company:</strong> ${escapedValues.companyName}</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Job Title:</strong> ${escapedValues.jobTitle}</p>
+                  <p style="margin:6px 0; font-size:14px; color:#304067;"><strong>Submitted:</strong> ${submissionDate}</p>
+                </div>
+                <p style="margin:0 0 18px; font-size:15px; color:#304067; line-height:1.6;">If you need immediate assistance, please call <strong style="color:#002856;">+44 (0) 33 3060 3806</strong>. We appreciate your interest and look forward to speaking with you.</p>
+                <p style="margin:24px 0 0; font-size:15px; color:#304067;">Warm regards,<br/><span style="font-weight:600; color:#0a1640;">Security Council Client Services</span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 30px; background:#f4f6fb; font-size:12px; color:#7181a6;">&copy; ${new Date().getFullYear()} Security Council. All rights reserved.</td>
+            </tr>
+          </table>
+        </body>
+      </html>`;
+
+    const customerText = `Hi ${plainValues.firstName},\n\nThank you for requesting a briefing with Security Council. Our team has received your information and will contact you shortly.\n\nSummary\nEmail: ${plainValues.email}\nCompany: ${plainValues.companyName}\nJob Title: ${plainValues.jobTitle}\nSubmitted: ${submissionDate}\n\nIf your request is urgent, please call +44 (0) 33 3060 3806.\n\nSecurity Council Client Services`;
+
+    await Promise.all([
+      sendMail({
+        to: toEmail,
+        subject: ownerSubject,
+        html: ownerHtml,
+        text: ownerText,
+        replyTo: plainValues.email,
+      }),
+      sendMail({
+        to: plainValues.email,
+        subject: customerSubject,
+        html: customerHtml,
+        text: customerText,
+        replyTo: toEmail,
+      }),
+    ]);
+
+    res.status(201).json({ message: "Request stored" });
+  } catch (error) {
+    console.error("/api/request error", error);
+    res.status(500).json({ message: "Failed to store request", error: String(error) });
   }
 });
 

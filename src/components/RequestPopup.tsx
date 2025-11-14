@@ -16,6 +16,9 @@ const RequestPopup: React.FC<RequestPopupProps> = ({ isOpen, onClose }) => {
     phone: '',
     countryRegion: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -25,10 +28,52 @@ const RequestPopup: React.FC<RequestPopupProps> = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const resetForm = () => {
+    setFormData({
+      email: '',
+      jobTitle: '',
+      firstName: '',
+      companyName: '',
+      lastName: '',
+      jobFunction: '',
+      phone: '',
+      countryRegion: ''
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add your form submission logic here
+    setSubmitMessage(null);
+    setSubmitError(null);
+    setIsSubmitting(true);
+
+    try {
+      const base = import.meta.env.VITE_API_BASE || '';
+      const response = await fetch(`${base}/api/request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data?.message || 'Failed to submit request');
+      }
+
+      setSubmitMessage('Thanks! Our team will reach out shortly.');
+      resetForm();
+
+      setTimeout(() => {
+        setSubmitMessage(null);
+        onClose();
+      }, 1500);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error && err.message ? err.message : 'Something went wrong. Please try again.';
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -192,12 +237,19 @@ const RequestPopup: React.FC<RequestPopupProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-1">
+                <div className="pt-1 space-y-2">
+                  {submitMessage && (
+                    <p className="text-sm text-green-200">{submitMessage}</p>
+                  )}
+                  {submitError && (
+                    <p className="text-sm text-red-200">{submitError}</p>
+                  )}
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 bg-white text-[#0050AC] font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors shadow-lg"
+                    disabled={isSubmitting}
+                    className="inline-flex items-center gap-2 bg-white text-[#0050AC] font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Contact Us
+                    {isSubmitting ? 'Submitting...' : 'Contact Us'}
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                       <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>

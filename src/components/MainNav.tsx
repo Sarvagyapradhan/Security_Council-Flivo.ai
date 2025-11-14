@@ -118,7 +118,6 @@ const NAV_LINKS = [
   { id: 'our-intelligence', label: 'Our Intelligence' },
   { id: 'latest-insight', label: 'Latest Insight' },
   { id: 'events', label: 'Events' },
-  { id: 'new-intelligent', label: 'New Intelligent' },
 ];
 
 export default MainNav;

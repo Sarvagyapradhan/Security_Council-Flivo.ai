@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import ContactPopup from './components/ContactPopup';
 import RequestPopup from './components/RequestPopup';
 import WhoWeGuidePage from './components/WhoWeGuidePage';
+import NewWhoWeGuidePage from './components/NewWhoWeGuidePage';
 import OurIntelligencePage from './components/OurIntelligencePage';
 import LatestInsightPage from './components/LatestInsightPage';
 import EventsPage from './components/EventsPage';
@@ -73,14 +74,9 @@ const App = () => {
             case 'prev-home':
                 return <PrevHome onNavigate={handleNavigate} onBriefingClick={() => setIsBriefingOpen(true)} />;
             case 'our-intelligence':
-                return <OurIntelligencePage />;
+                return <NewIntelligentPage />;
             case 'who-we-guide':
-                return (
-                    <>
-                        <WhoWeGuidePage onNavigate={handleNavigate} />
-                        <CTIHighlights variant="grid-only" onNavigate={handleNavigate} />
-                    </>
-                );
+                return <NewWhoWeGuidePage />;
             case 'latest-insight':
                 return <LatestInsightPage onNavigate={handleNavigate} />;
             case 'insight-1':
@@ -119,6 +115,15 @@ const App = () => {
                 return <RequestLandingPage />;
             case 'new-intelligent':
                 return <NewIntelligentPage />;
+            case 'old-who-we-guide':
+                return (
+                    <>
+                        <WhoWeGuidePage onNavigate={handleNavigate} />
+                        <CTIHighlights variant="grid-only" onNavigate={handleNavigate} />
+                    </>
+                );
+            case 'old-our-intelligence':
+                return <OurIntelligencePage />;
             default:
                 return <Home />;
         }

@@ -1,0 +1,11 @@
+.featured-card--ai-threats {
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url('/reports/ai-powered-threats.webp');
+}
+
+.featured-card--threat-actor {
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url('/reports/emerging-threat-actor.webp');
+}
+
+.featured-card--threat-intelligence {
+  background-image: url('/reports/threat-intelligence-methodology.webp');
+}

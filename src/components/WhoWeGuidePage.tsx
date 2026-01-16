@@ -1,20 +1,72 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import OptimizedImage from './OptimizedImage';
 
-const WhoWeGuidePage: React.FC = () => {
+interface WhoWeGuidePageProps {
+  onNavigate?: (page: string) => void;
+}
+
+const WhoWeGuidePage: React.FC<WhoWeGuidePageProps> = ({ onNavigate }) => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[356px] bg-cover bg-center bg-no-repeat" 
-        style={{ backgroundImage: `url('/who-we-guide/backgrounds/hero-background.jpg')` }}>
-        <div className="absolute left-20 -top-10 w-[805px] h-[526px] bg-white/10 border-0 border-[#002856] flex items-center justify-center">
+      <section className="relative h-[220px] bg-cover bg-center bg-no-repeat overflow-hidden sm:h-[260px] md:h-[300px] xl:h-[356px] who-we-guide-hero">
+        <div className="absolute left-20 -top-10 hidden h-[526px] w-[805px] items-center justify-center bg-white/10 xl:flex">
           {/*<h1 className="text-[#002856] text-[56px] font-bold leading-[65px] w-[771px] text-left px-7">
             We Don't Serve the Industry. We Guide Its Decision-Makers.
           </h1>*/}
         </div>
       </section>
 
-      {/* Main Content Section */}
-      <section className="relative w-full h-[1870px] bg-white">
+      {/* Main Content Section - Mobile/Tablet */}
+      <section className="xl:hidden w-full bg-white">
+        {/* Intro */}
+        <div className="mx-auto max-w-4xl px-4 py-10 text-[#002856]">
+          <h2 className="mb-4 text-3xl font-bold leading-snug">Cyber Intelligence Designed for Decision-Makers</h2>
+          <p className="mb-4 text-lg leading-8">
+            <span className="font-bold">Security Council</span> works upstream, before the breach, before the alert, before the exposure. We guide those responsible for understanding risk at its root: the executives, analysts and security teams who make decisions when noise isn't an option.
+          </p>
+          <p className="text-lg leading-8">
+            This isn't just about services. It's about clarity, timing and knowing who needs to see what and when.
+          </p>
+        </div>
+
+        {/* Security Operations & Incident Response Teams (Mobile) */}
+        <MobileAudienceSection
+          title="Security Operations & Incident Response Teams:"
+          paragraphs={[
+            
+            'We provide them with upstream threat intelligence: actor patterns, breach entry paths and infrastructure clues that sharpen prioritization and accelerate containment.',
+            'When timelines collapse, our guidance delivers the signal before the chaos.',
+          ]}
+          images={{ frontSrc: '/images/Who We guide Page-2a.webp', backSrc: '/images/Who We guide Page-2b.webp' }}
+          imagePosition="left"
+        />
+
+        {/* Executives & Cybersecurity Leaders (Mobile) */}
+        <MobileAudienceSection
+          title="Executives & Cybersecurity Leaders:"
+          paragraphs={[
+            "They don't need dashboards. They need clarity. We guide CISOs, CTOs and senior security heads through exposures that aren't yet public and decisions that can't wait for alerts.",
+            'From zero-day visibility to adversary intent, our intelligence supports high-stakes risk judgment, not post-breach reaction.',
+          ]}
+          images={{ frontSrc: '/images/Who We guide Page-1a.webp', backSrc: '/images/Who We guide Page-1b.webp' }}
+          imagePosition="right"
+        />
+
+        {/* Threat Researchers & Intelligence Analysts (Mobile) */}
+        <MobileAudienceSection
+          title="Threat Researchers & Intelligence Analysts:"
+          paragraphs={[
+            'For teams who hunt threats before they materialize, depth matters. We work with researchers, CTI analysts and red teams to expose evolving TTPs, adversary overlaps and the weak links others miss.',
+            "This is not generic feed intel, it's targeted, mapped and high-fidelity.",
+          ]}
+          images={{ frontSrc: '/images/Who We guide Page-3a.webp', backSrc: '/images/Who We guide Page-3b.webp' }}
+          imagePosition="left"
+        />
+      </section>
+
+      {/* Main Content Section - Desktop */}
+      <section className="relative hidden w-full bg-white xl:block xl:h-[1870px]">
         {/* Background Blue Rectangles */}
         <div className="absolute right-[177px] top-[131px] w-[97px] h-[239px] bg-[#0050AC]"></div>
         <div className="absolute right-[63px] top-[182px] w-[97px] h-[239px] bg-[#0050AC]"></div>
@@ -26,12 +78,12 @@ const WhoWeGuidePage: React.FC = () => {
         <div className="absolute right-[59px] top-[197px] w-[54px] h-[208px] bg-black/70 blur-[4.5px]"></div>
 
         {/* Background Images */}
-        <img className="absolute right-[241px] top-[154px] w-[90px] h-[245px] border-2 border-white" 
-          src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-        <img className="absolute right-[51px] top-[156px] w-[90px] h-[245px] border-2 border-white" 
-          src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-        <img className="absolute right-[162px] top-[108px] w-[90px] h-[245px] border-2 border-white" 
-          src="/who-we-guide/team/member-portrait-3.jpg" alt="" />
+        <OptimizedImage className="absolute right-[295px] top-[154px] w-[90px] h-[245px] border-2 border-white"
+          src="/who-we-guide/team/member-portrait-1.webp" alt="" />
+        <OptimizedImage className="absolute right-[60px] top-[156px] w-[90px] h-[245px] border-2 border-white"
+          src="/who-we-guide/team/member-portrait-2.webp" alt="" />
+        <OptimizedImage className="absolute right-[174px] top-[108px] w-[90px] h-[245px] border-2 border-white"
+          src="/who-we-guide/team/member-portrait-3.webp" alt="" />
 
         {/* Main Text Content */}
         <div className="absolute left-[88px] top-[70px]">
@@ -56,67 +108,46 @@ const WhoWeGuidePage: React.FC = () => {
           <div className="relative w-full h-[439px]">
             <div className="absolute left-0 top-[47px] w-full h-[314px] bg-[#0050AC]"></div>
             
-            {/* Left Images - Positioned outside viewport */}
-            <div className="absolute -left-[449px] top-0 w-[317px] h-[334px]">
-              <div className="absolute left-[41px] top-[21px] w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
-              <img className="absolute left-0 top-0 w-[290px] h-[328px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-            </div>
-            
-            <div className="absolute -left-[398px] top-[101px] w-[315px] h-[338px]">
-              <div className="absolute left-[29px] top-[15px] w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
-              <img className="absolute left-0 top-0 w-[276px] h-[313px] border-2 border-white shadow-lg" 
-                src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-              <div className="absolute left-[34px] top-[29px] w-[164px] h-[24px] bg-black/10 backdrop-blur-sm"></div>
-            </div>
+            {/* Left Images - Animated pair from Figma assets */}
+            <AnimatedOpsImagePair />
 
-            {/*<div className="absolute left-[613px] top-[92px] text-center">
-              <h3 className="text-white text-[22px] font-bold leading-[34px] mb-4 w-[519px]">
+            <div className="absolute left-[613px] top-[80px] text-left">
+              <h3 className="text-white text-[20px] font-bold leading-[30px] mb-4 w-[900px]">
                 Security Operations & Incident Response Teams:
               </h3>
-              <p className="text-white text-[22px] leading-[34px] mb-4 w-[762px]">
-                We provide them with upstream threat intelligence: actor patterns, breach
-                entry paths and infrastructure clues that sharpen prioritization and accelerate
-                containment.
+              <p className="text-white text-[20px] leading-[32px] mb-4 w-[900px]">
+                We provide them with upstream threat intelligence: actor patterns,<br />
+                breach entry paths and infrastructure clues that sharpen prioritization<br />
+                and accelerate containment.
               </p>
-              <p className="text-white text-[22px] leading-[34px] w-[762px]">
-                When timelines collapse, our guidance delivers the signal before the chaos.
+              <p className="text-white text-[20px] leading-[32px] w-[900px]">
+                When timelines collapse, our guidance delivers the signal before the<br />
+                chaos.
               </p>
-            </div>*/}
+            </div>
           </div>
 
           {/* Executives & Cybersecurity Leaders */}
           <div className="relative w-full h-[467px]">
             <div className="absolute left-0 top-[61px] w-full h-[323px] bg-[#0050AC]"></div>
             
-            {/* Right Images - Positioned outside viewport */}
-            {/*<div className="absolute -right-[237px] top-[141px] w-[291px] h-[326px]">
-              <div className="absolute left-0 top-0 w-[276px] h-[313px] bg-black/60 blur-[32px]"></div>
-              <img className="absolute left-2 top-1.5 w-[276px] h-[313px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
-            </div>
-            
-            <div className="absolute -right-[99px] top-0 w-[301px] h-[328px]">
-              <div className="absolute left-[50px] top-0.5 w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
-              <img className="absolute left-[11px] top-0 w-[290px] h-[328px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
-              <div className="absolute left-[15px] top-0.5 w-[277px] h-[324px] bg-black/10 backdrop-blur-sm"></div>
-            </div>
+            {/* Right Images - Animated pair from Figma assets */}
+            <AnimatedExecImagePair />
 
             <div className="absolute left-[88px] top-[93px]">
-              <h3 className="text-white text-[22px] font-bold leading-[34px] mb-4 w-[393px] text-center">
+              <h3 className="text-white text-[20px] font-bold leading-[30px] mb-4 w-[900px] text-left">
                 Executives & Cybersecurity Leaders:
               </h3>
-              <p className="text-white text-[22px] leading-[34px] mb-4 w-[762px]">
-                They don't need dashboards. They need clarity. We guide CISOs, CTOs and
-                senior security heads through exposures that aren't yet public and decisions
-                that can't wait for alerts.
+              <p className="text-white text-[20px] leading-[32px] mb-4 w-[900px]">
+                They don't need dashboards. They need clarity. We guide CISOs, CTOs<br />
+                and senior security heads through exposures that aren't yet public and<br />
+                decisions that can't wait for alerts.
               </p>
-              <p className="text-white text-[22px] leading-[34px] w-[762px]">
-                From zero-day visibility to adversary intent, our intelligence supports
+              <p className="text-white text-[20px] leading-[32px] w-[900px]">
+                From zero-day visibility to adversary intent, our intelligence supports<br />
                 high-stakes risk judgment, not post-breach reaction.
               </p>
-            </div>*/}
+            </div>
           </div>
 
           {/* Threat Researchers & Intelligence Analysts */}
@@ -127,36 +158,52 @@ const WhoWeGuidePage: React.FC = () => {
             {/*<div className="absolute -left-[615px] top-0 w-[325px] h-[328px]">
               <div className="absolute -left-px top-0 w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
               <img className="absolute left-0 top-0 w-[290px] h-[328px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-1.jpg" alt="" />
+                src="/who-we-guide/team/member-portrait-1.webp" alt="" />
               <div className="absolute left-1 top-0.5 w-[268px] h-[324px] bg-black/10 backdrop-blur-sm"></div>
             </div>*/}
             
             {/*<div className="absolute -left-[465px] top-[138px] w-[297px] h-[327px]">
               <div className="absolute left-0 top-3.5 w-[276px] h-[313px] bg-black/70 blur-[32px]"></div>
               <img className="absolute left-[21px] top-0 w-[276px] h-[313px] border-2 border-white" 
-                src="/who-we-guide/team/member-portrait-2.jpg" alt="" />
+                src="/who-we-guide/team/member-portrait-2.webp" alt="" />
               <div className="absolute left-[25px] top-1 w-[268px] h-[304px] bg-black/10 backdrop-blur-sm"></div>
-            </div>*/}
+            </div> */}
 
-            {/*<div className="absolute left-[632px] top-[116px] text-center">
-              <h3 className="text-white text-[22px] font-bold leading-[34px] mb-4 w-[466px]">
+            {/* Left Images - Animated pair from Figma assets */}
+            <AnimatedResearchersImagePair />
+
+            <div className="absolute left-[613px] top-[130px] text-left">
+              <h3 className="text-white text-[20px] font-bold leading-[30px] mb-4 w-[900px]">
                 Threat Researchers & Intelligence Analysts:
               </h3>
-              <p className="text-white text-[22px] leading-[34px] mb-4 w-[762px]">
-                For teams who hunt threats before they materialize, depth matters.
-                We work with researchers, CTI analysts and red teams to expose evolving
+              <p className="text-white text-[20px] leading-[32px] mb-4 w-[900px]">
+                For teams who hunt threats before they materialize, depth matters.<br />
+                We work with researchers, CTI analysts and red teams to expose evolving<br />
                 TTPs, adversary overlaps and the weak links others miss.
               </p>
-              <p className="text-white text-[22px] leading-[34px] w-[762px]">
+              <p className="text-white text-[20px] leading-[32px] w-[900px]">
                 This is not generic feed intel, it's targeted, mapped and high-fidelity.
               </p>
-            </div>*/}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Reputational Stakes Section */}
-      <section className="relative h-[518px] bg-[#0050AC]">
+      {/* Reputational Stakes Section - Mobile */}
+      <section className="xl:hidden bg-[#0050AC] px-4 py-12">
+        <div className="mx-auto max-w-4xl text-white">
+          <h2 className="mb-6 text-3xl font-bold leading-snug">When the stakes are reputational, not just technical. Exposure becomes a matter of timing and trust.</h2>
+          <p className="mb-6 text-lg leading-8">We guide advisory boards, compliance heads and risk committees across industries where context matters most, from financial services and healthcare to critical infrastructure, SaaS, defense and more</p>
+          <p className="mb-8 text-lg font-semibold leading-8">This is intelligence that clarifies not just what happened, but what could.</p>
+          <button className="inline-flex w-full items-center justify-center gap-2 rounded border-2 border-white bg-white px-5 py-4 font-semibold text-[#002856] transition-colors hover:bg-gray-100 sm:w-auto">Request Private Assessment</button>
+          <div className="mt-8 overflow-hidden rounded-3xl border border-white/40 shadow-lg">
+            <OptimizedImage src="/who-we-guide/backgrounds/reputational-stakes.webp" alt="Reputational stakes" className="h-full w-full object-cover" />
+          </div>
+        </div>
+      </section>
+
+      {/* Reputational Stakes Section - Desktop */}
+      <section className="relative hidden h-[518px] bg-[#0050AC] xl:block">
         <div className="absolute left-[110px] top-[43px]">
           <h2 className="text-white text-[41px] font-bold leading-[50px] mb-8 w-[1053px]">
             When the stakes are reputational, not just technical. Exposure becomes a matter
@@ -183,67 +230,285 @@ const WhoWeGuidePage: React.FC = () => {
         
         {/* Background Image */}
         <div className="absolute right-[98px] top-[179px] w-[332px] h-[217px] border border-white"></div>
-        <img className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg" 
-          src="/who-we-guide/backgrounds/reputational-stakes.jpg" alt="" />
+        <OptimizedImage className="absolute right-[82px] top-[164px] w-[332px] h-[217px] shadow-lg"
+          src="/who-we-guide/backgrounds/reputational-stakes.webp" alt="" />
       </section>
 
-      {/* Featured Articles Section */}
-      {/*<section className="bg-white py-8">
-        <div className="flex justify-center px-12">
-          <div className="w-[1328px] h-[550px] flex items-start gap-8">
-             Article 1
-            <div className="w-[418px] h-[550px] bg-cover bg-center relative flex-shrink-0" 
-              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/ai-powered-threats.jpg')` }}>
-              <div className="absolute left-7 top-8 w-[362px] h-[202px] flex flex-col gap-0">
-                <h3 className="text-white text-[32px] font-bold leading-[38px]">
-                  The Rise of AI-Powered Threats:
-                  What Security Teams Need to Know
-                </h3>
-              </div>
-              <div className="absolute left-7 top-[200px] inline-flex items-center gap-2 w-[208px] h-4">
-                <span className="text-white text-[18px] font-bold w-[189px]">See Key Take-Aways</span>
-                <svg className="w-5 h-0 transform rotate-[-51.546deg] stroke-white stroke-[3px]" fill="none" viewBox="0 0 19 20">
-                  <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
-                </svg>
-              </div>
-            </div>
-
-             Article 2
-            <div className="w-[417px] h-[550px] bg-cover bg-center relative flex-shrink-0" 
-              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/emerging-threat-actor.jpg')` }}>
-              <div className="absolute left-7 top-8 w-[362px] h-[114px] flex items-center">
-                <h3 className="text-white text-[32px] font-bold leading-[38px] w-[349px]">
-                  How CISOs Can Respond to Emerging Threat Actor Activity in Under 24 Hours
-                </h3>
-              </div>
-              <div className="absolute left-7 top-[200px] flex items-center gap-2 w-[163px] h-4">
-                <span className="text-white text-[18px] font-bold">Download Guide</span>
-                <svg className="w-5 h-0 transform rotate-[-51.546deg] stroke-white stroke-[3px]" fill="none" viewBox="0 0 19 20">
-                  <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
-                </svg>
+      {/* Featured Articles Section - Responsive */}
+      <section className="bg-white py-8 px-4 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {/* Article 1 */}
+            <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
+              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/ai-powered-threats.webp')` }}>
+              <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+                <div>
+                  <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+                    The Rise of AI-Powered Threats: What Security Teams Need to Know
+                  </h3>
+                  <button 
+                    onClick={() => onNavigate?.('ai-threats')}
+                    className="inline-flex items-center gap-2 self-start text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg cursor-pointer">
+                    <span>See Key Take-Aways</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 19 20">
+                      <path stroke="currentColor" strokeWidth="3" d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
-             Article 3
-            <div className="w-[418px] h-[550px] bg-cover bg-center relative flex-shrink-0" 
-              style={{ backgroundImage: `url('/who-we-guide/articles/threat-intelligence-methodology.jpg')` }}>
-              <div className="absolute left-7 top-8 w-[362px] h-[114px] flex flex-col items-start gap-6">
-                <h3 className="text-white text-[32px] font-bold leading-[38px] w-[362px]">
-                  Where Threat Intelligence Turns Into Real-World Action
-                </h3>
+            {/* Article 2 */}
+            <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
+              style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url('/who-we-guide/articles/emerging-threat-actor.webp')` }}>
+              <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+                <div>
+                  <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+                    How CISOs Can Respond to Emerging Threat Actor Activity in Under 24 Hours
+                  </h3>
+                  <button 
+                    onClick={() => onNavigate?.('threat-actor')}
+                    className="inline-flex items-center gap-2 self-start text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg cursor-pointer">
+                    <span>Download Guide</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 19 20">
+                      <path stroke="currentColor" strokeWidth="3" d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div className="absolute left-7 top-[200px] flex items-center gap-2">
-                <span className="text-white text-[18px] font-bold w-[196px]">Join Our Next Briefing</span>
-                <svg className="w-5 h-0 transform rotate-[-51.546deg] stroke-white stroke-[3px]" fill="none" viewBox="0 0 19 20">
-                  <path d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z" fill="white"/>
-                </svg>
+            </div>
+
+            {/* Article 3 */}
+            <div className="group relative flex h-[400px] flex-col overflow-hidden rounded-2xl bg-cover bg-center shadow-lg transition-transform hover:scale-[1.02] sm:h-[450px] lg:h-[550px]" 
+              style={{ backgroundImage: `url('/who-we-guide/articles/threat-intelligence-methodology.webp')` }}>
+              <div className="relative flex flex-1 flex-col p-6 sm:p-7">
+                <div>
+                  <h3 className="mb-3 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-[32px] lg:leading-[38px]">
+                    Where Threat Intelligence Turns Into Real-World Action
+                  </h3>
+                  <button 
+                    onClick={() => onNavigate?.('threat-intelligence')}
+                    className="inline-flex items-center gap-2 self-start text-base font-bold text-white transition-colors hover:text-gray-200 sm:text-lg cursor-pointer">
+                    <span>Join Our Next Briefing</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 19 20">
+                      <path stroke="currentColor" strokeWidth="3" d="M1.82534 16.8982C1.31015 17.547 1.41842 18.4905 2.06717 19.0057C2.71592 19.5209 3.65947 19.4126 4.17466 18.7639L1.82534 16.8982ZM16.9279 1.9979C16.8335 1.17487 16.0897 0.584237 15.2667 0.678679L1.85473 2.21769C1.03171 2.31213 0.441071 3.05589 0.535513 3.87891C0.629954 4.70194 1.37371 5.29257 2.19674 5.19813L14.1185 3.83012L15.4865 15.7519C15.581 16.5749 16.3247 17.1656 17.1477 17.0711C17.9708 16.9767 18.5614 16.2329 18.467 15.4099L16.9279 1.9979ZM3 17.8311L4.17466 18.7639L16.6124 3.10173L15.4377 2.1689L14.2631 1.23607L1.82534 16.8982L3 17.8311Z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>*/}
+      </section>
     </>
   );
 };
 
 export default WhoWeGuidePage;
+
+// Mobile helpers
+interface MobileAudienceSectionProps {
+  title: string;
+  paragraphs: string[];
+  images: { frontSrc: string; backSrc: string };
+  imagePosition: 'left' | 'right';
+}
+
+const MobileAudienceSection: React.FC<MobileAudienceSectionProps> = ({
+  title,
+  paragraphs,
+  images,
+  imagePosition,
+}) => {
+  const image = (
+    <div className="relative mx-auto flex w-full max-w-sm items-center justify-center">
+      <MobileImagePair frontSrc={images.frontSrc} backSrc={images.backSrc} />
+    </div>
+  );
+
+  return (
+    <article className="mx-auto mb-8 flex max-w-4xl flex-col gap-6 rounded-3xl bg-[#0050AC] p-6 text-white shadow-lg sm:p-8">
+      {imagePosition === 'left' && image}
+      <div className="space-y-4 text-base leading-7 sm:text-lg sm:leading-8">
+        <h3 className="text-xl font-bold sm:text-2xl">{title}</h3>
+        {paragraphs.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
+      </div>
+      {imagePosition === 'right' && image}
+    </article>
+  );
+};
+
+const MobileImagePair: React.FC<{ frontSrc: string; backSrc: string }> = ({ frontSrc, backSrc }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="relative h-48 w-40 sm:h-56 sm:w-48" aria-hidden>
+      <OptimizedImage
+        src={backSrc}
+        alt=""
+        loading="lazy"
+        className={`absolute left-6 top-8 h-36 w-24 rounded-2xl object-cover shadow-[0_12px_24px_rgba(0,0,0,0.35)] transition-all duration-700 ease-out sm:h-44 sm:w-28 ${
+          inView ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+        }`}
+      />
+      <OptimizedImage
+        src={frontSrc}
+        alt=""
+        loading="lazy"
+        className={`absolute left-0 top-0 h-40 w-28 rounded-2xl border-2 border-white object-cover shadow-[0_16px_32px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out sm:h-48 sm:w-32 ${
+          inView ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+        }`}
+      />
+    </div>
+  );
+};
+
+function AnimatedExecImagePair(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute right-[170px] top-[-10px] w-[460px] h-[420px] overflow-visible pointer-events-none"
+      aria-hidden
+    >
+      {/* Back image (b), lower-right and slightly smaller */}
+      <OptimizedImage
+        src="/images/Who We guide Page-1b.webp"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : 'translate-x-28 opacity-0'}
+          transition-transform duration-[900ms] ease-out absolute left-[150px] top-[120px] w-[352px] h-[352px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+
+      {/* Front image (a), upper-left and above */}
+      <OptimizedImage
+        src="/images/Who We guide Page-1a.webp"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}
+          transition-transform duration-[700ms] ease-out absolute left-[0px] top-[-20px] w-[376px] h-[376px] object-cover z-20 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+    </div>
+  );
+}
+
+function AnimatedOpsImagePair(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute left-[88px] top-[10px] w-[460px] h-[420px] overflow-visible pointer-events-none"
+      aria-hidden
+    >
+      {/* Back image (2b) */}
+      <OptimizedImage
+        src="/images/Who We guide Page-2b.webp"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-16 opacity-0'}
+          transition-transform duration-[900ms] ease-out absolute left-[150px] top-[70px] w-[360px] h-[370px] object-cover z-30 drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]`}
+      />
+
+      {/* Front image (2a) */}
+      <OptimizedImage
+        src="/images/Who We guide Page-2a.webp"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}
+          transition-transform duration-[700ms] ease-out absolute left-[20px] top-[-20px] w-[360px] h-[360px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+    </div>
+  );
+}
+
+function AnimatedResearchersImagePair(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setInView(true);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute left-[88px] top-[10px] w-[460px] h-[420px] overflow-visible pointer-events-none"
+      aria-hidden
+    >
+      {/* Back image (3b) */}
+      <OptimizedImage
+        src="/images/Who We guide Page-3b.webp"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-16 opacity-0'}
+          transition-transform duration-[900ms] ease-out absolute left-[150px] top-[90px] w-[360px] h-[370px] object-cover z-30 drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]`}
+      />
+
+      {/* Front image (3a) */}
+      <OptimizedImage
+        src="/images/Who We guide Page-3a.webp"
+        alt=""
+        className={`${inView ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}
+          transition-transform duration-[700ms] ease-out absolute left-[20px] top-[-20px] w-[360px] h-[360px] object-cover z-10 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]`}
+      />
+    </div>
+  );
+}

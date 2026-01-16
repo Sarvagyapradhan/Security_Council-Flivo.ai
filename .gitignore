@@ -28,3 +28,7 @@ server/.env
 *.njsproj
 *.sln
 *.sw?
+
+# Scripts directory (ignore all except convert-images.js)
+scripts/*
+!scripts/convert-images.js

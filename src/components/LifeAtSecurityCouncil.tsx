@@ -33,21 +33,27 @@ const LifeAtSecurityCouncil: React.FC = () => {
 
   return (
     <section className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-blue-900 text-4xl font-bold mb-12">
-          Life at Security Council
-        </h2>
-        
-        <div className="grid grid-cols-3 gap-8">
-          {sections.map((section, index) => (
-            <div key={index} className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-1">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 sm:px-6">
+        <div className="space-y-4">
+          <span className="text-xs font-semibold uppercase tracking-wide text-blue-900/70 sm:text-sm">
+            Careers & Culture
+          </span>
+          <h2 className="text-3xl font-bold text-blue-900 sm:text-4xl">Life at Security Council</h2>
+          <p className="text-sm leading-6 text-blue-900/80 sm:text-base sm:leading-7">
+            From our analyst pods to leadership briefings, we foster a culture of curiosity, collaboration, and confident decisioning. Explore how our teams operate and why top talent builds their CTI careers here.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {sections.map((section) => (
+            <div key={section.title} className="flex flex-col gap-4 rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <div className="flex items-center gap-2 text-blue-900/70">
                 {section.icon}
-                <span className="text-blue-900/60 text-lg font-medium">
+                <span className="text-xs font-semibold uppercase tracking-wide sm:text-sm">
                   {section.eyebrow}
                 </span>
               </div>
-              <h3 className="text-blue-900 text-2xl font-semibold leading-7">
+              <h3 className="text-lg font-semibold leading-7 text-blue-900 sm:text-xl">
                 {section.title}
               </h3>
             </div>

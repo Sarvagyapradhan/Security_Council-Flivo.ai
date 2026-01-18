@@ -14,11 +14,14 @@ jobs:
   ci-checks:
     name: CI Checks
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -49,11 +52,16 @@ jobs:
           fi
           echo "Build successful"
 
-  # Deployment job that runs after merge to main
+  # Deployment job that runs ONLY after merge to main (push event)
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [] # No dependencies - runs independently on push to main
+    if: |
+      github.event_name == 'push' && 
+      github.ref == 'refs/heads/main' &&
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.head_commit.message, '[skip deploy]')
     environment:
       name: Production
       url: https://vercel.com
@@ -80,11 +88,27 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Verify Vercel secrets
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "::error::VERCEL_TOKEN secret is not set. Please configure it in GitHub Settings > Secrets and variables > Actions"
+            exit 1
+          fi
+          if [ -z "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "::error::VERCEL_ORG_ID secret is not set. Please configure it in GitHub Settings > Secrets and variables > Actions"
+            exit 1
+          fi
+          if [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "::error::VERCEL_PROJECT_ID secret is not set. Please configure it in GitHub Settings > Secrets and variables > Actions"
+            exit 1
+          fi
+          echo "All Vercel secrets are configured"
+
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod --yes'
+          vercel-args: '--prod'
           scope: ${{ secrets.VERCEL_ORG_ID }}
